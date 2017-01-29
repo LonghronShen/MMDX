@@ -1,0 +1,204 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{06C3930B-4405-403F-AECB-43E16A1C17AA}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>BulletX</RootNamespace>
+    <AssemblyName>BulletX</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <XnaProfile>HiDef</XnaProfile>
+    <XnaCrossPlatformGroupID>1af84a53-3275-4bb6-97a9-dfd9b484972d</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS;XNA</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaCompressContent>false</XnaCompressContent>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release</OutputPath>
+    <DefineConstants>TRACE;WINDOWS</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaCompressContent>true</XnaCompressContent>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <DocumentationFile>
+    </DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="BulletCollision\BroadphaseCollision\AxisSweep3.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\BroadphaseNativeTypes.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\BroadphasePair.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\BroadphasePairSortPredicate.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\BroadphaseProxy.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\BroadphaseRayCallback.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\CollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\CollisionAlgorithmConstructionInfo.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\CollisionFilterGroups.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\Dbvt.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\DbvtAabbMm.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\DbvtBroadphase.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\DbvtNode.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\DbvtProxy.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\DbvtTreeCollider.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\DispatcherInfo.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\HashedOverlappingPairCache.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IBroadphaseAabbCallback.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IBroadphaseInterface.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\ICollide.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IDispatcher.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IOverlapCallback.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IOverlapFilterCallback.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IOverlappingPairCache.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\IOverlappingPairCallback.cs" />
+    <Compile Include="BulletCollision\BroadphaseCollision\NullPairCache.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ActivatingCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ActivationStateFlags.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\BoxBoxCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\BoxBoxDetector.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionAlgorithmCreateFunc.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionDispatcher.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionFlags.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionObject.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionObjectType.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionPairCallback.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CollisionWorld.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\CompoundCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ConvexConcaveCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ConvexConvexAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ConvexPlaneCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\DefaultCollisionConfiguration.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\DefaultCollisionConstructionInfo.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\EmptyAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ICollisionConfiguration.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\ManifoldResult.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\PersistentManifoldSortPredicate.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\PerturbedContactResult.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\SimulationIslandManager.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\SphereBoxCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\SphereSphereCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\SphereTriangleCollisionAlgorithm.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\UnionFind.cs" />
+    <Compile Include="BulletCollision\CollisionDispatch\UnionFindElementSortPredicate.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\BoxShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\CapsuleShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\CapsuleShapeX.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\CapsuleShapeZ.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\CollisionMargin.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\CollisionShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\ConcaveShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\ConvexInternalShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\ConvexShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\PolyhedralConvexShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\SphereShape.cs" />
+    <Compile Include="BulletCollision\CollisionShapes\StaticPlaneShape.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\ClosesPointInput.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\ContactManifoldTypes.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\EPA.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\GJK.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\GjkEpaPenetrationDepthSolver.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\GjkEpaSolver2.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\GjkPairDetector.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\IConvexPenetrationDepthSolver.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\IDiscreteCollisionDetectorInterface.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\ISimplexSolver.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\ManifoldPoint.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\MinkowskiDiff.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\MinkowskiPenetrationDepthSolver.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\PersistentManifold.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\SubSimplexClosestResult.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\UsageBitfield.cs" />
+    <Compile Include="BulletCollision\NarrowPhaseCollision\VoronoiSimplexSolver.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\ContactSolverInfo.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\Generic6DofConstraint.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\Generic6DofSpringConstraint.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\IConstraintSolver.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\JacobianEntry.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\RotationalLimitMotor.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\SequentialImpulseConstraintSolver.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\SolverConstraint.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\TranslationalLimitMotor.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\TypedConstraint.cs" />
+    <Compile Include="BulletDynamics\ConstraintSolver\TypedConstraintType.cs" />
+    <Compile Include="BulletDynamics\Dynamics\ActionInterface.cs" />
+    <Compile Include="BulletDynamics\Dynamics\DiscreteDynamicsWorld.cs" />
+    <Compile Include="BulletDynamics\Dynamics\DynamicsWorld.cs" />
+    <Compile Include="BulletDynamics\Dynamics\InplaceSolverIslandCallback.cs" />
+    <Compile Include="BulletDynamics\Dynamics\RigidBody.cs" />
+    <Compile Include="BulletDynamics\Dynamics\RigidBodyConstructionInfo.cs" />
+    <Compile Include="BulletDynamics\Dynamics\RigidBodyFlags.cs" />
+    <Compile Include="BulletDynamics\Dynamics\SortConstraintOnIslandPredicate.cs" />
+    <Compile Include="BulletException.cs" />
+    <Compile Include="BulletGlobal.cs" />
+    <Compile Include="IProfiler.cs" />
+    <Compile Include="LinerMath\AabbUtil2.cs" />
+    <Compile Include="LinerMath\btMatrix3x3.cs" />
+    <Compile Include="LinerMath\btQuaternion.cs" />
+    <Compile Include="LinerMath\btTransform.cs" />
+    <Compile Include="LinerMath\btVector3.cs" />
+    <Compile Include="LinerMath\btVector4.cs" />
+    <Compile Include="LinerMath\DefaultMotionState.cs" />
+    <Compile Include="LinerMath\IDebugDraw.cs" />
+    <Compile Include="LinerMath\IMotionState.cs" />
+    <Compile Include="LinerMath\StackAlloc.cs" />
+    <Compile Include="LinerMath\TransformUtil.cs" />
+    <Compile Include="LinerMath\TypedObject.cs" />
+    <Compile Include="ObjPoolBase.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>

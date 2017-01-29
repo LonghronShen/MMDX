@@ -1,0 +1,142 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{190EDC29-B9AD-446C-AD7A-06AB2EC5D5ED}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">Xbox 360</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MikuMikuDance.XNA</RootNamespace>
+    <AssemblyName>MikuMikuDanceXNA</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Xbox 360</XnaPlatform>
+    <XnaProfile>HiDef</XnaProfile>
+    <XnaCrossPlatformGroupID>39787fc7-7186-4c2c-8c1b-c0954191aec3</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|Xbox 360' ">
+    <OutputPath>bin\Xbox 360\Debug</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <DefineConstants>TRACE;DEBUG;XBOX;XBOX360;XNA</DefineConstants>
+    <XnaCompressContent>true</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|Xbox 360' ">
+    <OutputPath>bin\Xbox 360\Release</OutputPath>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <DefineConstants>TRACE;XBOX;XBOX360;XNA</DefineConstants>
+    <XnaCompressContent>true</XnaCompressContent>
+    <DocumentationFile>bin\Xbox 360\Release\MikuMikuDanceXNA.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Compile Include="Accessory\MMDAccessory.cs" />
+    <Compile Include="Accessory\MMDAccessoryPart.cs" />
+    <Compile Include="Accessory\MMDAccessoryPartReader.cs" />
+    <Compile Include="Accessory\MMDAccessoryReader.cs" />
+    <Compile Include="Accessory\ScreenManager.cs" />
+    <Compile Include="Accessory\VACReader.cs" />
+    <Compile Include="Misc\EdgeManager.cs" />
+    <Compile Include="Misc\PhysicsDebugDraw.cs" />
+    <Compile Include="Misc\VertexDeclarations.cs" />
+    <Compile Include="Misc\WritableVertexBuffer.cs" />
+    <Compile Include="MMDXCore.cs" />
+    <Compile Include="Model\MMDBoneManagerReader.cs" />
+    <Compile Include="Model\MMDBoneReader.cs" />
+    <Compile Include="Model\MMDFaceManagerReader.cs" />
+    <Compile Include="Model\MMDIKReader.cs" />
+    <Compile Include="Model\MMDModelPart.cs" />
+    <Compile Include="Model\MMDCPUModelPart.cs" />
+    <Compile Include="Model\MMDCPUModelPartFactory.cs" />
+    <Compile Include="Model\MMDModelPartFromFileFactory.cs" />
+    <Compile Include="Model\MMDGPUModelPart.cs" />
+    <Compile Include="Model\MMDGPUModelPartFactory.cs" />
+    <Compile Include="Model\MMDGPUModelPartReader.cs" />
+    <Compile Include="Model\MMDXBoxBoneManager.cs" />
+    <Compile Include="Model\MMDXBoxFaceManager.cs" />
+    <Compile Include="Model\MMDXBoxFaceManagerReader.cs" />
+    <Compile Include="Model\MMDXBoxModelPart.cs" />
+    <Compile Include="Model\MMDXBoxModelPartFactory.cs" />
+    <Compile Include="Model\MMDModelReader.cs" />
+    <Compile Include="Model\MMDXBoxModelPartReader.cs" />
+    <Compile Include="Model\MMDXModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Avatar">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.GamerServices">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Net">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Storage">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Video">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net" />
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulletX\Xbox 360 用の BulletX のコピー.csproj">
+      <Project>{93FCCE90-A3EE-4E06-887A-D93F05613F3D}</Project>
+      <Name>Xbox 360 用の BulletX のコピー</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MikuMikuDanceCore\Xbox 360 用の MikuMikuDanceCore のコピー.csproj">
+      <Project>{48963946-14DB-49CF-BAF0-5FD850DD8378}</Project>
+      <Name>Xbox 360 用の MikuMikuDanceCore のコピー</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>

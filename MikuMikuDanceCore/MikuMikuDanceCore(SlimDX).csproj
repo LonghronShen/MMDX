@@ -1,0 +1,119 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
+    <ProductVersion>8.0.30703</ProductVersion>
+    <SchemaVersion>2.0</SchemaVersion>
+    <ProjectGuid>{C7AE2E19-6C3C-4E96-8C93-5A85E4FFF0FB}</ProjectGuid>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MikuMikuDance.Core</RootNamespace>
+    <AssemblyName>MikuMikuDanceCore%28SlimDX%29</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <FileAlignment>512</FileAlignment>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\Debug\</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS;SlimDX</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS;SlimDX</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <DocumentationFile>bin\Release\MikuMikuDanceCore%28SlimDX%29.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="SlimDX, Version=4.0.11.43, Culture=neutral, PublicKeyToken=b1b0c32fd1ffe4f9" />
+    <Reference Include="System" />
+    <Reference Include="System.Core" />
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml.Linq" />
+    <Reference Include="System.Data.DataSetExtensions" />
+    <Reference Include="Microsoft.CSharp" />
+    <Reference Include="System.Data" />
+    <Reference Include="System.Xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessory\IMMDAccessoryFactory.cs" />
+    <Compile Include="Accessory\IMMDVACFactory.cs" />
+    <Compile Include="Accessory\MMDAccessoryBase.cs" />
+    <Compile Include="Accessory\MMDVACFactory.cs" />
+    <Compile Include="Accessory\MMD_VAC.cs" />
+    <Compile Include="Misc\BezierCurve.cs" />
+    <Compile Include="Misc\CCDSolver.cs" />
+    <Compile Include="Misc\DefaltIKLimitter.cs" />
+    <Compile Include="Misc\IEdgeManager.cs" />
+    <Compile Include="Misc\IIKLimitter.cs" />
+    <Compile Include="Misc\IIKSolver.cs" />
+    <Compile Include="Misc\MathHelper.cs" />
+    <Compile Include="Misc\MMDDrawingMode.cs" />
+    <Compile Include="Misc\MMDVertex.cs" />
+    <Compile Include="Misc\MMDXException.cs" />
+    <Compile Include="Misc\MMDXMath.cs" />
+    <Compile Include="Misc\MMDXProfiler.cs" />
+    <Compile Include="Misc\SQTTransform.cs" />
+    <Compile Include="MMDCore.cs" />
+    <Compile Include="Model\IMMDFaceManager.cs" />
+    <Compile Include="Model\MMDFaceManager.cs" />
+    <Compile Include="Model\IMMDModelPart.cs" />
+    <Compile Include="Model\IMMDModelPartFactory.cs" />
+    <Compile Include="Model\IMMDModelFactory.cs" />
+    <Compile Include="Model\MMDBone.cs" />
+    <Compile Include="Model\MMDBoneManager.cs" />
+    <Compile Include="Model\MMDIK.cs" />
+    <Compile Include="Model\MMDModel.cs" />
+    <Compile Include="Model\Physics\MMDJoint.cs" />
+    <Compile Include="Model\Physics\MMDMotionState.cs" />
+    <Compile Include="Model\Physics\MMDRigid.cs" />
+    <Compile Include="Model\Physics\PhysicsManager.cs" />
+    <Compile Include="Model\SkinningHelpers.cs" />
+    <Compile Include="Motion\AnimationPlayer.cs" />
+    <Compile Include="Motion\IMMDMotionFactory.cs" />
+    <Compile Include="Motion\IMMDMotionTrack.cs" />
+    <Compile Include="Motion\MMDBoneKeyFrame.cs" />
+    <Compile Include="Motion\MMDCameraKeyFrame.cs" />
+    <Compile Include="Motion\MMDFaceKeyFrame.cs" />
+    <Compile Include="Motion\MMDLightKeyFrame.cs" />
+    <Compile Include="Motion\MMDMotion.cs" />
+    <Compile Include="Motion\MMDMotionFactory.cs" />
+    <Compile Include="Motion\MMDMotionTrack.cs" />
+    <Compile Include="Motion\MMDMotionTrackOptions.cs" />
+    <Compile Include="Motion\MotionHelper.cs" />
+    <Compile Include="MultiThreads\PhysicsThreadManager.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Stages\IMMDXCamera.cs" />
+    <Compile Include="Stages\IMMDXLight.cs" />
+    <Compile Include="Stages\MMDStageMotionTrack.cs" />
+    <Compile Include="Stages\MMDXDefaultCamera.cs" />
+    <Compile Include="Stages\MMDXDefaultLight.cs" />
+    <Compile Include="Stages\StagePlayer.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulletX\BulletX%28NP%29.csproj">
+      <Project>{E43E58B0-F059-403E-BFB4-601F83C2EB41}</Project>
+      <Name>BulletX%28NP%29</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MMDMotionLibrary\MMDMotionLibrary.csproj">
+      <Project>{BA809094-C906-4EC1-B2B0-319E1EE4702A}</Project>
+      <Name>MMDMotionLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+       Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

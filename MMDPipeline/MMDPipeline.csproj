@@ -1,0 +1,125 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="4.0">
+  <PropertyGroup>
+    <ProjectGuid>{D0225B70-1092-47CF-AF40-69516961D775}</ProjectGuid>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MikuMikuDance.XNA</RootNamespace>
+    <AssemblyName>MMDPipeline</AssemblyName>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>DEBUG;TRACE</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaPlatform>Windows</XnaPlatform>
+    <DocumentationFile>bin\x86\Debug\MMDPipeline.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+      <SpecificVersion>True</SpecificVersion>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Content.Pipeline, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+      <SpecificVersion>true</SpecificVersion>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Drawing" />
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessory\AccessoryProcessor.cs" />
+    <Compile Include="Accessory\MMDAccessoryContent.cs" />
+    <Compile Include="Accessory\MMDAccessoryMaterialProcessor.cs" />
+    <Compile Include="Accessory\MMDAccessoryPartContent.cs" />
+    <Compile Include="Accessory\MMDAccessoryPartWriter.cs" />
+    <Compile Include="Accessory\MMDAccessoryWriter.cs" />
+    <Compile Include="Accessory\VACContent.cs" />
+    <Compile Include="Accessory\VACImporter.cs" />
+    <Compile Include="Accessory\VACProcessor.cs" />
+    <Compile Include="Accessory\VACWriter.cs" />
+    <Compile Include="Misc\BezierCurveContent.cs" />
+    <Compile Include="Misc\MMDXMath.cs" />
+    <Compile Include="Misc\SQTTransformContent.cs" />
+    <Compile Include="Model\MMDFaceManagerContent.cs" />
+    <Compile Include="Model\MMDFaceManagerWriter.cs" />
+    <Compile Include="Model\ImageExtAnalyzer.cs" />
+    <Compile Include="Model\MMDBoneContent.cs" />
+    <Compile Include="Model\MMDBoneManagerContent.cs" />
+    <Compile Include="Model\MMDBoneManagerWriter.cs" />
+    <Compile Include="Model\MMDBoneTag.cs" />
+    <Compile Include="Model\MMDBoneWriter.cs" />
+    <Compile Include="Model\MMDIKContent.cs" />
+    <Compile Include="Model\MMDIKWriter.cs" />
+    <Compile Include="Model\MMDJointContent.cs" />
+    <Compile Include="Model\MMDMaterialProcessor.cs" />
+    <Compile Include="Model\MMDMeshBuilder.cs" />
+    <Compile Include="Model\MMDModelContent.cs" />
+    <Compile Include="Model\MMDModelContentWriter.cs" />
+    <Compile Include="Model\MMDModelPartContent.cs" />
+    <Compile Include="Model\MMDModelPartContentWriter.cs" />
+    <Compile Include="Model\MMDModelProcessor.cs" />
+    <Compile Include="Model\MMDModelScene.cs" />
+    <Compile Include="Model\MMDRigidContent.cs" />
+    <Compile Include="Misc\MMDVertexContent.cs" />
+    <Compile Include="Model\PMDImporter.cs" />
+    <Compile Include="Model\SkinningHelpers.cs" />
+    <Compile Include="Model\ToonTexManager.cs" />
+    <Compile Include="Motion\MMDBoneKeyFrameContent.cs" />
+    <Compile Include="Motion\MMDCameraKeyFrameContent.cs" />
+    <Compile Include="Motion\MMDFaceKeyFrameContent.cs" />
+    <Compile Include="Motion\MMDLightKeyFrameContent.cs" />
+    <Compile Include="Motion\MMDMotionContent.cs" />
+    <Compile Include="Motion\MMDMotionProcessor.cs" />
+    <Compile Include="Motion\MotionHelper.cs" />
+    <Compile Include="Motion\VMDImporter.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MMDModelLibrary\MMDModelLibrary.csproj">
+      <Project>{73B47545-8924-4D77-BADC-593A9F71E372}</Project>
+      <Name>MMDModelLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MMDMotionLibrary\MMDMotionLibrary.csproj">
+      <Project>{BA809094-C906-4EC1-B2B0-319E1EE4702A}</Project>
+      <Name>MMDMotionLibrary</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MMDXResource\MMDXResource.csproj">
+      <Project>{2E9C1189-52ED-457A-B1B1-7911BC2522F2}</Project>
+      <Name>MMDXResource</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.ContentPipelineExtensions.targets" />
+  <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
+     Other similar extension points exist, see Microsoft.Common.targets.
+  <Target Name="BeforeBuild">
+  </Target>
+  <Target Name="AfterBuild">
+  </Target>
+  -->
+</Project>

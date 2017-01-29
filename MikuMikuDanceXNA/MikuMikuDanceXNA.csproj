@@ -1,0 +1,154 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <PropertyGroup>
+    <ProjectGuid>{E9814344-4640-417C-8269-18363625B229}</ProjectGuid>
+    <ProjectTypeGuids>{6D335F3A-9D43-41b4-9D22-F6F17C4BE596};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
+    <Platform Condition=" '$(Platform)' == '' ">x86</Platform>
+    <OutputType>Library</OutputType>
+    <AppDesignerFolder>Properties</AppDesignerFolder>
+    <RootNamespace>MikuMikuDance.XNA</RootNamespace>
+    <AssemblyName>MikuMikuDanceXNA</AssemblyName>
+    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkProfile>Client</TargetFrameworkProfile>
+    <XnaFrameworkVersion>v4.0</XnaFrameworkVersion>
+    <XnaPlatform>Windows</XnaPlatform>
+    <XnaProfile>HiDef</XnaProfile>
+    <XnaCrossPlatformGroupID>39787fc7-7186-4c2c-8c1b-c0954191aec3</XnaCrossPlatformGroupID>
+    <XnaOutputType>Library</XnaOutputType>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
+    <DebugSymbols>true</DebugSymbols>
+    <DebugType>full</DebugType>
+    <Optimize>false</Optimize>
+    <OutputPath>bin\x86\Debug</OutputPath>
+    <DefineConstants>TRACE;DEBUG;WINDOWS;XNA</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaCompressContent>false</XnaCompressContent>
+  </PropertyGroup>
+  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|x86' ">
+    <DebugType>pdbonly</DebugType>
+    <Optimize>true</Optimize>
+    <OutputPath>bin\x86\Release\</OutputPath>
+    <DefineConstants>TRACE;WINDOWS;XNA</DefineConstants>
+    <ErrorReport>prompt</ErrorReport>
+    <WarningLevel>4</WarningLevel>
+    <NoStdLib>true</NoStdLib>
+    <UseVSHostingProcess>false</UseVSHostingProcess>
+    <PlatformTarget>x86</PlatformTarget>
+    <XnaCompressContent>true</XnaCompressContent>
+    <AllowUnsafeBlocks>false</AllowUnsafeBlocks>
+    <DocumentationFile>bin\x86\Release\MikuMikuDanceXNA.XML</DocumentationFile>
+  </PropertyGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Game, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Graphics, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.GamerServices, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Xact, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Video, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Avatar, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Net, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="Microsoft.Xna.Framework.Storage, Version=4.0.0.0, Culture=neutral, PublicKeyToken=842cf8be1de50553, processorArchitecture=x86">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="mscorlib">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml">
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Core">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Xml.Linq">
+      <RequiredTargetFramework>4.0</RequiredTargetFramework>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="System.Net">
+      <Private>False</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <Compile Include="Accessory\MMDAccessory.cs" />
+    <Compile Include="Accessory\MMDAccessoryPart.cs" />
+    <Compile Include="Accessory\MMDAccessoryPartReader.cs" />
+    <Compile Include="Accessory\MMDAccessoryReader.cs" />
+    <Compile Include="Accessory\ScreenManager.cs" />
+    <Compile Include="Accessory\VACReader.cs" />
+    <Compile Include="Misc\EdgeManager.cs" />
+    <Compile Include="Misc\PhysicsDebugDraw.cs" />
+    <Compile Include="Misc\WritableVertexBuffer.cs" />
+    <Compile Include="MMDXCore.cs" />
+    <Compile Include="Model\MMDCPUModelPart.cs" />
+    <Compile Include="Model\MMDCPUModelPartFactory.cs" />
+    <Compile Include="Model\MMDFaceManagerReader.cs" />
+    <Compile Include="Model\MMDGPUModelPart.cs" />
+    <Compile Include="Model\MMDGPUModelPartFactory.cs" />
+    <Compile Include="Model\MMDGPUModelPartReader.cs" />
+    <Compile Include="Model\MMDModelPartFromFileFactory.cs" />
+    <Compile Include="Model\MMDBoneManagerReader.cs" />
+    <Compile Include="Model\MMDBoneReader.cs" />
+    <Compile Include="Model\MMDIKReader.cs" />
+    <Compile Include="Model\MMDModelPart.cs" />
+    <Compile Include="Model\MMDModelReader.cs" />
+    <Compile Include="Misc\VertexDeclarations.cs" />
+    <Compile Include="Model\MMDXBoxBoneManager.cs" />
+    <Compile Include="Model\MMDXBoxFaceManager.cs" />
+    <Compile Include="Model\MMDXBoxFaceManagerReader.cs" />
+    <Compile Include="Model\MMDXBoxModelPart.cs" />
+    <Compile Include="Model\MMDXBoxModelPartFactory.cs" />
+    <Compile Include="Model\MMDXBoxModelPartReader.cs" />
+    <Compile Include="Model\MMDXModel.cs" />
+    <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\BulletX\BulletX.csproj">
+      <Project>{06C3930B-4405-403F-AECB-43E16A1C17AA}</Project>
+      <Name>BulletX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MikuMikuDanceCore\MikuMikuDanceCore.csproj">
+      <Project>{59AF880A-09A9-4884-8208-C36976EDF2B9}</Project>
+      <Name>MikuMikuDanceCore</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MMDModelLibrary\MMDModelLibrary.csproj">
+      <Project>{73B47545-8924-4D77-BADC-593A9F71E372}</Project>
+      <Name>MMDModelLibrary</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup />
+  <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
+  <Import Project="$(MSBuildExtensionsPath)\Microsoft\XNA Game Studio\Microsoft.Xna.GameStudio.targets" />
+  <!--
+      To modify your build process, add your task inside one of the targets below and uncomment it. 
+      Other similar extension points exist, see Microsoft.Common.targets.
+      <Target Name="BeforeBuild">
+      </Target>
+      <Target Name="AfterBuild">
+      </Target>
+    -->
+</Project>
