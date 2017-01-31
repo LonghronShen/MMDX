@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,7 +28,64 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Accessory\MMDAccessory.cs" />
+    <Compile Include="Accessory\MMDAccessoryPart.cs" />
+    <Compile Include="Accessory\MMDAccessoryPartReader.cs" />
+    <Compile Include="Accessory\MMDAccessoryReader.cs" />
+    <Compile Include="Accessory\ScreenManager.cs" />
+    <Compile Include="Accessory\VACReader.cs" />
+    <Compile Include="Misc\EdgeManager.cs" />
+    <Compile Include="Misc\IGameWindow.cs" />
+    <Compile Include="Misc\PhysicsDebugDraw.cs" />
+    <Compile Include="Misc\VertexDeclarations.cs" />
+    <Compile Include="Misc\WritableVertexBuffer.cs" />
+    <Compile Include="MMDXCore.cs" />
+    <Compile Include="Model\MMDBoneManagerReader.cs" />
+    <Compile Include="Model\MMDBoneReader.cs" />
+    <Compile Include="Model\MMDCPUModelPart.cs" />
+    <Compile Include="Model\MMDCPUModelPartFactory.cs" />
+    <Compile Include="Model\MMDFaceManagerReader.cs" />
+    <Compile Include="Model\MMDGPUModelPart.cs" />
+    <Compile Include="Model\MMDGPUModelPartFactory.cs" />
+    <Compile Include="Model\MMDGPUModelPartReader.cs" />
+    <Compile Include="Model\MMDIKReader.cs" />
+    <Compile Include="Model\MMDModelPart.cs" />
+    <Compile Include="Model\MMDModelPartFromFileFactory.cs" />
+    <Compile Include="Model\MMDModelReader.cs" />
+    <Compile Include="Model\MMDXBoxBoneManager.cs" />
+    <Compile Include="Model\MMDXBoxFaceManager.cs" />
+    <Compile Include="Model\MMDXBoxFaceManagerReader.cs" />
+    <Compile Include="Model\MMDXBoxModelPart.cs" />
+    <Compile Include="Model\MMDXBoxModelPartFactory.cs" />
+    <Compile Include="Model\MMDXBoxModelPartReader.cs" />
+    <Compile Include="Model\MMDXModel.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Background.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MikumikuDance.Framework.BulletX\MikumikuDance.Framework.BulletX.csproj">
+      <Project>{3f64ef94-88af-473c-8685-f10d228da838}</Project>
+      <Name>MikumikuDance.Framework.BulletX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\MikumikuDance.Framework.Core\MikumikuDance.Framework.Core.csproj">
+      <Project>{ff076653-4aed-4fea-9414-2937b97b94e7}</Project>
+      <Name>MikumikuDance.Framework.Core</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="MonoGame.Framework, Version=3.1.2.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MonoGame.Framework.Portable.3.2.99.1-Beta\lib\portable-net45+win+wpa81+Xamarin.iOS10+MonoAndroid10+MonoTouch10\MonoGame.Framework.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+    <Reference Include="MonoGame.Framework.Content.Pipeline, Version=1.0.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\..\packages\MonoGame.Framework.Content.Pipeline.Portable.3.2.99.1-Beta\lib\portable-net45+win+wpa81+Xamarin.iOS10+MonoAndroid10+MonoTouch10\MonoGame.Framework.Content.Pipeline.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="packages.config" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

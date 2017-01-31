@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -28,7 +28,24 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="MMDXResource.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+  </ItemGroup>
+  <ItemGroup>
+    <EmbeddedResource Include="Resources\AccessoryEffect.fx" />
+    <EmbeddedResource Include="Resources\MMDEdgeEffect.fx" />
+    <EmbeddedResource Include="Resources\MMDWinEffect.fx" />
+    <EmbeddedResource Include="Resources\MMDXBoxEffect.fx" />
+    <EmbeddedResource Include="Resources\toon01.bmp" />
+    <EmbeddedResource Include="Resources\toon02.bmp" />
+    <EmbeddedResource Include="Resources\toon03.bmp" />
+    <EmbeddedResource Include="Resources\toon04.bmp" />
+    <EmbeddedResource Include="Resources\toon05.bmp" />
+    <EmbeddedResource Include="Resources\toon06.bmp" />
+    <EmbeddedResource Include="Resources\toon07.bmp" />
+    <EmbeddedResource Include="Resources\toon08.bmp" />
+    <EmbeddedResource Include="Resources\toon09.bmp" />
+    <EmbeddedResource Include="Resources\toon10.bmp" />
   </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>
