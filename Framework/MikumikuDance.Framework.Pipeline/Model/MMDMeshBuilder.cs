@@ -33,8 +33,11 @@ namespace MikuMikuDance.XNA.Model
             //ジオメトリとマテリアルの生成
             for (int i = 0; i < model.Materials.Length; i++)
             {
+                //System.Diagnostics.Debugger.Launch();
+
                 GeometryContent geometry = new GeometryContent();
                 BasicMaterialContent material = new BasicMaterialContent();
+                //geometry.Vertices.Add(0);
                 geometry.Material = material;
                 //マテリアル設定
                 material.VertexColorEnabled = false;//頂点カラー無し
@@ -44,7 +47,9 @@ namespace MikuMikuDance.XNA.Model
                 material.SpecularColor = MMDXMath.ToVector3(model.Materials[i].SpecularColor);
                 material.SpecularPower = model.Materials[i].Specularity;
                 if (!string.IsNullOrEmpty(model.Materials[i].TextureFileName))
+                {
                     material.Texture = new ExternalReference<TextureContent>(NormalizeFilepath(model.Materials[i].TextureFileName, filename));
+                }
                 if (!string.IsNullOrEmpty(model.Materials[i].SphereTextureFileName))
                 {
                     if (Path.GetExtension(model.Materials[i].SphereTextureFileName).ToLower() == ".sph")
@@ -56,7 +61,9 @@ namespace MikuMikuDance.XNA.Model
                         material.OpaqueData.Add("UseSphere", 2);
                     }
                     else
+                    {
                         throw new InvalidContentException("スフィアマップは*.sph, *.spaのみ指定可能です: " + model.Materials[i].SphereTextureFileName);
+                    }
                     material.Textures.Add("Sphere", new ExternalReference<TextureContent>(ProcessSphere(NormalizeFilepath(model.Materials[i].SphereTextureFileName, filename))));
                 }
                 else
@@ -71,9 +78,13 @@ namespace MikuMikuDance.XNA.Model
                     material.OpaqueData.Add("UseToon", true);
                 }
                 else
+                {
                     material.OpaqueData.Add("UseToon", false);
+                }
+
                 //一応エッジ情報突っ込んでおく
                 material.OpaqueData.Add("Edge", (model.Materials[i].EdgeFlag != 0));
+
                 //ジオメトリのチャンネル設定
                 //法線
                 geometry.Vertices.Channels.Add(VertexChannelNames.Normal(0), typeof(Vector3), null);
@@ -83,7 +94,7 @@ namespace MikuMikuDance.XNA.Model
                 //ボーンウェイト
                 geometry.Vertices.Channels.Add(VertexChannelNames.Weights(0), typeof(BoneWeightCollection), null);
 
-                
+
                 //面と頂点をジオメトリに登録
                 //このマテリアルに対応する面は今までのマテリアルの面数の合計からこのマテリアルの面数個分
                 vertMap.Clear();
@@ -97,13 +108,15 @@ namespace MikuMikuDance.XNA.Model
                     if (!vertMap.TryGetValue(VertIndex, out geoVertIndex))
                     {
                         //未登録なので、ジオメトリに登録し、ジオメトリ頂点番号取得
-                        geoVertIndex = geometry.Vertices.Add(VertIndex);
+                        geoVertIndex = geometry.Vertices.AddEx(VertIndex);
+
                         //頂点マップに登録
                         vertMap.Add(VertIndex, geoVertIndex);
                         //チャンネル情報の登録
                         int channelIndex = 0;
                         //法線登録
-                        geometry.Vertices.Channels.Get<Vector3>(channelIndex++)[geoVertIndex] = MMDXMath.ToVector3(model.Vertexes[VertIndex].NormalVector);
+                        var channel = geometry.Vertices.Channels.Get<Vector3>(channelIndex++);
+                        channel[geoVertIndex] = MMDXMath.ToVector3(model.Vertexes[VertIndex].NormalVector);
                         //テクスチャ座標
                         if (!string.IsNullOrEmpty(model.Materials[i].TextureFileName))
                             geometry.Vertices.Channels.Get<Vector2>(channelIndex++)[geoVertIndex] = MMDXMath.ToVector2(model.Vertexes[VertIndex].UV);
@@ -122,7 +135,7 @@ namespace MikuMikuDance.XNA.Model
                     //インデックスに登録
                     geometry.Indices.Add(geoVertIndex);
                 }
-                
+
                 //ジオメトリをモデルに追加
                 buildingMesh.Geometry.Add(geometry);
                 //面頂点カウント進める
@@ -131,7 +144,7 @@ namespace MikuMikuDance.XNA.Model
             //重複頂点データのマージ
             //MeshHelper.MergeDuplicatePositions(buildingMesh, 0);
             //MeshHelper.MergeDuplicateVertices(buildingMesh);
-            
+
             //メッシュ出来たので返却
             return buildingMesh;
         }
@@ -139,7 +152,7 @@ namespace MikuMikuDance.XNA.Model
         private static string ProcessSphere(string path)
         {
             if (!File.Exists(path))
-                throw new FileNotFoundException("スフィアマップ:"+path+"が見つかりません", path);
+                throw new FileNotFoundException("スフィアマップ:" + path + "が見つかりません", path);
             //スフィアマップは.NETフレームワークを利用して.bmpに変換し、中間ディレクトリに吐き出す
             string midDir = Path.Combine(Path.GetDirectoryName(path), "ext");
             if (!Directory.Exists(midDir))
@@ -173,6 +186,6 @@ namespace MikuMikuDance.XNA.Model
                 return filename;
             return Path.Combine(Path.GetDirectoryName(modelfilename), filename);
         }
-        
+
     }
 }

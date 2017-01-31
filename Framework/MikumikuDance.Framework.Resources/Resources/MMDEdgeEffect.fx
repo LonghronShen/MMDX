@@ -1,4 +1,4 @@
-//-----------------------------------------------------------
+ï»¿//-----------------------------------------------------------
 // MMDEdgeEffect.fx
 //
 // MMDX
@@ -6,22 +6,22 @@
 //-----------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// ƒGƒtƒFƒNƒgİ’è’l
+// ã‚¨ãƒ•ã‚§ã‚¯ãƒˆè¨­å®šå€¤
 //-----------------------------------------------------------------------------
-float EdgeWidth=0.1;//ƒGƒbƒW•
-float EdgeSensitivity=1;//ƒGƒbƒW‚ğ‚Ç‚Ì‚®‚ç‚¢ˆÃ‚­‚·‚é‚©
-float NormalThreashold=1.25;//–@ü·‚ÌŒŸoŒÀŠE
-float DepthThreashold=0.1;//ƒfƒvƒX·‚ÌŒŸoŒÀŠE
-float NormalSensitivity=1;//–@ü·‚É‚æ‚è‚Ç‚ÌˆÊƒGƒbƒW‚ğˆÃ‚­‚·‚é‚©
-float DepthSensitivity=10;//ƒfƒvƒX·‚É‚æ‚è‚Ç‚ÌˆÊƒGƒbƒW‚ğˆÃ‚­‚·‚é‚©
+float EdgeWidth=0.1;//ã‚¨ãƒƒã‚¸å¹…
+float EdgeSensitivity=1;//ã‚¨ãƒƒã‚¸ã‚’ã©ã®ãã‚‰ã„æš—ãã™ã‚‹ã‹
+float NormalThreashold=1.25;//æ³•ç·šå·®ã®æ¤œå‡ºé™ç•Œ
+float DepthThreashold=0.1;//ãƒ‡ãƒ—ã‚¹å·®ã®æ¤œå‡ºé™ç•Œ
+float NormalSensitivity=1;//æ³•ç·šå·®ã«ã‚ˆã‚Šã©ã®ä½ã‚¨ãƒƒã‚¸ã‚’æš—ãã™ã‚‹ã‹
+float DepthSensitivity=10;//ãƒ‡ãƒ—ã‚¹å·®ã«ã‚ˆã‚Šã©ã®ä½ã‚¨ãƒƒã‚¸ã‚’æš—ãã™ã‚‹ã‹
 
-//‰ğ‘œ“x
+//è§£åƒåº¦
 float2 ScreenResolution;
 
 //-----------------------------------------------------------------------------
-// ƒeƒXƒNƒ`ƒƒ
+// ãƒ†ã‚¹ã‚¯ãƒãƒ£
 //-----------------------------------------------------------------------------
-texture Texture;		// ƒeƒNƒXƒ`ƒƒ
+texture Texture;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 sampler EdgeSampler : register(s0) = sampler_state
 {
 	Texture = (Texture);
@@ -34,27 +34,27 @@ sampler EdgeSampler : register(s0) = sampler_state
 
 float4 PSDrawEdge(float2 texCoord : TEXCOORD0) : COLOR
 {
-	//ƒGƒbƒWƒf[ƒ^‚ÌƒTƒ“ƒvƒ‹ˆÊ’u‚ğƒYƒ‰‚·ƒIƒtƒZƒbƒg‚ğŒvZ
+	//ã‚¨ãƒƒã‚¸ãƒ‡ãƒ¼ã‚¿ã®ã‚µãƒ³ãƒ—ãƒ«ä½ç½®ã‚’ã‚ºãƒ©ã™ã‚ªãƒ•ã‚»ãƒƒãƒˆã‚’è¨ˆç®—
 	float2 offset = EdgeWidth/ScreenResolution;
-	//ƒTƒ“ƒvƒŠƒ“ƒO
+	//ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°
 	float4 sample1=tex2D(EdgeSampler,texCoord+float2(-1,-1)*offset);
 	float4 sample2=tex2D(EdgeSampler,texCoord+float2(1,1)*offset);
 	float4 sample3=tex2D(EdgeSampler,texCoord+float2(1,-1)*offset);
 	float4 sample4=tex2D(EdgeSampler,texCoord+float2(-1,1)*offset);
 	//return float4(sample1.x,sample1.y,sample1.z,1);
-	//ƒTƒ“ƒvƒŠƒ“ƒO‚É”ñƒGƒbƒWƒtƒBƒ‹ƒ^(x,y,z‚ª1)‚ª“ü‚Á‚Ä‚¢‚½‚çƒGƒbƒW‚ğ•`‰æ‚µ‚È‚¢
+	//ã‚µãƒ³ãƒ—ãƒªãƒ³ã‚°ã«éã‚¨ãƒƒã‚¸ãƒ•ã‚£ãƒ«ã‚¿(x,y,zãŒ1)ãŒå…¥ã£ã¦ã„ãŸã‚‰ã‚¨ãƒƒã‚¸ã‚’æç”»ã—ãªã„
 	if(!any(sample1-1) || !any(sample2-1) || !any(sample3-1) || !any(sample4-1))
 	{
 		return 0;
 	}
-	//–@ü‚Æ[“x‚Ì•Ï‰»—Ê‚ğæ“¾
+	//æ³•ç·šã¨æ·±åº¦ã®å¤‰åŒ–é‡ã‚’å–å¾—
 	float4 delta=abs(sample1-sample2)+abs(sample3-sample4);
-	float normalDelta=dot(delta.xyz,1);//xyz...‚à‚¤Œã‚ª–³‚¢B‚Á‚ÄŒÃ‚¢‚©B
+	float normalDelta=dot(delta.xyz,1);//xyz...ã‚‚ã†å¾ŒãŒç„¡ã„ã€‚ã£ã¦å¤ã„ã‹ã€‚
 	float depthDelta=delta.w;
-	//”÷¬•Ï‰»—Ê‚ğƒtƒBƒ‹ƒ^‚µA•Ï‰»—Ê‚ğSensitivity‚Å‘å‚«‚­‚·‚é
+	//å¾®å°å¤‰åŒ–é‡ã‚’ãƒ•ã‚£ãƒ«ã‚¿ã—ã€å¤‰åŒ–é‡ã‚’Sensitivityã§å¤§ããã™ã‚‹
 	normalDelta=saturate((normalDelta-NormalThreashold)*NormalSensitivity);
 	depthDelta=saturate((depthDelta-DepthThreashold)*DepthSensitivity);
-	//ÅI“I‚ÈƒGƒbƒW‚Ì”Z‚³‚ğæ“¾
+	//æœ€çµ‚çš„ãªã‚¨ãƒƒã‚¸ã®æ¿ƒã•ã‚’å–å¾—
 	float edgeAmount=saturate(normalDelta+depthDelta)*EdgeSensitivity;
 	//return sample1;
 	return float4(0,0,0,edgeAmount);

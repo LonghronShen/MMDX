@@ -1,12 +1,12 @@
-//-----------------------------------------------------------------------------
+ï»¿//-----------------------------------------------------------------------------
 // AccessoryEffect.fx
-// ƒAƒNƒZƒTƒŠ—p‚ÌƒGƒtƒFƒNƒgB
+// ã‚¢ã‚¯ã‚»ã‚µãƒªç”¨ã®ã‚¨ãƒ•ã‚§ã‚¯ãƒˆã€‚
 //-----------------------------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// ƒeƒXƒNƒ`ƒƒ
+// ãƒ†ã‚¹ã‚¯ãƒãƒ£
 //-----------------------------------------------------------------------------
-texture Texture;		// ƒeƒNƒXƒ`ƒƒ
+texture Texture;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 sampler TextureSampler : register(s0) = sampler_state
 {
 	Texture = (Texture);
@@ -15,7 +15,7 @@ sampler TextureSampler : register(s0) = sampler_state
 	MagFilter = Linear;
 };
 
-//ƒXƒtƒBƒAƒ}ƒbƒvg—pƒtƒ‰ƒOB0:–³‚µ 1:æZ 2:‰ÁZ
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ä½¿ç”¨ãƒ•ãƒ©ã‚°ã€‚0:ç„¡ã— 1:ä¹—ç®— 2:åŠ ç®—
 int UseSphere;
 texture Sphere;
 sampler SphereSampler : register(s1) = sampler_state
@@ -28,18 +28,18 @@ sampler SphereSampler : register(s1) = sampler_state
 
 
 //-----------------------------------------------------------------------------
-// ’è”ƒŒƒWƒXƒ^éŒ¾
+// å®šæ•°ãƒ¬ã‚¸ã‚¹ã‚¿å®£è¨€
 //=============================================================================
 float3	EyePosition;		// in world space
 
 //-----------------------------------------------------------------------------
-// ƒ‰ƒCƒgİ’è
+// ãƒ©ã‚¤ãƒˆè¨­å®š
 //-----------------------------------------------------------------------------
 float3	AmbientLightColor;
 float3	DirLight0Direction;
 
 //-----------------------------------------------------------------------------
-// •ÏŠ·s—ñ
+// å¤‰æ›è¡Œåˆ—
 //-----------------------------------------------------------------------------
 
 float4x4	World		;	// 12 - 15
@@ -47,7 +47,7 @@ float4x4	View		;	// 16 - 19
 float4x4	Projection	;	// 20 - 23
 
 //-----------------------------------------------------------------------------
-// ƒ}ƒeƒŠƒAƒ‹İ’è
+// ãƒãƒ†ãƒªã‚¢ãƒ«è¨­å®š
 //-----------------------------------------------------------------------------
 float3	DiffuseColor = 1;
 float	Alpha = 1;
@@ -58,7 +58,7 @@ bool	Edge=false;
 
 
 //-----------------------------------------------------------------------------
-// \‘¢‘Ìo—Í
+// æ§‹é€ ä½“å‡ºåŠ›
 //-----------------------------------------------------------------------------
 
 struct ColorPair
@@ -83,9 +83,9 @@ struct CommonVSOutputSd
 	float	FogFactor;
 };
 
-// Nm: –@ü
-// Tx: ƒeƒNƒXƒ`ƒƒ
-// Vc: ’¸“_ƒJƒ‰[
+// Nm: æ³•ç·š
+// Tx: ãƒ†ã‚¯ã‚¹ãƒãƒ£
+// Vc: é ‚ç‚¹ã‚«ãƒ©ãƒ¼
 //
 // Nm Tx Vc
 //  0  0  0	VSInput
@@ -99,7 +99,7 @@ struct CommonVSOutputSd
 
 
 //-----------------------------------------------------------------------------
-// ’¸“_ƒVƒF[ƒ_[“ü—Í\‘¢‘Ì
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼å…¥åŠ›æ§‹é€ ä½“
 //-----------------------------------------------------------------------------
 
 struct VSInputNm
@@ -132,60 +132,60 @@ struct VSInputNmTxVc
 
 
 //-----------------------------------------------------------------------------
-// ’¸“_ƒVƒF[ƒ_o—Í
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€å‡ºåŠ›
 //-----------------------------------------------------------------------------
 
 struct VertexLightingVSOutput
 {
-	float4	PositionPS	: POSITION;		// ƒvƒƒWƒFƒNƒVƒ‡ƒ“Ï‚İ’¸“_ˆÊ’u
+	float4	PositionPS	: POSITION;		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³æ¸ˆã¿é ‚ç‚¹ä½ç½®
 	float4	Diffuse		: COLOR0;
-	float4	Specular	: COLOR1;		// Specular.rgb‚Æfog factor
+	float4	Specular	: COLOR1;		// Specular.rgbã¨fog factor
 };
 
 struct VertexLightingVSOutputTx
 {
-	float4	PositionPS	: POSITION;		// ƒvƒƒWƒFƒNƒVƒ‡ƒ“Ï‚İ’¸“_ˆÊ’u
+	float4	PositionPS	: POSITION;		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³æ¸ˆã¿é ‚ç‚¹ä½ç½®
 	float4	Diffuse		: COLOR0;
 	float4	Specular	: COLOR1;
 	float2	TexCoord	: TEXCOORD0;
 };
 
-//ƒXƒtƒBƒAƒ}ƒbƒv
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 struct VertexLightingVSOutputSp
 {
-	float4	PositionPS	: POSITION;		// ƒvƒƒWƒFƒNƒVƒ‡ƒ“Ï‚İ’¸“_ˆÊ’u
+	float4	PositionPS	: POSITION;		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³æ¸ˆã¿é ‚ç‚¹ä½ç½®
 	float4	Diffuse		: COLOR0;
-	float4	Specular	: COLOR1;		// Specular.rgb ‚Æ fog factor
-	float3  NormalWS	: TEXCOORD1;	// –@ü
+	float4	Specular	: COLOR1;		// Specular.rgb ã¨ fog factor
+	float3  NormalWS	: TEXCOORD1;	// æ³•ç·š
 };
 
 struct VertexLightingVSOutputTxSp
 {
-	float4	PositionPS	: POSITION;		// ƒvƒƒWƒFƒNƒVƒ‡ƒ“Ï‚İ’¸“_ˆÊ’u
+	float4	PositionPS	: POSITION;		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³æ¸ˆã¿é ‚ç‚¹ä½ç½®
 	float4	Diffuse		: COLOR0;
 	float4	Specular	: COLOR1;
 	float2	TexCoord	: TEXCOORD0;
-	float3  NormalWS	: TEXCOORD1;	// –@ü
+	float3  NormalWS	: TEXCOORD1;	// æ³•ç·š
 };
 
-//ƒXƒtƒBƒAƒ}ƒbƒv
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 struct VertexLightingVSOutputSpSd
 {
-	float4	PositionPS	: POSITION;		// ƒvƒƒWƒFƒNƒVƒ‡ƒ“Ï‚İ’¸“_ˆÊ’u
+	float4	PositionPS	: POSITION;		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³æ¸ˆã¿é ‚ç‚¹ä½ç½®
 	float4	Diffuse		: COLOR0;
-	float4	Specular	: COLOR1;		// Specular.rgb ‚Æ fog factor
-	float3  NormalWS	: TEXCOORD1;	// –@ü
-	float4	Pos_Light	: TEXCOORD3;	// ŒõŒ¹‚©‚ç‚İ‚½’¸“_ˆÊ’u
+	float4	Specular	: COLOR1;		// Specular.rgb ã¨ fog factor
+	float3  NormalWS	: TEXCOORD1;	// æ³•ç·š
+	float4	Pos_Light	: TEXCOORD3;	// å…‰æºã‹ã‚‰ã¿ãŸé ‚ç‚¹ä½ç½®
 };
 
 struct VertexLightingVSOutputTxSpSd
 {
-	float4	PositionPS	: POSITION;		// ƒvƒƒWƒFƒNƒVƒ‡ƒ“Ï‚İ’¸“_ˆÊ’u
+	float4	PositionPS	: POSITION;		// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³æ¸ˆã¿é ‚ç‚¹ä½ç½®
 	float4	Diffuse		: COLOR0;
 	float4	Specular	: COLOR1;
 	float2	TexCoord	: TEXCOORD0;
-	float3  NormalWS	: TEXCOORD1;	// –@ü
-	float4	Pos_Light	: TEXCOORD3;	// ŒõŒ¹‚©‚ç‚İ‚½’¸“_ˆÊ’u
+	float3  NormalWS	: TEXCOORD1;	// æ³•ç·š
+	float4	Pos_Light	: TEXCOORD3;	// å…‰æºã‹ã‚‰ã¿ãŸé ‚ç‚¹ä½ç½®
 };
 struct EdgeVSOutput
 {
@@ -194,7 +194,7 @@ struct EdgeVSOutput
 };
 
 //-----------------------------------------------------------------------------
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_“ü—Í\‘¢‘Ì
+// ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€å…¥åŠ›æ§‹é€ ä½“
 //-----------------------------------------------------------------------------
 
 struct VertexLightingPSInput
@@ -210,7 +210,7 @@ struct VertexLightingPSInputTx
 	float2	TexCoord	: TEXCOORD0;
 };
 
-//ƒXƒtƒBƒAƒ}ƒbƒv
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 struct VertexLightingPSInputSp
 {
 	float4	Diffuse		: COLOR0;
@@ -226,13 +226,13 @@ struct VertexLightingPSInputTxSp
 	float3	NormalWS	: TEXCOORD1;
 };
 
-//ƒXƒtƒBƒAƒ}ƒbƒv
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 struct VertexLightingPSInputSpSd
 {
 	float4	Diffuse		: COLOR0;
 	float4	Specular	: COLOR1;
 	float3	NormalWS	: TEXCOORD1;
-	float4	Pos_Light	: TEXCOORD3;	// ŒõŒ¹‚©‚ç‚İ‚½’¸“_ˆÊ’u
+	float4	Pos_Light	: TEXCOORD3;	// å…‰æºã‹ã‚‰ã¿ãŸé ‚ç‚¹ä½ç½®
 };
 
 struct VertexLightingPSInputTxSpSd
@@ -241,13 +241,13 @@ struct VertexLightingPSInputTxSpSd
 	float4	Specular	: COLOR1;
 	float2	TexCoord	: TEXCOORD0;
 	float3	NormalWS	: TEXCOORD1;
-	float4	Pos_Light	: TEXCOORD3;	// ŒõŒ¹‚©‚ç‚İ‚½’¸“_ˆÊ’u
+	float4	Pos_Light	: TEXCOORD3;	// å…‰æºã‹ã‚‰ã¿ãŸé ‚ç‚¹ä½ç½®
 };
 
 //-----------------------------------------------------------------------------
-// ƒ‰ƒCƒeƒBƒ“ƒOŒvZ
-// E: ‹üƒxƒNƒgƒ‹
-// N: ƒ[ƒ‹ƒhÀ•WŒn‚É‚¨‚¯‚é’PˆÊ–@üƒxƒNƒgƒ‹
+// ãƒ©ã‚¤ãƒ†ã‚£ãƒ³ã‚°è¨ˆç®—
+// E: è¦–ç·šãƒ™ã‚¯ãƒˆãƒ«
+// N: ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™ç³»ã«ãŠã‘ã‚‹å˜ä½æ³•ç·šãƒ™ã‚¯ãƒˆãƒ«
 //-----------------------------------------------------------------------------
 ColorPair ComputeLights(float3 E, float3 N)
 {
@@ -263,7 +263,7 @@ ColorPair ComputeLights(float3 E, float3 N)
 	float2 ret = lit(dot(N, L), dot(N, H), SpecularPower).yz;
 	result.Specular+=AmbientLightColor*ret.y;
 	
-	//MMD‚Å‚ÍEmissive‚ğ‘«‚µ‚Ä‚©‚çsaturate‚·‚é‚Ì‚ª³‰ğ‚ç‚µ‚¢B
+	//MMDã§ã¯Emissiveã‚’è¶³ã—ã¦ã‹ã‚‰saturateã™ã‚‹ã®ãŒæ­£è§£ã‚‰ã—ã„ã€‚
 	result.Diffuse *= DiffuseColor;
 	result.Diffuse	+= EmissiveColor;
 	result.Diffuse	= saturate(result.Diffuse);
@@ -311,7 +311,7 @@ CommonVSOutput ComputeCommonVSOutputWithLighting(float4 position, float3 normal)
 
 
 //-----------------------------------------------------------------------------
-// ’¸“_ƒVƒF[ƒ_ŠÖ”
+// é ‚ç‚¹ã‚·ã‚§ãƒ¼ãƒ€é–¢æ•°
 //-----------------------------------------------------------------------------
 
 VertexLightingVSOutput VSBasicNm(VSInputNm vin)
@@ -369,7 +369,7 @@ VertexLightingVSOutputTx VSBasicNmTxVc(VSInputNmTxVc vin)
 	
 	return vout;
 }
-//ƒXƒtƒBƒAƒ}ƒbƒv
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 VertexLightingVSOutputSp VSBasicNmSp(VSInputNm vin)
 {
 	VertexLightingVSOutputSp vout;
@@ -436,8 +436,8 @@ EdgeVSOutput VSEdgeNm(VSInputNm vin)
 	vout.PositionPS	= mul(mul(mul(vin.Position,World),View),Projection);
 	float3 normal	= normalize(mul(vin.Normal,World));
 	if(Edge){
-		vout.Color.rgb=(normal+1)/2;//–@ü‚ğ0-1‚ÌŠÔ‚É‚µ‚Ä•Û‘¶
-		vout.Color.w=vout.PositionPS.z/vout.PositionPS.w;//[“x‚ğ0-1‚É‚µ‚ÄƒAƒ‹ƒtƒ@’l‚É•Û‘¶
+		vout.Color.rgb=(normal+1)/2;//æ³•ç·šã‚’0-1ã®é–“ã«ã—ã¦ä¿å­˜
+		vout.Color.w=vout.PositionPS.z/vout.PositionPS.w;//æ·±åº¦ã‚’0-1ã«ã—ã¦ã‚¢ãƒ«ãƒ•ã‚¡å€¤ã«ä¿å­˜
 	}else{
 		vout.Color=1;
 	}
@@ -445,7 +445,7 @@ EdgeVSOutput VSEdgeNm(VSInputNm vin)
 }
 
 //-----------------------------------------------------------------------------
-// ƒsƒNƒZƒ‹ƒVƒF[ƒ_
+// ãƒ”ã‚¯ã‚»ãƒ«ã‚·ã‚§ãƒ¼ãƒ€
 //-----------------------------------------------------------------------------
 
 float4 PSBasic(VertexLightingPSInput pin) : COLOR
@@ -461,17 +461,17 @@ float4 PSBasicTx(VertexLightingPSInputTx pin) : COLOR
 	return color;
 }
 
-//ƒXƒtƒBƒAƒ}ƒbƒv
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 float4 PSBasicSp(VertexLightingPSInputSp pin) : COLOR
 {
 	float4 color = pin.Diffuse + float4(pin.Specular.rgb, 0);
-	//ƒXƒtƒBƒAƒ}ƒbƒvŒvZ
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—è¨ˆç®—
 	float3 N = normalize(pin.NormalWS);
 	float2 SphereCoord = float2(N.x*0.5f+0.5f,N.y*0.5f+0.5f);
 	if(UseSphere==1)
-		color*=tex2D(SphereSampler,SphereCoord);//ƒXƒtƒBƒAƒ}ƒbƒv‚ğæZ
+		color*=tex2D(SphereSampler,SphereCoord);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’ä¹—ç®—
 	else if(UseSphere==2)
-		color+=tex2D(SphereSampler,SphereCoord);//ƒXƒtƒBƒAƒ}ƒbƒv‚ğ‰ÁZ
+		color+=tex2D(SphereSampler,SphereCoord);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’åŠ ç®—
 	return color;
 }
 
@@ -479,26 +479,26 @@ float4 PSBasicSp(VertexLightingPSInputSp pin) : COLOR
 float4 PSBasicTxSp(VertexLightingPSInputTxSp pin) : COLOR
 {
 	float4 color = tex2D(TextureSampler, pin.TexCoord) * pin.Diffuse + float4(pin.Specular.rgb, 0);
-	//ƒXƒtƒBƒAƒ}ƒbƒvŒvZ
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—è¨ˆç®—
 	float3 N = normalize(pin.NormalWS);
 	float2 SphereCoord = float2(N.x*0.5f+0.5f,N.y*0.5f+0.5f);
 	if(UseSphere==1)
-		color*=tex2D(SphereSampler,SphereCoord);//ƒXƒtƒBƒAƒ}ƒbƒv‚ğæZ
+		color*=tex2D(SphereSampler,SphereCoord);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’ä¹—ç®—
 	else if(UseSphere==2)
-		color+=tex2D(SphereSampler,SphereCoord);//ƒXƒtƒBƒAƒ}ƒbƒv‚ğ‰ÁZ
+		color+=tex2D(SphereSampler,SphereCoord);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’åŠ ç®—
 	return color;
 }
 
 
 float4 PSEdge(float4 color : COLOR0) : COLOR
 {
-	return color;//ƒGƒbƒW—p‚Éî•ñ‚ğ‚»‚Ì‚Ü‚Üo—Í
+	return color;//ã‚¨ãƒƒã‚¸ç”¨ã«æƒ…å ±ã‚’ãã®ã¾ã¾å‡ºåŠ›
 }
 
 
 
 //-----------------------------------------------------------------------------
-// ƒVƒF[ƒ_ƒeƒNƒjƒbƒN’è‹`
+// ã‚·ã‚§ãƒ¼ãƒ€ãƒ†ã‚¯ãƒ‹ãƒƒã‚¯å®šç¾©
 //-----------------------------------------------------------------------------
 
 int ShaderIndex = 0;
@@ -512,7 +512,7 @@ VertexShader VSArray[8] =
 	compile vs_2_0 VSBasicNmTxVc(),
 	
 	
-	//ƒXƒtƒBƒAƒ}ƒbƒv
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 	compile vs_2_0 VSBasicNmSp(),
 	compile vs_2_0 VSBasicNmVcSp(),
 	compile vs_2_0 VSBasicNmTxSp(),
@@ -531,7 +531,7 @@ PixelShader PSArray[8] =
 	compile ps_2_0 PSBasicTx(),
 	compile ps_2_0 PSBasicTx(),
 	
-	//ƒXƒtƒBƒAƒ}ƒbƒv
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 	compile ps_2_0 PSBasicSp(),
 	compile ps_2_0 PSBasicSp(),
 	compile ps_2_0 PSBasicTxSp(),

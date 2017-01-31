@@ -55,6 +55,7 @@
     <Compile Include="Accessory\VACProcessor.cs" />
     <Compile Include="Accessory\VACWriter.cs" />
     <Compile Include="Misc\BezierCurveContent.cs" />
+    <Compile Include="Misc\Extensions\Microsoft.Xna.Framework.Content.Pipeline.Graphics\VertexContentExtensions.cs" />
     <Compile Include="Misc\Extensions\System\SystemExtensions.cs" />
     <Compile Include="Misc\MMDVertexContent.cs" />
     <Compile Include="Misc\MMDXMath.cs" />
@@ -113,6 +114,9 @@
       <Project>{da9b22cf-9103-4095-965b-213a7929761f}</Project>
       <Name>MikumikuDance.Framework.Xna</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

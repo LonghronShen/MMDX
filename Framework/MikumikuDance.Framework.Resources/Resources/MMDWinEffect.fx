@@ -1,15 +1,15 @@
-//-----------------------------------------------------------
+ï»¿//-----------------------------------------------------------
 // MMDWinEffect.fx
 //
 // MMDX
 // Copyright (C) Wilfrem
-// ƒ}ƒCƒNƒƒ\ƒtƒg‚ÌƒTƒ“ƒvƒ‹‚ğ‚à‚Æ‚É‰ü‘¢
+// ãƒã‚¤ã‚¯ãƒ­ã‚½ãƒ•ãƒˆã®ã‚µãƒ³ãƒ—ãƒ«ã‚’ã‚‚ã¨ã«æ”¹é€ 
 //-----------------------------------------------------------
 
 //-----------------------------------------------------------------------------
-// ƒeƒXƒNƒ`ƒƒ
+// ãƒ†ã‚¹ã‚¯ãƒãƒ£
 //-----------------------------------------------------------------------------
-texture Texture;		// ƒeƒNƒXƒ`ƒƒ
+texture Texture;		// ãƒ†ã‚¯ã‚¹ãƒãƒ£
 uniform const sampler TextureSampler : register(s0) = sampler_state
 {
 	Texture = (Texture);
@@ -18,7 +18,7 @@ uniform const sampler TextureSampler : register(s0) = sampler_state
 	MagFilter = Linear;
 };
 
-//ƒXƒtƒBƒAƒ}ƒbƒvg—pƒtƒ‰ƒOB0:–³‚µ 1:æZ 2:‰ÁZ
+//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ä½¿ç”¨ãƒ•ãƒ©ã‚°ã€‚0:ç„¡ã— 1:ä¹—ç®— 2:åŠ ç®—
 uniform const int UseSphere;
 texture Sphere;
 uniform const sampler SphereSampler : register(s1) = sampler_state
@@ -40,11 +40,11 @@ uniform const sampler ToonTexSampler : register(s2) = sampler_state
 
 
 //-----------------------------------------------------------------------------
-// ’è”ƒŒƒWƒXƒ^éŒ¾
+// å®šæ•°ãƒ¬ã‚¸ã‚¹ã‚¿å®£è¨€
 //=============================================================================
 uniform shared const float3	EyePosition;		// in world space
 //-----------------------------------------------------------------------------
-// ƒ}ƒeƒŠƒAƒ‹İ’è
+// ãƒãƒ†ãƒªã‚¢ãƒ«è¨­å®š
 //-----------------------------------------------------------------------------
 
 uniform const float3	DiffuseColor	: register(c5) = 1;
@@ -55,19 +55,19 @@ uniform const float		SpecularPower	: register(c9) = 16;
 uniform const bool		Edge=true;
 
 //-----------------------------------------------------------------------------
-// ƒ‰ƒCƒgİ’è
+// ãƒ©ã‚¤ãƒˆè¨­å®š
 //-----------------------------------------------------------------------------
 uniform const float3	AmbientLightColor;
 uniform const float3	DirLight0Direction;
 
 //-----------------------------------------------------------------------------
-// ƒ}ƒgƒŠƒbƒNƒX
+// ãƒãƒˆãƒªãƒƒã‚¯ã‚¹
 //-----------------------------------------------------------------------------
-// ƒIƒuƒWƒFƒNƒg‚Ìƒ[ƒ‹ƒhÀ•W
+// ã‚ªãƒ–ã‚¸ã‚§ã‚¯ãƒˆã®ãƒ¯ãƒ¼ãƒ«ãƒ‰åº§æ¨™
 uniform const float4x4	World;	
-// ƒrƒ…[‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+// ãƒ“ãƒ¥ãƒ¼ã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 uniform shared const float4x4	View;
-// ƒvƒƒWƒFƒNƒVƒ‡ƒ“‚Ìƒgƒ‰ƒ“ƒXƒtƒH[ƒ€
+// ãƒ—ãƒ­ã‚¸ã‚§ã‚¯ã‚·ãƒ§ãƒ³ã®ãƒˆãƒ©ãƒ³ã‚¹ãƒ•ã‚©ãƒ¼ãƒ 
 uniform shared const float4x4	Projection;
 
 
@@ -206,16 +206,16 @@ ColorPair ComputeLights(float3 E, float3 N)
 	// Directional Light 0
 	float3 L = normalize(-DirLight0Direction);
 	float3 H = normalize(E+L);
-	float2 ret = lit(dot(N, L), dot(N, H), SpecularPower).yz;//VectorIndex.y=ƒpƒŒƒbƒg”Ô†
+	float2 ret = lit(dot(N, L), dot(N, H), SpecularPower).yz;//VectorIndex.y=ãƒ‘ãƒ¬ãƒƒãƒˆç•ªå·
 	result.Specular+=AmbientLightColor*ret.y;
 	
-	//MMD‚Å‚ÍEmissive‚ğ‘«‚µ‚Ä‚©‚çsaturate‚·‚é‚Ì‚ª³‰ğ‚ç‚µ‚¢B
+	//MMDã§ã¯Emissiveã‚’è¶³ã—ã¦ã‹ã‚‰saturateã™ã‚‹ã®ãŒæ­£è§£ã‚‰ã—ã„ã€‚
 	result.Diffuse *= DiffuseColor;
 	result.Diffuse	+= EmissiveColor;
 	result.Diffuse	= saturate(result.Diffuse);
 	result.Specular	*= SpecularColor;
 	
-	//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒ—p‚ÌƒTƒ“ƒvƒ‹ˆÊ’u‚ğŒvZ
+	//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£ç”¨ã®ã‚µãƒ³ãƒ—ãƒ«ä½ç½®ã‚’è¨ˆç®—
 	result.ToonTex.x=clamp(0.5f-dot(normalize(N),normalize(E))*0.5f,0,1);
 	result.ToonTex.y=clamp(0.5f-dot(normalize(N),normalize(L))*0.5f,0,1);
 	
@@ -240,9 +240,9 @@ CommonVSOutput ComputeCommonVSOutputWithLighting(float4 position, float3 normal)
 	vout.Diffuse	= float4(lightResult.Diffuse.rgb, Alpha);
 	vout.Specular	= lightResult.Specular;
 	
-	//ƒgƒD[ƒ“ƒeƒNƒXƒ`ƒƒæ“¾ˆÊ’u‚ğƒRƒs[
+	//ãƒˆã‚¥ãƒ¼ãƒ³ãƒ†ã‚¯ã‚¹ãƒãƒ£å–å¾—ä½ç½®ã‚’ã‚³ãƒ”ãƒ¼
 	vout.ToonTexCoord=lightResult.ToonTex;
-	//ƒXƒtƒBƒAŒvZ
+	//ã‚¹ãƒ•ã‚£ã‚¢è¨ˆç®—
 	vout.SphereCoord=float2(normal.x/2+0.5,normal.y/2+0.5);
 	
 	return vout;
@@ -323,8 +323,8 @@ EdgeVSOutput VSEdgeNm(VSInputNm vin)
 	vout.PositionPS	= mul(mul(mul(vin.Position,World),View),Projection);
 	float3 normal	= normalize(mul(vin.Normal,World));
 	if(Edge){
-		vout.Color.rgb=(normal+1)/2;//–@ü‚ğ0-1‚ÌŠÔ‚É‚µ‚Ä•Û‘¶
-		vout.Color.w=vout.PositionPS.z/vout.PositionPS.w;//[“x‚ğ0-1‚É‚µ‚ÄƒAƒ‹ƒtƒ@’l‚É•Û‘¶
+		vout.Color.rgb=(normal+1)/2;//æ³•ç·šã‚’0-1ã®é–“ã«ã—ã¦ä¿å­˜
+		vout.Color.w=vout.PositionPS.z/vout.PositionPS.w;//æ·±åº¦ã‚’0-1ã«ã—ã¦ã‚¢ãƒ«ãƒ•ã‚¡å€¤ã«ä¿å­˜
 	}else{
 		vout.Color=1;
 	}
@@ -338,13 +338,13 @@ EdgeVSOutput VSEdgeNm(VSInputNm vin)
 float4 PSBasic(VertexLightingPSInput pin) : COLOR
 {
 	float4 color = pin.Diffuse + float4(pin.Specular.rgb, 0);
-	//ƒXƒtƒBƒAƒ}ƒbƒv
-	if(UseSphere==1)//y’ˆÓ“_z‚±‚±‚ÅƒoƒO‚é if else‚ğ‰º‚ÌƒVƒF[ƒ_‚àŠÜ‚ß‚ÄÁ‚·‚ÆƒoƒO‚ç‚È‚¢
-		color*=tex2D(SphereSampler,pin.SphereCoord);//ƒXƒtƒBƒAƒ}ƒbƒv‚ğæZ
-	else if(UseSphere==2)//ƒXƒtƒBƒAƒ}ƒbƒv‚ğ‰ÁZ
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
+	if(UseSphere==1)//ã€æ³¨æ„ç‚¹ã€‘ã“ã“ã§ãƒã‚°ã‚‹ if elseã‚’ä¸‹ã®ã‚·ã‚§ãƒ¼ãƒ€ã‚‚å«ã‚ã¦æ¶ˆã™ã¨ãƒã‚°ã‚‰ãªã„
+		color*=tex2D(SphereSampler,pin.SphereCoord);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’ä¹—ç®—
+	else if(UseSphere==2)//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’åŠ ç®—
 		color+=tex2D(SphereSampler,pin.SphereCoord);
-	//ƒgƒD[ƒ“
-	if(UseToon)//‚±‚¿‚ç‚ÌğŒ•ªŠò‚Í‰½ŒÌ‚©ƒoƒO‚ç‚È‚¢
+	//ãƒˆã‚¥ãƒ¼ãƒ³
+	if(UseToon)//ã“ã¡ã‚‰ã®æ¡ä»¶åˆ†å²ã¯ä½•æ•…ã‹ãƒã‚°ã‚‰ãªã„
 		color*=tex2D(ToonTexSampler,pin.ToonTexCoord);
 	return color;//+dummy*0;
 }
@@ -353,12 +353,12 @@ float4 PSBasic(VertexLightingPSInput pin) : COLOR
 float4 PSBasicTx(VertexLightingPSInputTx pin) : COLOR
 {
 	float4 color = tex2D(TextureSampler, pin.TexCoord) * pin.Diffuse + float4(pin.Specular.rgb, 0);
-	//ƒXƒtƒBƒAƒ}ƒbƒv
+	//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—
 	if(UseSphere==1)
-		color*=tex2D(SphereSampler,pin.SphereCoord);//ƒXƒtƒBƒAƒ}ƒbƒv‚ğæZ
-	else if(UseSphere==2)//ƒXƒtƒBƒAƒ}ƒbƒv‚ğ‰ÁZ
+		color*=tex2D(SphereSampler,pin.SphereCoord);//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’ä¹—ç®—
+	else if(UseSphere==2)//ã‚¹ãƒ•ã‚£ã‚¢ãƒãƒƒãƒ—ã‚’åŠ ç®—
 		color+=tex2D(SphereSampler,pin.SphereCoord);
-	//ƒgƒD[ƒ“
+	//ãƒˆã‚¥ãƒ¼ãƒ³
 	if(UseToon)
 		color*=tex2D(ToonTexSampler,pin.ToonTexCoord);
 	return color;
@@ -366,11 +366,11 @@ float4 PSBasicTx(VertexLightingPSInputTx pin) : COLOR
 
 float4 PSEdge(float4 color : COLOR0) : COLOR
 {
-	return color;//ƒGƒbƒW—p‚Éî•ñ‚ğ‚»‚Ì‚Ü‚Üo—Í
+	return color;//ã‚¨ãƒƒã‚¸ç”¨ã«æƒ…å ±ã‚’ãã®ã¾ã¾å‡ºåŠ›
 }
 
 //-----------------------------------------------------------------------------
-// ƒVƒF[ƒ_[
+// ã‚·ã‚§ãƒ¼ãƒ€ãƒ¼
 //-----------------------------------------------------------------------------
 
 int ShaderIndex = 0;

@@ -26,11 +26,11 @@ namespace MikuMikuDance.XNA.Model
         public override MaterialContent Process(MaterialContent input, ContentProcessorContext context)
         {
             MaterialContent finalinput;
-            if (context.TargetPlatform == TargetPlatform.WindowsPhone)
-            {
-                finalinput = input;
-            }
-            else
+            //if (context.TargetPlatform == TargetPlatform.WindowsPhone)
+            //{
+            //    finalinput = input;
+            //}
+            //else
             {
                 BasicMaterialContent basicinput = input as BasicMaterialContent;
                 if(basicinput==null)
