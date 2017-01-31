@@ -1,8 +1,8 @@
 
 #----------------------------- Global Properties ----------------------------#
 
-/outputDir:bin/$(Platform)
-/intermediateDir:obj/$(Platform)
+/outputDir:bin
+/intermediateDir:obj
 /platform:Windows
 /config:
 /profile:Reach
@@ -10,6 +10,17 @@
 
 #-------------------------------- References --------------------------------#
 
+/reference:..\..\..\Framework\MikumikuDance.Framework.Pipeline\bin\Debug\MikumikuDance.Framework.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
+
+#begin Miku.pmd
+/importer:PMDImporter
+/processor:MMDModelProcessor
+/build:Miku.pmd
+
+#begin TrueMyHeart.vmd
+/importer:VMDImporter
+/processor:MMDMotionProcessor
+/build:TrueMyHeart.vmd
 

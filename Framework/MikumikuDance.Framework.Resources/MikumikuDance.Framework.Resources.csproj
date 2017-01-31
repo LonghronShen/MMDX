@@ -47,5 +47,8 @@
     <EmbeddedResource Include="Resources\toon09.bmp" />
     <EmbeddedResource Include="Resources\toon10.bmp" />
   </ItemGroup>
+  <ItemGroup>
+    <Folder Include="Extensions\" />
+  </ItemGroup>
   <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
 </Project>

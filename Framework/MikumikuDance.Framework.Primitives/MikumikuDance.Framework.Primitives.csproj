@@ -29,6 +29,28 @@
     <DefineConstants>XNA;WINDOWS;PORTABLE</DefineConstants>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Model\CoordinateType.cs" />
+    <Compile Include="Model\MMDModel.cs" />
+    <Compile Include="Model\ModelManager.cs" />
+    <Compile Include="Model\Ver1\MMDModel1.cs" />
+    <Compile Include="Model\Ver1\ModelBone.cs" />
+    <Compile Include="Model\Ver1\ModelBoneDisp.cs" />
+    <Compile Include="Model\Ver1\ModelBoneDispName.cs" />
+    <Compile Include="Model\Ver1\ModelHeader.cs" />
+    <Compile Include="Model\Ver1\ModelIK.cs" />
+    <Compile Include="Model\Ver1\ModelJoint.cs" />
+    <Compile Include="Model\Ver1\ModelMaterial.cs" />
+    <Compile Include="Model\Ver1\ModelRigidBody.cs" />
+    <Compile Include="Model\Ver1\ModelSkin.cs" />
+    <Compile Include="Model\Ver1\ModelVertex.cs" />
+    <Compile Include="Motion\CoordinateType.cs" />
+    <Compile Include="Motion\MMDMotion.cs" />
+    <Compile Include="Motion\Motion2\CameraMotionData.cs" />
+    <Compile Include="Motion\Motion2\FaceMotionData.cs" />
+    <Compile Include="Motion\Motion2\LightMotionData.cs" />
+    <Compile Include="Motion\Motion2\MMDMotion2.cs" />
+    <Compile Include="Motion\Motion2\MotionData.cs" />
+    <Compile Include="Motion\MotionManager.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>

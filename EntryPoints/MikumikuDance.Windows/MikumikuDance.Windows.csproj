@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="12.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Common.props')" />
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
@@ -13,7 +13,8 @@
     <AssemblyName>MikumikuDance.Windows</AssemblyName>
     <FileAlignment>512</FileAlignment>
     <MonoGamePlatform>Windows</MonoGamePlatform>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.5.1</TargetFrameworkVersion>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|x86' ">
     <PlatformTarget>x86</PlatformTarget>
@@ -50,10 +51,54 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Content Include="Content\ext\MMDEdgeEffect.fx" />
+    <Content Include="Content\ext\MMDWinEffect.fx" />
+    <Content Include="Content\ext\toon01.bmp" />
+    <Content Include="Content\ext\toon02.bmp" />
+    <Content Include="Content\ext\toon03.bmp" />
+    <Content Include="Content\ext\toon04.bmp" />
+    <Content Include="Content\ext\toon05.bmp" />
+    <Content Include="Content\ext\toon06.bmp" />
+    <Content Include="Content\ext\toon07.bmp" />
+    <Content Include="Content\ext\toon08.bmp" />
+    <Content Include="Content\ext\toon09.bmp" />
+    <Content Include="Content\ext\toon10.bmp" />
+    <Content Include="Content\eye2.bmp" />
     <Content Include="Icon.ico" />
   </ItemGroup>
   <ItemGroup>
     <MonoGameContentReference Include="Content\Content.mgcb" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\..\Framework\MikumikuDance.Framework.BulletX\MikumikuDance.Framework.BulletX.csproj">
+      <Project>{3f64ef94-88af-473c-8685-f10d228da838}</Project>
+      <Name>MikumikuDance.Framework.BulletX</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Core\MikumikuDance.Framework.Core.csproj">
+      <Project>{ff076653-4aed-4fea-9414-2937b97b94e7}</Project>
+      <Name>MikumikuDance.Framework.Core</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Pipeline\MikumikuDance.Framework.Pipeline.csproj">
+      <Project>{33ef15fb-7471-45fe-9b45-29e3ca3e7013}</Project>
+      <Name>MikumikuDance.Framework.Pipeline</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Primitives\MikumikuDance.Framework.Primitives.csproj">
+      <Project>{0f63a084-f28b-4760-a2dc-cd0698b71562}</Project>
+      <Name>MikumikuDance.Framework.Primitives</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Resources\MikumikuDance.Framework.Resources.csproj">
+      <Project>{969795df-e4d2-4ff1-b5e6-42c550849632}</Project>
+      <Name>MikumikuDance.Framework.Resources</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Xna\MikumikuDance.Framework.Xna.csproj">
+      <Project>{da9b22cf-9103-4095-965b-213a7929761f}</Project>
+      <Name>MikumikuDance.Framework.Xna</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="app.config" />
+    <None Include="Content\Miku.pmd" />
+    <None Include="Content\TrueMyHeart.vmd" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <Import Project="$(MSBuildExtensionsPath)\MonoGame\v3.0\MonoGame.Content.Builder.targets" />
