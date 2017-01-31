@@ -19,7 +19,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
             var newVertexIndex = self.VertexCount;
 
             // MonoGame bug: issue #5314 not update all channels
-            int count = newVertexIndex - oldVertexCount;
+            var count = newVertexIndex - oldVertexCount;
 
             foreach (var channel in self.Channels)
             {
