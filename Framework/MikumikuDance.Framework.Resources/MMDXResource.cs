@@ -77,7 +77,7 @@ namespace MikuMikuDance.Resource
             var files = asm.GetManifestResourceNames();
             foreach (var file in files)
             {
-                if (file.EndsWith(fileName))
+                if (file.EndsWith(fileName) || file.Contains(fileName))
                 {
                     using (var stream = asm.GetManifestResourceStream(file))
                     {
