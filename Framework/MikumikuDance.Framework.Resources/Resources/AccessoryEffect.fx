@@ -506,17 +506,17 @@ int ShaderIndex = 0;
 
 VertexShader VSArray[8] =
 {
-	compile vs_2_0 VSBasicNm(),
-	compile vs_2_0 VSBasicNmVc(),
-	compile vs_2_0 VSBasicNmTx(),
-	compile vs_2_0 VSBasicNmTxVc(),
+	compile vs_4_0_level_9_1 VSBasicNm(),
+	compile vs_4_0_level_9_1 VSBasicNmVc(),
+	compile vs_4_0_level_9_1 VSBasicNmTx(),
+	compile vs_4_0_level_9_1 VSBasicNmTxVc(),
 	
 	
 	//スフィアマップ
-	compile vs_2_0 VSBasicNmSp(),
-	compile vs_2_0 VSBasicNmVcSp(),
-	compile vs_2_0 VSBasicNmTxSp(),
-	compile vs_2_0 VSBasicNmTxVcSp(),
+	compile vs_4_0_level_9_1 VSBasicNmSp(),
+	compile vs_4_0_level_9_1 VSBasicNmVcSp(),
+	compile vs_4_0_level_9_1 VSBasicNmTxSp(),
+	compile vs_4_0_level_9_1 VSBasicNmTxVcSp(),
 	
 	
 	
@@ -526,16 +526,16 @@ VertexShader VSArray[8] =
 
 PixelShader PSArray[8] =
 {
-	compile ps_2_0 PSBasic(),
-	compile ps_2_0 PSBasic(),
-	compile ps_2_0 PSBasicTx(),
-	compile ps_2_0 PSBasicTx(),
+	compile ps_4_0_level_9_1 PSBasic(),
+	compile ps_4_0_level_9_1 PSBasic(),
+	compile ps_4_0_level_9_1 PSBasicTx(),
+	compile ps_4_0_level_9_1 PSBasicTx(),
 	
 	//スフィアマップ
-	compile ps_2_0 PSBasicSp(),
-	compile ps_2_0 PSBasicSp(),
-	compile ps_2_0 PSBasicTxSp(),
-	compile ps_2_0 PSBasicTxSp(),
+	compile ps_4_0_level_9_1 PSBasicSp(),
+	compile ps_4_0_level_9_1 PSBasicSp(),
+	compile ps_4_0_level_9_1 PSBasicTxSp(),
+	compile ps_4_0_level_9_1 PSBasicTxSp(),
 	
 	
 	
@@ -555,7 +555,7 @@ Technique MMDNormalDepth
 {
 	Pass
 	{
-		VertexShader = (compile vs_2_0 VSEdgeNm());
-		PixelShader = (compile ps_2_0 PSEdge());
+		VertexShader = (compile vs_4_0_level_9_1 VSEdgeNm());
+		PixelShader = (compile ps_4_0_level_9_1 PSEdge());
 	}
 }
