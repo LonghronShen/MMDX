@@ -158,10 +158,10 @@ namespace MikuMikuDance.XNA.Model
                 switch (mode)
                 {
                     case MMDDrawingMode.Normal:
-                        Effect.CurrentTechnique = Effect.Techniques["MMDEffect"];
+                        Effect.CurrentTechnique = Effect.Techniques["MMDEffect0"];
                         break;
                     case MMDDrawingMode.Edge:
-                        Effect.CurrentTechnique = Effect.Techniques["MMDNormalDepth"];
+                        Effect.CurrentTechnique = Effect.Techniques["MMDNormalDepth0"];
                         break;
                     default:
                         throw new NotImplementedException();
