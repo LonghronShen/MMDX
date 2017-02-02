@@ -33,7 +33,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.Core.Model.MMDBoneManager, MikuMikuDanceCore";
             var type = typeof(MMDBoneManager).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
         /// <summary>
         /// MMDX上でのリーダを指定
@@ -42,7 +42,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.XNA.Model.MMDBoneManagerReader, MikuMikuDanceXNA";
             var type = typeof(MMDBoneManagerReader).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
     }
 }

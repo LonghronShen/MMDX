@@ -8,6 +8,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using System.Reflection;
+using MikuMikuDance.Core.Misc;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -38,7 +39,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.XNA.Model.MMDXModel, MikuMikuDanceCore";
             var type = typeof(MMDXModel).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
         
         /// <summary>
@@ -51,7 +52,7 @@ namespace MikuMikuDance.XNA.Model
             // MMDX側で読み込む型を指定
             //return "MikuMikuDance.XNA.Model.MMDModelReader, MikuMikuDanceXNA";
             var type = typeof(MMDModelReader).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
     }
 }

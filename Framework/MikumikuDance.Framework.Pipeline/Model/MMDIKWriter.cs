@@ -38,7 +38,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.Core.Model.MMDIK, MikuMikuDanceCore";
             var type = typeof(MMDIK).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
         
         /// <summary>
@@ -48,7 +48,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.XNA.Model.MMDIKReader, MikuMikuDanceXNA";
             var type = typeof(MMDIKReader).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
     }
 }

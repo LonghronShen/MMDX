@@ -55,14 +55,14 @@ namespace MikuMikuDance.XNA.Model
                 case TargetPlatform.Xbox360:
                     //return "MikuMikuDance.XNA.Model.MMDXBoxModelPartReader, MikuMikuDanceXNA";
                     type = typeof(MMDXBoxModelPartReader).GetTypeInfo();
-                    return $"{type.FullName}, {type.Assembly.FullName}";
+                    return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
                 //default:
                 //    throw new NotImplementedException();
                 case TargetPlatform.Windows:
                 default:
                     //return "MikuMikuDance.XNA.Model.MMDGPUModelPartReader, MikuMikuDanceXNA";
                     type = typeof(MMDGPUModelPartReader).GetTypeInfo();
-                    return $"{type.FullName}, {type.Assembly.FullName}";
+                    return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
             }
         }
     }

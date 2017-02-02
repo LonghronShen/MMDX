@@ -32,7 +32,7 @@ namespace MikuMikuDance.XNA.Accessory
         {
             //return "MikuMikuDance.Core.Accessory.MMD_VAC, MikuMikuDanceCore";
             var type = typeof(MMDAccessoryReader).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
         /// <summary>
         /// 読み出す用のタイプリーダ
@@ -41,7 +41,7 @@ namespace MikuMikuDance.XNA.Accessory
         {
             //return "MikuMikuDance.XNA.Accessory.VACReader, MikuMikuDanceXNA";
             var type = typeof(VACReader).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
         }
     }
 }
