@@ -7,6 +7,8 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
+using MikuMikuDance.Core.Model;
+using System.Reflection;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -29,14 +31,18 @@ namespace MikuMikuDance.XNA.Model
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "MikuMikuDance.Core.Model.MMDBoneManager, MikuMikuDanceCore";
+            //return "MikuMikuDance.Core.Model.MMDBoneManager, MikuMikuDanceCore";
+            var type = typeof(MMDBoneManager).GetTypeInfo();
+            return $"{type.FullName}, {type.Assembly.FullName}";
         }
         /// <summary>
         /// MMDX上でのリーダを指定
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "MikuMikuDance.XNA.Model.MMDBoneManagerReader, MikuMikuDanceXNA";
+            //return "MikuMikuDance.XNA.Model.MMDBoneManagerReader, MikuMikuDanceXNA";
+            var type = typeof(MMDBoneManagerReader).GetTypeInfo();
+            return $"{type.FullName}, {type.Assembly.FullName}";
         }
     }
 }

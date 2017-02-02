@@ -8,7 +8,7 @@ using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using MikuMikuDance.XNA.Model;
-
+using System.Reflection;
 
 namespace MikuMikuDance.XNA.Accessory
 {
@@ -37,14 +37,18 @@ namespace MikuMikuDance.XNA.Accessory
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "MikuMikuDance.XNA.Accessory.MMDAccessoryPart, MikuMikuDanceXNA";
+            //return "MikuMikuDance.XNA.Accessory.MMDAccessoryPart, MikuMikuDanceXNA";
+            var type = typeof(MMDAccessoryPart).GetTypeInfo();
+            return $"{type.FullName}, {type.Assembly.FullName}";
         }
         /// <summary>
         /// MMDXè„Ç≈ÇÃTypeReader
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            return "MikuMikuDance.XNA.Accessory.MMDAccessoryPartReader, MikuMikuDanceXNA";
+            //return "MikuMikuDance.XNA.Accessory.MMDAccessoryPartReader, MikuMikuDanceXNA";
+            var type = typeof(MMDAccessoryPartReader).GetTypeInfo();
+            return $"{type.FullName}, {type.Assembly.FullName}";
         }
     }
 }

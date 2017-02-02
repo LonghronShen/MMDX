@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-
+using System.Reflection;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -36,7 +36,9 @@ namespace MikuMikuDance.XNA.Model
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            return "MikuMikuDance.XNA.Model.MMDXModel, MikuMikuDanceCore";
+            //return "MikuMikuDance.XNA.Model.MMDXModel, MikuMikuDanceCore";
+            var type = typeof(MMDXModel).GetTypeInfo();
+            return $"{type.FullName}, {type.Assembly.FullName}";
         }
         
         /// <summary>
@@ -47,7 +49,9 @@ namespace MikuMikuDance.XNA.Model
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
             // MMDX側で読み込む型を指定
-            return "MikuMikuDance.XNA.Model.MMDModelReader, MikuMikuDanceXNA";
+            //return "MikuMikuDance.XNA.Model.MMDModelReader, MikuMikuDanceXNA";
+            var type = typeof(MMDModelReader).GetTypeInfo();
+            return $"{type.FullName}, {type.Assembly.FullName}";
         }
     }
 }
