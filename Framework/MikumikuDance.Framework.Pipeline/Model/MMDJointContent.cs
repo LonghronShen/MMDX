@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Model
     /// <summary>
     /// 剛体情報
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.Physics.MMDJoint, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.Physics.MMDJoint, MikumikuDance.Framework.Core")]
     public class MMDJointContent
     {
         /// <summary>

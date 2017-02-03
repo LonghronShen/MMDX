@@ -41,7 +41,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.XNA.Model.MMDModelPart, MikuMikuDanceXNA";
             var type = typeof(MMDModelPart).GetTypeInfo();
-            return $"{type.FullName}, {type.Assembly.FullName}";
+            return $"{type.FullName}, {type.Assembly.GetName().Name}";
         }
         /// <summary>
         /// MMDX上でのリーダを指定
@@ -55,14 +55,14 @@ namespace MikuMikuDance.XNA.Model
                 case TargetPlatform.Xbox360:
                     //return "MikuMikuDance.XNA.Model.MMDXBoxModelPartReader, MikuMikuDanceXNA";
                     type = typeof(MMDXBoxModelPartReader).GetTypeInfo();
-                    return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+                    return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
                 //default:
                 //    throw new NotImplementedException();
                 case TargetPlatform.Windows:
                 default:
                     //return "MikuMikuDance.XNA.Model.MMDGPUModelPartReader, MikuMikuDanceXNA";
                     type = typeof(MMDGPUModelPartReader).GetTypeInfo();
-                    return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+                    return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
             }
         }
     }

@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Model
     /// <summary>
     /// 剛体情報
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.Physics.MMDRigid, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.Physics.MMDRigid, MikumikuDance.Framework.Core")]
     public class MMDRigidContent
     {
         /// <summary>

@@ -9,7 +9,7 @@ namespace MikuMikuDance.XNA.Motion
     /// <summary>
     /// 表情キーフレーム
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDFaceKeyFrame, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDFaceKeyFrame, MikumikuDance.Framework.Core")]
     public class MMDFaceKeyFrameContent
     {
         /// <summary>

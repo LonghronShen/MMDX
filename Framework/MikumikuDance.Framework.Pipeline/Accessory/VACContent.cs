@@ -4,13 +4,15 @@ using System.Linq;
 using System.Text;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
+using MikuMikuDance.Core.Accessory;
 
 namespace MikuMikuDance.XNA.Accessory
 {
     /// <summary>
     /// VAC中間データ
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Accessory.MMD_VAC, MikuMikuDanceCore")]
+    //[ContentSerializerRuntimeType("MikuMikuDance.Core.Accessory.MMD_VAC, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Accessory.MMD_VAC, MikumikuDance.Framework.Core")]
     public struct VACContent
     {
         /// <summary>

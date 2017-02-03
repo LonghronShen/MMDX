@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Motion
     /// <summary>
     /// MMDのライティング用キーフレーム
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDLightKeyFrame, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDLightKeyFrame, MikumikuDance.Framework.Core")]
     public struct MMDLightKeyFrameContent
     {
         /// <summary>

@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Misc
     /// <summary>
     /// ベジェ曲線クラス
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.BezierCurve, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.BezierCurve, MikumikuDance.Framework.Core")]
     public struct BezierCurveContent
     {
         /// <summary>

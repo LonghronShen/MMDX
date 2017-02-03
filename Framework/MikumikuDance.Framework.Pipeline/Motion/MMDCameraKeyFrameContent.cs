@@ -11,7 +11,7 @@ namespace MikuMikuDance.XNA.Motion
     /// <summary>
     /// MMD用カメラキーフレーム
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDCameraKeyFrame, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDCameraKeyFrame, MikumikuDance.Framework.Core")]
     public struct MMDCameraKeyFrameContent
     {
         /// <summary>

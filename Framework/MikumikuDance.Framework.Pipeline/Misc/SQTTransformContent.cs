@@ -11,7 +11,7 @@ namespace MikuMikuDance.XNA.Misc
     /// クォータニオンを使った回転と平行移動を表すことのできる頂点変換用構造体
     /// 通常の行列の半分以下のメモリ使用量になる
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.SQTTransform, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.SQTTransform, MikumikuDance.Framework.Core")]
     public struct SQTTransformContent
     {
         #region フィールド

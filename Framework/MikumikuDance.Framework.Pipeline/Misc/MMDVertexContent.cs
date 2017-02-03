@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Misc
     /// <summary>
     /// MMD頂点データ(法線付き)
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNm, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNm, MikumikuDance.Framework.Core")]
     public class MMDVertexNmContent
     {
         /// <summary>
@@ -37,7 +37,7 @@ namespace MikuMikuDance.XNA.Misc
     /// <summary>
     /// MMD頂点データ(法線、テクスチャ付き)
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNmTx, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNmTx, MikumikuDance.Framework.Core")]
     public class MMDVertexNmTxContent : MMDVertexNmContent
     {
         /// <summary>
@@ -48,7 +48,7 @@ namespace MikuMikuDance.XNA.Misc
     /// <summary>
     /// MMD頂点データ(法線、テクスチャ、頂点カラー付き)
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNmTxVc, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNmTxVc, MikumikuDance.Framework.Core")]
     public class MMDVertexNmTxVcContent : MMDVertexNmTxContent
     {
         /// <summary>
@@ -59,7 +59,7 @@ namespace MikuMikuDance.XNA.Misc
     /// <summary>
     /// MMD頂点データ(法線、頂点カラー付き)
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNmTxVc, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Misc.MMDVertexNmTxVc, MikumikuDance.Framework.Core")]
     public class MMDVertexNmVcContent : MMDVertexNmContent
     {
         /// <summary>

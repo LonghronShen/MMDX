@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Model
     /// <summary>
     /// 表情セット
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.SkinVertSet, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.SkinVertSet, MikumikuDance.Framework.Core")]
     public class SkinVertSet
     {
         /// <summary>

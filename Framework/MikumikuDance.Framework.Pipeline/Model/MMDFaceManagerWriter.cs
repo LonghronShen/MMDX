@@ -42,7 +42,7 @@ namespace MikuMikuDance.XNA.Model
         {
             //return "MikuMikuDance.Core.Model.MMDFaceManager, MikuMikuDanceCore";
             var type = typeof(MMDFaceManager).GetTypeInfo();
-            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
         /// <summary>
         /// 読み込み時のタイプライターを指定
@@ -54,11 +54,11 @@ namespace MikuMikuDance.XNA.Model
             {
                 //return "MikuMikuDance.XNA.Model.MMDXBoxFaceManagerReader, MikuMikuDanceXNA";
                 type = typeof(MMDXBoxFaceManagerReader).GetTypeInfo();
-                return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+                return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
             }
             //return "MikuMikuDance.XNA.Model.MMDFaceManagerReader, MikuMikuDanceXNA";
             type = typeof(MMDFaceManagerReader).GetTypeInfo();
-            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }
 }

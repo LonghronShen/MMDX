@@ -9,7 +9,7 @@ namespace MikuMikuDance.XNA.Motion
     /// <summary>
     /// MMDモーションデータ
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDMotion, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDMotion, MikumikuDance.Framework.Core")]
     public class MMDMotionContent
     {
         /// <summary>

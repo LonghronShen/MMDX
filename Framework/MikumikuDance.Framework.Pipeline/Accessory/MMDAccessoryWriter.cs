@@ -32,7 +32,7 @@ namespace MikuMikuDance.XNA.Accessory
         {
             //return "MikuMikuDance.XNA.Accessory.MMDAccessory, MikuMikuDanceXNA";
             var type = typeof(MMDAccessory).GetTypeInfo();
-            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
         /// <summary>
         /// MMDX上でのリーダ
@@ -41,7 +41,7 @@ namespace MikuMikuDance.XNA.Accessory
         {
             //return "MikuMikuDance.XNA.Accessory.MMDAccessoryReader, MikuMikuDanceXNA";
             var type = typeof(MMDAccessoryReader).GetTypeInfo();
-            return $"{type.Namespace}.{type.Name}, {type.Assembly.FullName}";
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }
 }

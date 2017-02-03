@@ -12,7 +12,7 @@ namespace MikuMikuDance.XNA.Motion
     /// <summary>
     /// MMD用ボーンキーフレーム
     /// </summary>
-    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDBoneKeyFrame, MikuMikuDanceCore")]
+    [ContentSerializerRuntimeType("MikuMikuDance.Core.Motion.MMDBoneKeyFrame, MikumikuDance.Framework.Core")]
     public class MMDBoneKeyFrameContent
     {
         /// <summary>
