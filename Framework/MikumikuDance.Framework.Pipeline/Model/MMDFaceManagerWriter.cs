@@ -30,7 +30,17 @@ namespace MikuMikuDance.XNA.Model
             }
             else
             {
-                output.WriteObject(value.vertData);
+                output.Write(value.vertData.Count);
+                foreach (var element in value.vertData)
+                {
+                    output.Write(element.Key);
+
+                    output.Write(element.Value.Length);
+                    foreach (var item in element.Value)
+                    {
+                        output.WriteObject(item, new SkinVertSetContentWriter());
+                    }
+                }
             }
         }
         /// <summary>

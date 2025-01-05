@@ -1,13 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using MikuMikuDance.Model.Ver1;
 using MikuMikuDance.XNA.Misc;
-using Microsoft.Xna.Framework;
-using System.IO;
-using Microsoft.Xna.Framework.Content.Pipeline;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -60,9 +58,12 @@ namespace MikuMikuDance.XNA.Model
             {//このルートボーンの子はUint16.MaxValue値になっている
                 BuildSkelton(rootBone, UInt16.MaxValue, model, boneMap);
             }
-            catch (StackOverflowException)
+            catch (Exception ex)
             {
-                throw new InvalidContentException("ボーンがループしている");
+                if (ex.Message.Contains("stack"))
+                {
+                    throw new InvalidContentException("ボーンがループしている");
+                }
             }
             //ボーンマップチェック
             foreach (var bone in boneMap)
@@ -147,17 +148,17 @@ namespace MikuMikuDance.XNA.Model
             //Windows用表情データ作成
             for (int i = 0; i < model.Skins.Length; ++i)
             {
-                List<SkinVertSet> tempList = new List<SkinVertSet>();
+                List<SkinVertSetContent> tempList = new List<SkinVertSetContent>();
                 foreach (var it in model.Skins[i].SkinVertDatas)
                 {
-                    tempList.Add(new SkinVertSet { index = (int)it.SkinVertIndex, vector = MMDXMath.ToVector3(it.SkinVertPos) });
+                    tempList.Add(new SkinVertSetContent { index = (int)it.SkinVertIndex, vector = MMDXMath.ToVector3(it.SkinVertPos) });
                 }
                 faceManager.vertData.Add(model.Skins[i].SkinName, tempList.ToArray());
             }
             
             
             int BaseFaceIndex = -1;
-            Dictionary<long, List<SkinVertSet2>> vertTemp = new Dictionary<long, List<SkinVertSet2>>();
+            Dictionary<long, List<SkinVertSet2Content>> vertTemp = new Dictionary<long, List<SkinVertSet2Content>>();
             for (int i = 0; i < model.Skins.Length; ++i)
             {
                 if (model.Skins[i].SkinName != "base")
@@ -167,10 +168,10 @@ namespace MikuMikuDance.XNA.Model
                 else
                 {
                     BaseFaceIndex = i;
-                    for (long j = 0; j < model.Skins[i].SkinVertDatas.LongLength; ++j)
+                    for (long j = 0; j < model.Skins[i].SkinVertDatas.LongCount(); ++j)
                     {
-                        List<SkinVertSet2> list = new List<SkinVertSet2>();
-                        list.Add(new SkinVertSet2 { FaceName = model.Skins[i].SkinName, vector = MMDXMath.ToVector3(model.Skins[i].SkinVertDatas[j].SkinVertPos) });
+                        List<SkinVertSet2Content> list = new List<SkinVertSet2Content>();
+                        list.Add(new SkinVertSet2Content { FaceName = model.Skins[i].SkinName, vector = MMDXMath.ToVector3(model.Skins[i].SkinVertDatas[j].SkinVertPos) });
                         vertTemp.Add(model.Skins[i].SkinVertDatas[j].SkinVertIndex, list);
                     }
                 }
@@ -179,10 +180,10 @@ namespace MikuMikuDance.XNA.Model
             {
                 if (model.Skins[i].SkinName != "base")
                 {
-                    for (long j = 0; j < model.Skins[i].SkinVertDatas.LongLength; ++j)
+                    for (long j = 0; j < model.Skins[i].SkinVertDatas.LongCount(); ++j)
                     {
                         vertTemp[model.Skins[BaseFaceIndex].SkinVertDatas[model.Skins[i].SkinVertDatas[j].SkinVertIndex].SkinVertIndex].Add(
-                            new SkinVertSet2 { FaceName = model.Skins[i].SkinName, vector = MMDXMath.ToVector3(model.Skins[i].SkinVertDatas[j].SkinVertPos) });
+                            new SkinVertSet2Content { FaceName = model.Skins[i].SkinName, vector = MMDXMath.ToVector3(model.Skins[i].SkinVertDatas[j].SkinVertPos) });
                     }
                 }
             }
@@ -195,7 +196,7 @@ namespace MikuMikuDance.XNA.Model
             //XBox用にビルド
             foreach (var it in faceManager.vertData2)
             {
-                SkinVertPtr ptr = new SkinVertPtr();
+                SkinVertPtrContent ptr = new SkinVertPtrContent();
                 ptr.Pos = pos;
                 int i = 0;
                 for (int j = 0; j < it.Value.Length; ++j)
@@ -217,8 +218,8 @@ namespace MikuMikuDance.XNA.Model
             rigids = new MMDRigidContent[0];
             if (model.RigidBodies != null)
             {
-                rigids = new MMDRigidContent[model.RigidBodies.LongLength];
-                for (UInt32 i = 0; i < model.RigidBodies.LongLength; i++)
+                rigids = new MMDRigidContent[model.RigidBodies.LongCount()];
+                for (UInt32 i = 0; i < model.RigidBodies.LongCount(); i++)
                 {
                     MMDRigidContent rigid = new MMDRigidContent();
                     rigid.AngularDamping = model.RigidBodies[i].AngularDamping;
@@ -230,7 +231,7 @@ namespace MikuMikuDance.XNA.Model
                     rigid.Position = new float[model.RigidBodies[i].Position.Length];
                     for (int j = 0; j < rigid.Position.Length; j++)
                         rigid.Position[j] = model.RigidBodies[i].Position[j];
-                    if (model.RigidBodies[i].RelatedBoneIndex < model.Bones.LongLength)
+                    if (model.RigidBodies[i].RelatedBoneIndex < model.Bones.LongCount())
                         rigid.RelatedBoneName = model.Bones[model.RigidBodies[i].RelatedBoneIndex].BoneName;
                     else
                         rigid.RelatedBoneName = null;
@@ -250,8 +251,8 @@ namespace MikuMikuDance.XNA.Model
             joints = new MMDJointContent[0];
             if (model.Joints != null)
             {
-                joints = new MMDJointContent[model.Joints.LongLength];
-                for (UInt32 i = 0; i < model.Joints.LongLength; i++)
+                joints = new MMDJointContent[model.Joints.LongCount()];
+                for (UInt32 i = 0; i < model.Joints.LongCount(); i++)
                 {
                     MMDJointContent joint = new MMDJointContent();
                     joint.ConstrainPosition1 = new float[model.Joints[i].ConstrainPosition1.Length];

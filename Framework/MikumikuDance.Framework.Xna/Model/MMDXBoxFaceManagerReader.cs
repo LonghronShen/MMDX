@@ -10,16 +10,16 @@ using MikuMikuDance.Core.Model;
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// FaceManager偺儕乕僟
+    /// FaceManagerのリーダ
     /// </summary>
     public class MMDXBoxFaceManagerReader : ContentTypeReader<IMMDFaceManager>
     {
         /// <summary>
-        /// 昞忣儅僱乕僕儍傪傾僙僢僩傛傝撉傒崬傓
+        /// 表情マネージャをアセットより読み込む
         /// </summary>
-        /// <param name="input">僐儞僥儞僣儕乕僟</param>
-        /// <param name="existingInstance">婛懚僆僽僕僃僋僩</param>
-        /// <returns>昞忣儅僱乕僕儍</returns>
+        /// <param name="input">コンテンツリーダ</param>
+        /// <param name="existingInstance">既存オブジェクト</param>
+        /// <returns>表情マネージャ</returns>
         protected override IMMDFaceManager Read(ContentReader input, IMMDFaceManager existingInstance)
         {
             var vertData = input.ReadObject<Vector4[]>();

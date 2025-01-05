@@ -10,18 +10,18 @@ using MikuMikuDance.Core.Misc;
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// ModelPart‚Ì“Ç‚Ýž‚Ý—pƒ^ƒCƒvƒŠ[ƒ_
+    /// ModelPart¤ÎÕi¤ßÞz¤ßÓÃ¥¿¥¤¥×¥ê©`¥À
     /// </summary>
     public class MMDGPUModelPartReader : ContentTypeReader<MMDModelPart>
     {
         /// <summary>
-        /// ƒ‚ƒfƒ‹ƒp[ƒc‚Ì“Ç‚Ýž‚Ý
+        /// ¥â¥Ç¥ë¥Ñ©`¥Ä¤ÎÕi¤ßÞz¤ß
         /// </summary>
-        /// <param name="input">ƒRƒ“ƒeƒ“ƒcƒŠ[ƒ_</param>
-        /// <param name="existingInstance">Šù‘¶ƒIƒuƒWƒFƒNƒg</param>
+        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
+        /// <param name="existingInstance">¼È´æ¥ª¥Ö¥¸¥§¥¯¥È</param>
         protected override MMDModelPart Read(ContentReader input, MMDModelPart existingInstance)
         {
-            //ƒ‚ƒfƒ‹ƒp[ƒc‚Ì“Ç‚Ýž‚Ý
+            //¥â¥Ç¥ë¥Ñ©`¥Ä¤ÎÕi¤ßÞz¤ß
             int triangleCount = input.ReadInt32();
             MMDVertexNm[] Vertices = input.ReadObject<MMDVertexNm[]>();
             Dictionary<long, int[]> VertMap = input.ReadObject<Dictionary<long, int[]>>();
@@ -35,7 +35,7 @@ namespace MikuMikuDance.XNA.Model
             modelPart = MMDXCore.Instance.ModelPartFactory.Create(triangleCount, Vertices, OpaqueData) as MMDModelPart;
             if (modelPart == null)
             {
-                throw new ContentLoadException("MMDXCore.ModelPartFactory‚ªMMDModelPartˆÈŠO‚ð•Ô‚·ƒtƒ@ƒNƒgƒŠ[‚É‚È‚Á‚Ä‚¢‚Ü‚·BXNA‚ÌƒRƒ“ƒeƒ“ƒcƒpƒCƒvƒ‰ƒCƒ“‚ðŽg—p‚·‚éê‡‚ÍMMDModelPart‚ð•Ô‚·ƒtƒ@ƒNƒgƒŠ[‚ðƒZƒbƒg‚·‚é•K—v‚ª‚ ‚è‚Ü‚·");
+                throw new ContentLoadException("MMDXCore.ModelPartFactory¤¬MMDModelPartÒÔÍâ¤ò·µ¤¹¥Õ¥¡¥¯¥È¥ê©`¤Ë¤Ê¤Ã¤Æ¤¤¤Þ¤¹¡£XNA¤Î¥³¥ó¥Æ¥ó¥Ä¥Ñ¥¤¥×¥é¥¤¥ó¤òÊ¹ÓÃ¤¹¤ëˆöºÏ¤ÏMMDModelPart¤ò·µ¤¹¥Õ¥¡¥¯¥È¥ê©`¤ò¥»¥Ã¥È¤¹¤ë±ØÒª¤¬¤¢¤ê¤Þ¤¹");
             }
             // read in the BasicEffect as a shared resource
             input.ReadSharedResource<Effect>(fx => modelPart.Effect = fx);

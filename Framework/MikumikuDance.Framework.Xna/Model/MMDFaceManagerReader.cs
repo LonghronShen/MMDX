@@ -6,6 +6,7 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MikuMikuDance.Core.Model;
 
+using SkinVertSet = MikuMikuDance.Core.Model.SkinVertSet;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -22,8 +23,26 @@ namespace MikuMikuDance.XNA.Model
         /// <returns>表情マネージャ</returns>
         protected override IMMDFaceManager Read(ContentReader input, IMMDFaceManager existingInstance)
         {
-            var vertData = input.ReadObject<Dictionary<string, SkinVertSet[]>>();
-            
+            //var vertData = input.ReadObject<Dictionary<string, SkinVertSet[]>>();
+
+            var vertData = new Dictionary<string, SkinVertSet[]>();
+
+            var total = input.ReadInt32();
+            for (int i = 0; i < total; i++)
+            {
+                var key = input.ReadString();
+
+                var value = new List<SkinVertSet>();
+                var valueCount = input.ReadInt32();
+                for (int j = 0; j < valueCount; j++)
+                {
+                    var item = input.ReadObject<SkinVertSet>();
+                    value.Add(item);
+                }
+
+                vertData.Add(key, value.ToArray());
+            }
+
             return new MMDFaceManager(vertData);
         }
     }

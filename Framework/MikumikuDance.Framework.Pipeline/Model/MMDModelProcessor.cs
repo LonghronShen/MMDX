@@ -1,13 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
-using System.ComponentModel;
+using Microsoft.Xna.Framework.Graphics;
 using MikuMikuDance.XNA.Misc;
+using System.Collections.Generic;
+using System.ComponentModel;
+
+using DescriptionAttribute = Microsoft.Xna.Framework.Content.Pipeline.DescriptionAttribute;
+using DisplayNameAttribute = Microsoft.Xna.Framework.Content.Pipeline.DisplayNameAttribute;
 
 
 namespace MikuMikuDance.XNA.Model
@@ -21,7 +22,7 @@ namespace MikuMikuDance.XNA.Model
     {
         ContentProcessorContext context;
         MMDModelContent resultModel;
-        
+
         Dictionary<MaterialContent, MaterialContent> ProcessedMaterial = new Dictionary<MaterialContent, MaterialContent>();
 
         Color colorKeyColor = new Color(255, 0, 255, 255);
@@ -37,7 +38,7 @@ namespace MikuMikuDance.XNA.Model
         public virtual bool ColorKeyEnabled { get { return colorKeyEnabled; } set { colorKeyEnabled = value; } }
 
         MaterialProcessorDefaultEffect DefaultEffect = MaterialProcessorDefaultEffect.BasicEffect;
-        
+
         bool generateMipmaps = true;
         [DisplayName("ミップマップの生成")]
         [Description("有効な場合、モデルのテクスチャーに対して完全なミップマップチェーンが生成されます。既存のミップマップは置換されません")]
@@ -49,7 +50,7 @@ namespace MikuMikuDance.XNA.Model
         [DefaultValue(true)]
         [DisplayName("アルファの事前乗算")]
         public virtual bool PremultiplyTextureAlpha { get { return premultiplyTextureAlpha; } set { premultiplyTextureAlpha = value; } }
-        
+
         bool resizeTexturesToPowerOfTwo = true;
         [Description("有効な場合、モデルのテクスチャーは次に大きな2の累乗のサイズに変更され、可能な限りの互換性を保ちます。多くのグラフィックカードは、サイズが2の累乗でないテクスチャーに対応していません。")]
         [DisplayName("テクスチャーサイズを2の累乗にリサイズ")]
@@ -95,7 +96,7 @@ namespace MikuMikuDance.XNA.Model
                         foreach (var i in part.VertMap[it.Key])
                         {
                             //ポインタ情報の付与
-                            SkinVertPtr ptr = resultModel.FaceManager.vertPtr[it.Key];
+                            SkinVertPtrContent ptr = resultModel.FaceManager.vertPtr[it.Key];
                             part.extVertices[i] = new Vector2(ptr.Pos, ptr.Count);
                         }
                     }
@@ -227,7 +228,7 @@ namespace MikuMikuDance.XNA.Model
                 }
                 vertN.Normal = normals[i];
                 vertices[i] = vertN;
-                
+
 
                 vertices[i].Position = geometry.Vertices.Positions[i];
                 if (blendWeights == null || blendIndices == null)
@@ -308,7 +309,7 @@ namespace MikuMikuDance.XNA.Model
             //処理用変数
             int[] tempIndices = new int[maxWeights];
             float[] tempWeights = new float[maxWeights];
-            
+
             //3つ以上のボーンは無視して、ウェイトを正規化する
             inputWeights.NormalizeWeights(maxWeights);
 
@@ -334,7 +335,7 @@ namespace MikuMikuDance.XNA.Model
             outIndices[vertexIndex] = new Vector2(tempIndices[0], tempIndices[1]);
             outWeights[vertexIndex] = new Vector2(tempWeights[0], tempWeights[1]);
         }
-        private MaterialContent ProcessMaterial(MaterialContent materialContent,int ShaderIndex)
+        private MaterialContent ProcessMaterial(MaterialContent materialContent, int ShaderIndex)
         {
             //何回も処理するのを防ぐ仕掛け……
             if (!ProcessedMaterial.ContainsKey(materialContent))
@@ -349,7 +350,7 @@ namespace MikuMikuDance.XNA.Model
                 processorParameters["PremultiplyTextureAlpha"] = PremultiplyTextureAlpha;
                 processorParameters["ResizeTexturesToPowerOfTwo"] =
                     ResizeTexturesToPowerOfTwo;
-                
+
                 processorParameters["ShaderIndex"] = ShaderIndex;
                 MaterialContent processed = context.Convert<MaterialContent, MaterialContent>(materialContent,
                                             "MMDMaterialProcessor", processorParameters);
@@ -358,6 +359,6 @@ namespace MikuMikuDance.XNA.Model
             return ProcessedMaterial[materialContent];
         }
 
-        
+
     }
 }

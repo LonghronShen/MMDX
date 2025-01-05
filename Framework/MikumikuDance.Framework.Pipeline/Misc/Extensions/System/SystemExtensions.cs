@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 namespace System
 {
 
-    public static class SystemExtensions
+    internal static class SystemExtensions
     {
 
         public static void Save(this byte[] data, string path)

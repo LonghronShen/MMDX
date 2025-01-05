@@ -373,7 +373,7 @@ float4 PSEdge(float4 color : COLOR0) : COLOR
 // シェーダー
 //-----------------------------------------------------------------------------
 
-Technique MMDEffect0
+Technique MMDEffect
 {
 	Pass
 	{
@@ -406,7 +406,7 @@ Technique MMDEffect3
 	}
 }
 
-Technique MMDNormalDepth0
+Technique MMDNormalDepth
 {
 	Pass
 	{

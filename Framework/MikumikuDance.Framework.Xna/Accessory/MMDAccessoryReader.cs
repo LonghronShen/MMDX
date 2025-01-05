@@ -9,16 +9,16 @@ using MikuMikuDance.Core.Misc;
 namespace MikuMikuDance.XNA.Accessory
 {
     /// <summary>
-    /// ƒAƒNƒZƒTƒŠ‚ÌƒRƒ“ƒeƒ“ƒcƒŠ[ƒ_
+    /// ¥¢¥¯¥»¥µ¥ê¤Î¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À
     /// </summary>
     public class MMDAccessoryReader : ContentTypeReader<MMDAccessory>
     {
         /// <summary>
-        /// ƒAƒNƒZƒTƒŠ‚Ì“Ç‚İ‚İ
+        /// ¥¢¥¯¥»¥µ¥ê¤ÎÕi¤ßŞz¤ß
         /// </summary>
-        /// <param name="input">ƒRƒ“ƒeƒ“ƒcƒŠ[ƒ_</param>
-        /// <param name="existingInstance">Šù‘¶ƒIƒuƒWƒFƒNƒg</param>
-        /// <returns>ƒAƒNƒZƒTƒŠ</returns>
+        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
+        /// <param name="existingInstance">¼È´æ¥ª¥Ö¥¸¥§¥¯¥È</param>
+        /// <returns>¥¢¥¯¥»¥µ¥ê</returns>
         protected override MMDAccessory Read(ContentReader input, MMDAccessory existingInstance)
         {
             MMDVertexNmTxVc[] vertex = input.ReadObject<MMDVertexNmTxVc[]>();

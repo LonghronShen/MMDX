@@ -10,7 +10,7 @@ namespace MikuMikuDance.XNA.Accessory
     /// <summary>
     /// スクリーンマネージャ
     /// </summary>
-    public class ScreenManager: IDisposable
+    public class ScreenManager : IDisposable
     {
         RenderTarget2D[] screen = new RenderTarget2D[2];
         int bufferIndex = 1;

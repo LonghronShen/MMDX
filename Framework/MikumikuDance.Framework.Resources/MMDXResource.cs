@@ -73,7 +73,11 @@ namespace MikuMikuDance.Resource
 
         private static byte[] LoadEmbededResource(string fileName)
         {
+#if NET40
+            var asm = typeof(MMDXResource).Assembly;
+#else
             var asm = typeof(MMDXResource).GetTypeInfo().Assembly;
+#endif
             var files = asm.GetManifestResourceNames();
             foreach (var file in files)
             {

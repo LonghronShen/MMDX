@@ -1,15 +1,17 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline.Processors;
-using System.ComponentModel;
+using Microsoft.Xna.Framework.Graphics;
 using MikuMikuDance.XNA.Misc;
 using MikuMikuDance.XNA.Model;
+using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
+using System.Linq;
+
+using DescriptionAttribute = Microsoft.Xna.Framework.Content.Pipeline.DescriptionAttribute;
+using DisplayNameAttribute = Microsoft.Xna.Framework.Content.Pipeline.DisplayNameAttribute;
 
 namespace MikuMikuDance.XNA.Accessory
 {

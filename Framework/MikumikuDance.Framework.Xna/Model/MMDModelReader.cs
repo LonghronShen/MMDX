@@ -11,31 +11,31 @@ using MikuMikuDance.Core.Model.Physics;
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// MMDModel‚ÌƒŠ[ƒ_ƒNƒ‰ƒX
+    /// MMDModel¤Î¥ê©`¥À¥¯¥é¥¹
     /// </summary>
     public class MMDModelReader : ContentTypeReader<MMDXModel>
     {
         /// <summary>
-        /// ƒ‚ƒfƒ‹‚Ì“Ç‚İ‚İ
+        /// ¥â¥Ç¥ë¤ÎÕi¤ßŞz¤ß
         /// </summary>
-        /// <param name="input">ƒRƒ“ƒeƒ“ƒcƒŠ[ƒ_</param>
-        /// <param name="existingInstance">Šù‘¶ƒIƒuƒWƒFƒNƒg</param>
+        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
+        /// <param name="existingInstance">¼È´æ¥ª¥Ö¥¸¥§¥¯¥È</param>
         protected override MMDXModel Read(ContentReader input, MMDXModel existingInstance)
         {
-            // MMDModelPart‚Ì“Ç‚İ‚İ
+            // MMDModelPart¤ÎÕi¤ßŞz¤ß
             var temp = input.ReadObject<List<MMDModelPart>>();
             List<IMMDModelPart> modelParts = new List<IMMDModelPart>();
             foreach (var it in temp)
                 modelParts.Add(it);
 
-            //MMDBoneManager‚Ì“Ç‚İ‚İ
+            //MMDBoneManager¤ÎÕi¤ßŞz¤ß
             MMDBoneManager boneManager = input.ReadObject<MMDBoneManager>();
             IMMDFaceManager faceManager = input.ReadObject<IMMDFaceManager>();
 
-            //•t‘®ƒ‚[ƒVƒ‡ƒ“‚Ì“Ç‚İ‚İ
+            //¸¶Êô¥â©`¥·¥ç¥ó¤ÎÕi¤ßŞz¤ß
             Dictionary<string, MMDMotion> attachedMotion = input.ReadObject<Dictionary<string, MMDMotion>>();
 
-            //•¨—î•ñ‚Ì“Ç‚İ‚İ
+            //ÎïÀíÇéˆó¤ÎÕi¤ßŞz¤ß
             MMDRigid[] rigids = input.ReadObject<MMDRigid[]>();
             MMDJoint[] joints = input.ReadObject<MMDJoint[]>();
 

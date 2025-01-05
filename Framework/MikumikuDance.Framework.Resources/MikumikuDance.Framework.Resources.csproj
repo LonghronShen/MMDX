@@ -1,54 +1,28 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-  <PropertyGroup>
-    <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-    <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
-    <ProjectGuid>{969795DF-E4D2-4FF1-B5E6-42C550849632}</ProjectGuid>
-    <ProjectTypeGuids>{786C830F-07A1-408B-BD7F-6EE04809D6DB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
-    <UseMSBuildEngine>true</UseMSBuildEngine>
-    <OutputType>Library</OutputType>
-    <RootNamespace>MikumikuDance.Framework.Resources</RootNamespace>
-    <AssemblyName>MikumikuDance.Framework.Resources</AssemblyName>
-    <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
-    <TargetFrameworkProfile>Profile111</TargetFrameworkProfile>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-    <DebugSymbols>true</DebugSymbols>
-    <DebugType>full</DebugType>
-    <Optimize>false</Optimize>
-    <OutputPath>bin\Debug</OutputPath>
-    <DefineConstants>DEBUG;</DefineConstants>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-    <Optimize>true</Optimize>
-    <OutputPath>bin\Release</OutputPath>
-    <ErrorReport>prompt</ErrorReport>
-    <WarningLevel>4</WarningLevel>
-  </PropertyGroup>
-  <ItemGroup>
-    <Compile Include="MMDXResource.cs" />
-    <Compile Include="Properties\AssemblyInfo.cs" />
-  </ItemGroup>
-  <ItemGroup>
-    <EmbeddedResource Include="Resources\AccessoryEffect.fx" />
-    <EmbeddedResource Include="Resources\MMDEdgeEffect.fx" />
-    <EmbeddedResource Include="Resources\MMDWinEffect.fx" />
-    <EmbeddedResource Include="Resources\MMDXBoxEffect.fx" />
-    <EmbeddedResource Include="Resources\toon01.bmp" />
-    <EmbeddedResource Include="Resources\toon02.bmp" />
-    <EmbeddedResource Include="Resources\toon03.bmp" />
-    <EmbeddedResource Include="Resources\toon04.bmp" />
-    <EmbeddedResource Include="Resources\toon05.bmp" />
-    <EmbeddedResource Include="Resources\toon06.bmp" />
-    <EmbeddedResource Include="Resources\toon07.bmp" />
-    <EmbeddedResource Include="Resources\toon08.bmp" />
-    <EmbeddedResource Include="Resources\toon09.bmp" />
-    <EmbeddedResource Include="Resources\toon10.bmp" />
-  </ItemGroup>
-  <ItemGroup>
-    <Folder Include="Extensions\" />
-  </ItemGroup>
-  <Import Project="$(MSBuildExtensionsPath32)\Microsoft\Portable\$(TargetFrameworkVersion)\Microsoft.Portable.CSharp.targets" />
+﻿<Project Sdk="MSBuild.Sdk.Extras">
+	<PropertyGroup>
+		<TargetFrameworks>netstandard1.1;net40;portable-net45+win8+wpa81</TargetFrameworks>
+
+		<PackageId>MikumikuDance.Framework.Resources</PackageId>
+		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<NoWarn>NU5128</NoWarn>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<None Remove="Resources\*" />
+	</ItemGroup>
+	<ItemGroup>
+		<EmbeddedResource Include="Resources\*" />
+	</ItemGroup>
+
+	<Import Project="../../Build/profile111.props" Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81' " />
+	<Import Project="../../Build/sl5.props" Condition=" '$(TargetFramework)' == 'sl5' " />
+	<Import Project="../../Build/net35.props" Condition=" '$(TargetFramework)' == 'net35' " />
+	<Import Project="../../Build/net40.props" Condition=" '$(TargetFramework)' == 'net40' " />
+	<Import Project="../../Build/netstandard2.0.props" Condition=" '$(TargetFramework)' == 'netstandard2.0' " />
+	<Import Project="../../Build/net7.props" Condition=" '$(TargetFramework)' == 'net7' " />
+	<Import Project="../../Build/net8.props" Condition=" '$(TargetFramework)' == 'net8' " />
+	<Import Project="../../Build/net9.props" Condition=" '$(TargetFramework)' == 'net9' " />
 </Project>

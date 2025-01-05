@@ -1,0 +1,49 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project>
+	<PropertyGroup>
+		<PackageTags>mmdx;mmd;xna;monogame</PackageTags>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
+		<Authors>MMD Community</Authors>
+		<Description>MMDX is an open-source implementation of the MMD framework.</Description>
+		<PackageProjectUrl>https://github.com/LognhronShen/MMDX</PackageProjectUrl>
+		<!--<PackageIcon>logo.png</PackageIcon>-->
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RootNamespace>MikumikuDance.Framework</RootNamespace>
+
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+		<GenerateDocumentationFile>true</GenerateDocumentationFile>
+		<GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>
+		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<ImplicitUsings>disable</ImplicitUsings>
+		<Nullable>disable</Nullable>
+		<LangVersion>latest</LangVersion>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<TreatWarningsAsErrors>false</TreatWarningsAsErrors>
+		<WarningsNotAsErrors>618;429;219;1717;162;414</WarningsNotAsErrors>
+		<NoWarn>1591;1584;1574;1685;1573;0618;1658;1570;1587</NoWarn>
+		<ErrorReport>prompt</ErrorReport>
+		<WarningLevel>4</WarningLevel>
+		<EnableWindowsTargeting>true</EnableWindowsTargeting>
+	</PropertyGroup>
+
+	<ItemGroup>
+		<Compile Include="../../Build/GlobalSuppressions.cs" />
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(GeneratePackageOnBuild) == 'true' ">
+		<None Include="../../README.md" Pack="true" PackagePath="\"/>
+	</ItemGroup>
+
+	<ItemGroup Condition=" $(TargetFramework) != '' ">
+		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+		<PackageReference Include="GitVersion.MsBuild" Version="6.1.0" PrivateAssets="All" />
+	</ItemGroup>
+</Project>

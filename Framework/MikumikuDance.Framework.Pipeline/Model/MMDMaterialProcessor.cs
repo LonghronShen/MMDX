@@ -33,7 +33,7 @@ namespace MikuMikuDance.XNA.Model
             //else
             {
                 BasicMaterialContent basicinput = input as BasicMaterialContent;
-                if(basicinput==null)
+                if (basicinput == null)
                     throw new InvalidContentException(string.Format(
                     "MMDProcessorはEffectMaterialContentのみをサポートします" +
                     "入力メッシュは{0}を使用しています。", input.GetType()));
@@ -46,7 +46,7 @@ namespace MikuMikuDance.XNA.Model
                 {
                     fs = new FileStream(Path.Combine("ext", "MMDWinEffect.fx"), FileMode.Create);
                     BinaryWriter bw = new BinaryWriter(fs);
-                    bw.Write(MMDXResource.MMDWinEffect);
+                    bw.Write(this.ApplyShaderIndex(MMDXResource.MMDWinEffect));
                     bw.Close();
                     effect = new ExternalReference<EffectContent>(Path.Combine("ext", "MMDWinEffect.fx"));
                 }
@@ -54,7 +54,7 @@ namespace MikuMikuDance.XNA.Model
                 {
                     fs = new FileStream(Path.Combine("ext", "MMDXBoxEffect.fx"), FileMode.Create);
                     BinaryWriter bw = new BinaryWriter(fs);
-                    bw.Write(MMDXResource.MMDXBoxEffect);
+                    bw.Write(this.ApplyShaderIndex(MMDXResource.MMDXBoxEffect));
                     bw.Close();
                     effect = new ExternalReference<EffectContent>(Path.Combine("ext", "MMDXBoxEffect.fx"));
                 }
@@ -83,6 +83,14 @@ namespace MikuMikuDance.XNA.Model
             //テクスチャの事前アルファ計算は無し
             this.PremultiplyTextureAlpha = false;
             return base.Process(finalinput, context);
+        }
+
+        private byte[] ApplyShaderIndex(byte[] effect)
+        {
+            var text = Encoding.UTF8.GetString(effect);
+            text = text.Replace($"MMDEffect{this.ShaderIndex}", "MMDEffect");
+            text = text.Replace($"MMDNormalDepth{this.ShaderIndex}", "MMDNormalDepth");
+            return Encoding.UTF8.GetBytes(text);
         }
     }
 }

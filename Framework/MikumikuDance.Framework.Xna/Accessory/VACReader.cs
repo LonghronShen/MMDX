@@ -9,12 +9,12 @@ using MikuMikuDance.Core.Accessory;
 namespace MikuMikuDance.XNA.Accessory
 {
     /// <summary>
-    /// VACÉäÅ[É_
+    /// VAC§Œ•≥•Û•∆•Û•ƒ•Í©`•¿
     /// </summary>
     public class VACReader : ContentTypeReader<MMD_VAC>
     {
         /// <summary>
-        /// VACì«Ç›çûÇ›
+        /// VAC§Œ’i§ﬂﬁz§ﬂ
         /// </summary>
         protected override MMD_VAC Read(ContentReader input, MMD_VAC existingInstance)
         {

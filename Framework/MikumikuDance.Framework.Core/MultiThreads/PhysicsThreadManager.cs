@@ -26,8 +26,8 @@ namespace MikuMikuDance.Core.MultiThreads
         private CancellationToken cancellationToken;
         private CancellationTokenSource cancellationTokenSource;
         //マルチスレッドモード
-        bool bMultiThread = true;
-        bool bNextThreadMode = true;
+        bool bMultiThread = false;
+        bool bNextThreadMode = false;
         //シグナル
         AutoResetEvent CalcStart;
         AutoResetEvent CalcFinished;
@@ -70,12 +70,17 @@ namespace MikuMikuDance.Core.MultiThreads
         {
             CalcFinished = new AutoResetEvent(true);
             CalcStart = new AutoResetEvent(false);
+
             //thread = new Thread(new ThreadStart(threadFunc));
             //thread.Start();
+
             this.cancellationTokenSource = new CancellationTokenSource();
             this.cancellationToken = this.cancellationTokenSource.Token;
-            threadFunc();
+
+            //threadFunc();
+            Task.Run(threadFunc);
         }
+
         internal void Update(float timeStep)
         {
             if (bMultiThread)
@@ -113,9 +118,12 @@ namespace MikuMikuDance.Core.MultiThreads
                 {
                     bMultiThread = true;
                     Sync(timeStep);
+
                     //thread = new Thread(new ThreadStart(threadFunc));
                     //thread.Start();
-                    threadFunc();
+
+                    //threadFunc();
+                    Task.Run(threadFunc);
                 }
                 else
                 {
@@ -142,7 +150,7 @@ namespace MikuMikuDance.Core.MultiThreads
             }
         }
 
-        private async Task threadFunc()
+        private void threadFunc()
         {
 #if XBOX360
             thread.SetProcessorAffinity(XboxCoreNum);

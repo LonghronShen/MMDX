@@ -1,15 +1,11 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
+using System.ComponentModel;
 
+using DescriptionAttribute = Microsoft.Xna.Framework.Content.Pipeline.DescriptionAttribute;
+using DisplayNameAttribute = Microsoft.Xna.Framework.Content.Pipeline.DisplayNameAttribute;
 using TInput = MikuMikuDance.XNA.Accessory.VACContent2;
 using TOutput = MikuMikuDance.XNA.Accessory.VACContent;
-using System.ComponentModel;
 
 namespace MikuMikuDance.XNA.Accessory
 {

@@ -11,7 +11,7 @@ namespace MikuMikuDance.XNA.Model
     /// 表情セット
     /// </summary>
     [ContentSerializerRuntimeType("MikuMikuDance.Core.Model.SkinVertSet, MikumikuDance.Framework.Core")]
-    public class SkinVertSet
+    public class SkinVertSetContent
     {
         /// <summary>
         /// 頂点インデックス/baseインデックス
@@ -27,7 +27,7 @@ namespace MikuMikuDance.XNA.Model
     /// <summary>
     /// 表情セット(XBox用)
     /// </summary>
-    public class SkinVertSet2
+    public class SkinVertSet2Content
     {
         /// <summary>
         /// 表情名
@@ -42,7 +42,7 @@ namespace MikuMikuDance.XNA.Model
     /// <summary>
     /// 表情ポインタデータ
     /// </summary>
-    public class SkinVertPtr
+    public class SkinVertPtrContent
     {
         /// <summary>
         /// 開始位置
@@ -59,15 +59,14 @@ namespace MikuMikuDance.XNA.Model
     /// </summary>
     public class MMDFaceManagerContent
     {
-        
         /// <summary>
         /// 頂点情報
         /// </summary>
-        public Dictionary<string, SkinVertSet[]> vertData = new Dictionary<string, SkinVertSet[]>();
+        public Dictionary<string, SkinVertSetContent[]> vertData = new Dictionary<string, SkinVertSetContent[]>();
         /// <summary>
         /// 頂点情報2(XBox用)
         /// </summary>
-        public Dictionary<long, SkinVertSet2[]> vertData2 = new Dictionary<long, SkinVertSet2[]>();
+        public Dictionary<long, SkinVertSet2Content[]> vertData2 = new Dictionary<long, SkinVertSet2Content[]>();
         /// <summary>
         /// 表情辞書(XBox用)
         /// </summary>
@@ -80,7 +79,7 @@ namespace MikuMikuDance.XNA.Model
         /// <summary>
         /// 表情データ(XBox用)のポインタ情報
         /// </summary>
-        public Dictionary<long, SkinVertPtr> vertPtr = new Dictionary<long, SkinVertPtr>();
+        public Dictionary<long, SkinVertPtrContent> vertPtr = new Dictionary<long, SkinVertPtrContent>();
 
     }
 }

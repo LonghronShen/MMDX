@@ -11,33 +11,33 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// XBox岦偗儃乕儞儅僱乕僕儍奼挘(vfetch懳墳)
+    /// XBox向けボーンマネージャ拡張(vfetch対応)
     /// </summary>
     class MMDXBoxBoneManager : MMDBoneManager
     {
         VertexSkinning[] skinTransformsXBox;
         /// <summary>
-        /// 偙偺僾儘僷僥傿偼巊偊傑偣傫丅
+        /// このプロパティは使えません。
         /// </summary>
         public override Microsoft.Xna.Framework.Matrix[] SkinTransforms
         {
             get
             {
-                throw new InvalidOperationException();//偙偺憖嶌偼偝偣側偄丅
+                throw new InvalidOperationException();//この操作はさせない。
             }
         }
         /// <summary>
-        /// 僗僉僯儞僌峴楍
+        /// スキニング行列
         /// </summary>
         public VertexSkinning[] SKinTransformXBox { get { return skinTransformsXBox; } }
-        
+
         public MMDXBoxBoneManager(List<MMDBone> bones, List<MMDIK> iks)
             : base(bones, iks)
         {
             skinTransformsXBox = new VertexSkinning[bones.Count];
         }
         /// <summary>
-        /// 僗僉僯儞僌峴楍偺寁嶼
+        /// スキニング行列の計算
         /// </summary>
         public override void CalcSkinTransform()
         {
@@ -48,7 +48,7 @@ namespace MikuMikuDance.XNA.Model
                 Matrix.Multiply(ref this[i].InverseBindPose, ref this[i].GlobalTransform, out temp);
                 temp.Decompose(out temp2, out skinTransformsXBox[i].Rotation, out skinTransformsXBox[i].Translation);
             }
-            
+
         }
     }
 }

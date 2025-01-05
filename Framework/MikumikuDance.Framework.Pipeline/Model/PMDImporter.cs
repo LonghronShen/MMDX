@@ -1,33 +1,34 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
 using MikuMikuDance.Model;
 using MikuMikuDance.Model.Ver1;
 using System.IO;
+using System.Text;
 
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// MikuMikuDance PMDå½¢å¼ãƒ•ã‚¡ã‚¤ãƒ«ã®ã‚¤ãƒ³ãƒãƒ¼ã‚¿ãƒ¼
+    /// MikuMikuDance PMDĞÎÊ½¥Õ¥¡¥¤¥ë¤Î¥¤¥ó¥İ©`¥¿©`
     /// </summary>
     [ContentImporter(".pmd", DisplayName = "MikuMikuDance PMD : MikuMikuDance for XNA", DefaultProcessor = "MMDModelProcessor")]
     public class PMDImporter : ContentImporter<NodeContent>
     {
+        static PMDImporter()
+        {
+            Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
+        }
+
         /// <summary>
-        /// èª­ã¿è¾¼ã¿å‡¦ç†
+        /// Õi¤ßŞz¤ß„IÀí
         /// </summary>
         public override NodeContent Import(string filename, ContentImporterContext context)
         {
-            //pmdãƒ•ã‚¡ã‚¤ãƒ«ã‚’èª­ã¿è¾¼ã‚€
+            //pmd¥Õ¥¡¥¤¥ë¤òÕi¤ßŞz¤à
             MMDModel model = ModelManager.Read(File.OpenRead(Path.GetFullPath(filename)), CoordinateType.RightHandedCoordinate);
             MMDModel1 model1 = model as MMDModel1;
-            if (model1 == null)//å°†æ¥ver2ãŒå‡ºãŸæ™‚ç”¨
-                throw new InvalidContentException("ã“ã®ã‚¤ãƒ³ãƒãƒ¼ã‚¿ã§èª­ã‚ã‚‹ã®ã¯PMDãƒ¢ãƒ‡ãƒ«ver1ã®ã¿ã§ã™");
-            //èª­ã¿è¾¼ã‚“ã pmdã‚’å…ƒã«NodeContentã«çµ„ã¿ä¸Šã’ã‚‹
+            if (model1 == null)//½«À´ver2¤¬³ö¤¿•rÓÃ
+                throw new InvalidContentException("¤³¤Î¥¤¥ó¥İ©`¥¿¤ÇÕi¤á¤ë¤Î¤ÏPMD¥â¥Ç¥ëver1¤Î¤ß¤Ç¤¹");
+            //Õi¤ßŞz¤ó¤Àpmd¤òÔª¤ËNodeContent¤Ë½M¤ßÉÏ¤²¤ë
             MMDModelScene scene = MMDModelScene.Create(model1, filename);
 
             return scene.Root;

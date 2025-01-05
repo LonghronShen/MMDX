@@ -9,15 +9,15 @@ using MikuMikuDance.Core.Model;
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// MMDIKのタイプリーダ
+    /// MMDIK､ﾎ･ｿ･､･ﾗ･�ｩ`･ﾀ
     /// </summary>
     public class MMDIKReader : ContentTypeReader<MMDIK>
     {
         /// <summary>
-        /// IKデータの読み込み
+        /// IK･ﾇｩ`･ｿ､ﾎﾕi､ﾟﾞz､ﾟ
         /// </summary>
-        /// <param name="input">コンテンツリーダ</param>
-        /// <param name="existingInstance">既存オブジェクト</param>
+        /// <param name="input">･ｳ･ﾆ･ﾄ･�ｩ`･ﾀ</param>
+        /// <param name="existingInstance">ｼﾈｴ讌ｪ･ﾖ･ｸ･ｧ･ｯ･ﾈ</param>
         protected override MMDIK Read(ContentReader input, MMDIK existingInstance)
         {
             int ikBoneIndex = input.ReadInt32();
@@ -25,7 +25,7 @@ namespace MikuMikuDance.XNA.Model
             ushort iteration = input.ReadUInt16();
             float controlWeight = input.ReadSingle();
             List<int> ikchild = input.ReadObject<List<int>>();
-            return new MMDIK(ikBoneIndex,ikTargetBoneIndex, iteration, controlWeight, ikchild);
+            return new MMDIK(ikBoneIndex, ikTargetBoneIndex, iteration, controlWeight, ikchild);
         }
     }
 }

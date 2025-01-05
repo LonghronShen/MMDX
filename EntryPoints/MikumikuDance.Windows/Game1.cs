@@ -1,20 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Audio;
-using Microsoft.Xna.Framework.Content;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework.Media;
 using MikuMikuDance.Core.Model;
-using MikuMikuDance.Core;
 using MikuMikuDance.Core.Motion;
-using MikuMikuDance.Core.Misc;
 using MikuMikuDance.XNA;
-using MikuMikuDance.XNA.Misc;
-using MikuMikuDance.Core.Accessory;
-using MikuMikuDance.XNA.Accessory;
 
 namespace MikumikuDance.Windows
 {
@@ -40,6 +29,7 @@ namespace MikumikuDance.Windows
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.GraphicsProfile = GraphicsProfile.HiDef;
             Content.RootDirectory = "Content";
         }
 
@@ -51,6 +41,9 @@ namespace MikumikuDance.Windows
         /// </summary>
         protected override void Initialize()
         {
+            this.Window.Position = new Point(100, 100);
+            this.Window.Title = "MikuMikuDance for XNA";
+
             base.Initialize();
         }
 

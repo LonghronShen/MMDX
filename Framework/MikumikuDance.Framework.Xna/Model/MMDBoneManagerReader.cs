@@ -10,20 +10,20 @@ using MikuMikuDance.Core.Model;
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// MMDBoneManagerのリーダ
+    /// MMDBoneManager､ﾎ･�ｩ`･ﾀ
     /// </summary>
     public class MMDBoneManagerReader : ContentTypeReader<MMDBoneManager>
     {
         /// <summary>
-        /// ボーンマネージャの読み込み
+        /// ･ﾜｩ`･ﾞ･ﾍｩ`･ｸ･网ﾎﾕi､ﾟﾞz､ﾟ
         /// </summary>
-        /// <param name="input">コンテンツリーダ</param>
-        /// <param name="existingInstance">既存オブジェクト</param>
+        /// <param name="input">･ｳ･ﾆ･ﾄ･�ｩ`･ﾀ</param>
+        /// <param name="existingInstance">ｼﾈｴ讌ｪ･ﾖ･ｸ･ｧ･ｯ･ﾈ</param>
         protected override MMDBoneManager Read(ContentReader input, MMDBoneManager existingInstance)
         {
             List<MMDBone> bones = input.ReadObject<List<MMDBone>>();
             List<MMDIK> iks = input.ReadObject<List<MMDIK>>();
-            //ボーンインデックス→ボーンオブジェクト化
+            //･ﾜｩ`･､･ﾇ･ﾃ･ｯ･ｹ｡妺ﾜｩ`･ｪ･ﾖ･ｸ･ｧ･ｯ･ﾈｻｯ
             SkinningHelpers.IKSetup(iks, bones);
 #if !XBOX
             return new MMDBoneManager(bones, iks);
@@ -31,6 +31,6 @@ namespace MikuMikuDance.XNA.Model
             return new MMDXBoxBoneManager(bones, iks);
 #endif
         }
-        
+
     }
 }

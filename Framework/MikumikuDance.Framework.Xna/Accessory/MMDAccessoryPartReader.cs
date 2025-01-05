@@ -8,16 +8,16 @@ using Microsoft.Xna.Framework.Graphics;
 namespace MikuMikuDance.XNA.Accessory
 {
     /// <summary>
-    /// ƒAƒNƒZƒTƒŠƒp[ƒc‚ÌƒRƒ“ƒeƒ“ƒgƒŠ[ƒ_
+    /// ¥¢¥¯¥»¥µ¥ê¥Ñ©`¥Ä¤Î¥³¥ó¥Æ¥ó¥È¥ê©`¥À
     /// </summary>
     public class MMDAccessoryPartReader : ContentTypeReader<MMDAccessoryPart>
     {
         /// <summary>
-        /// ƒAƒNƒZƒTƒŠƒp[ƒc‚Ì“Ç‚Ýž‚Ý
+        /// ¥¢¥¯¥»¥µ¥ê¥Ñ©`¥Ä¤ÎÕi¤ßÞz¤ß
         /// </summary>
-        /// <param name="input">ƒRƒ“ƒeƒ“ƒcƒŠ[ƒ_</param>
-        /// <param name="existingInstance">Šù‘¶ƒp[ƒc</param>
-        /// <returns>ƒAƒNƒZƒTƒŠƒp[ƒc</returns>
+        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
+        /// <param name="existingInstance">¼È´æ¥Ñ©`¥Ä</param>
+        /// <returns>¥¢¥¯¥»¥µ¥ê¥Ñ©`¥Ä</returns>
         protected override MMDAccessoryPart Read(ContentReader input, MMDAccessoryPart existingInstance)
         {
             int vertexCount = input.ReadInt32();
