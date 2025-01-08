@@ -7,9 +7,11 @@ using System.Threading.Tasks;
 namespace System
 {
 
+#if NETPORTABLE
     public class SerializableAttribute
         : Attribute
     {
     }
+#endif
 
 }

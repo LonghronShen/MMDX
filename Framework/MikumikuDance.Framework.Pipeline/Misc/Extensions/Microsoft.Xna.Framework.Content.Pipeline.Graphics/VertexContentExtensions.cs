@@ -1,10 +1,5 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Collections;
 using System.Reflection;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 {
@@ -23,7 +18,7 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Graphics
 
             foreach (var channel in self.Channels)
             {
-                var type = channel.GetType().GetTypeInfo();
+                var type = channel.GetType();
                 var method = type.GetMethod("InsertRange", BindingFlags.Instance | BindingFlags.NonPublic);
                 var elementArrayType = channel.ElementType.MakeArrayType();
                 var elementArray = elementArrayType.InvokeMember("Set", BindingFlags.CreateInstance, null, new object(), new object[] { count });

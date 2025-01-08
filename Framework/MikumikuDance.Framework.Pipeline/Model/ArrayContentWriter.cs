@@ -2,7 +2,6 @@
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using System;
-using System.Reflection;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -33,7 +32,7 @@ namespace MikuMikuDance.XNA.Model
 
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            var type = typeof(T[]).GetTypeInfo();
+            var type = typeof(T[]);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
 

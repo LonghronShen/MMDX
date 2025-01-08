@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 	<PropertyGroup>
-		<TargetFrameworks>net461;portable-net45+win8+wpa81</TargetFrameworks>
+		<TargetFrameworks>net40;net461;portable-net45+win8+wpa81</TargetFrameworks>
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
@@ -15,6 +15,10 @@
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81' ">
 		<PackageReference Include="MonoGame.Framework.Portable.9000" Version="3.8.9102"></PackageReference>
+	</ItemGroup>
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+		<PackageReference Include="MonoGame.Framework.WindowsDX.9000" Version="3.8.9102"></PackageReference>
 	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">

@@ -1,7 +1,5 @@
 using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using System;
-using System.Reflection;
 
 namespace MikuMikuDance.XNA.Accessory
 {
@@ -19,22 +17,22 @@ namespace MikuMikuDance.XNA.Accessory
             output.Write(value.BoneName);
             output.Write(value.Transform);
         }
+
         /// <summary>
         /// 読み込み先の型
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.Core.Accessory.MMD_VAC, MikuMikuDanceCore";
-            var type = typeof(MMDAccessoryReader).GetTypeInfo();
+            var type = typeof(MMDAccessoryReader);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
+
         /// <summary>
         /// 読み出す用のタイプリーダ
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.XNA.Accessory.VACReader, MikuMikuDanceXNA";
-            var type = typeof(VACReader).GetTypeInfo();
+            var type = typeof(VACReader);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }

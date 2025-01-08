@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using MikuMikuDance.Core.Model;
-using System.Reflection;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -26,22 +18,22 @@ namespace MikuMikuDance.XNA.Model
             output.WriteObject(value.bones);
             output.WriteObject(value.iks);
         }
+
         /// <summary>
         /// MMDX上での型を指定
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.Core.Model.MMDBoneManager, MikuMikuDanceCore";
-            var type = typeof(MMDBoneManager).GetTypeInfo();
+            var type = typeof(MMDBoneManager);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
+
         /// <summary>
         /// MMDX上でのリーダを指定
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.XNA.Model.MMDBoneManagerReader, MikuMikuDanceXNA";
-            var type = typeof(MMDBoneManagerReader).GetTypeInfo();
+            var type = typeof(MMDBoneManagerReader);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }

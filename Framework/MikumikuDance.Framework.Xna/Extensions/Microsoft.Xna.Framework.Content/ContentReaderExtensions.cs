@@ -7,7 +7,9 @@ namespace Microsoft.Xna.Framework.Content
 {
     internal static class ContentReaderExtensions
     {
+#if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static int Read7BitEncodedInt(this ContentReader self)
         {
             int num = 0;
@@ -28,7 +30,9 @@ namespace Microsoft.Xna.Framework.Content
             return num;
         }
 
+#if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static Dictionary<TKey, TValue> ReadDictionary<TKey, TValue>(this ContentReader self)
         {
             var dict = new Dictionary<TKey, TValue>();

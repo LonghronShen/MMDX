@@ -114,7 +114,7 @@ namespace MikuMikuDance.Core.Model
         public void SkinUpdate(float elapsedSeconds)
         {
             //物理更新(シングルスレッド用)
-            if (!PhysicsThreadManager.Instanse.IsMultiThread)
+            if (!PhysicsThreadManager.Instance.IsMultiThread)
                 PhysicsManager.Update();
             //表情適用
             MMDXProfiler.BeginMark("ModelPart.SetFace", MMDXMath.CreateColor(60, 65, 0));

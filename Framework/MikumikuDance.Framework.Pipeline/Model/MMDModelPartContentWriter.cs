@@ -1,13 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using System.Reflection;
+using System;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -40,30 +33,29 @@ namespace MikuMikuDance.XNA.Model
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
             //return "MikuMikuDance.XNA.Model.MMDModelPart, MikuMikuDanceXNA";
-            var type = typeof(MMDModelPart).GetTypeInfo();
+            var type = typeof(MMDModelPart);
             return $"{type.FullName}, {type.Assembly.GetName().Name}";
         }
+
         /// <summary>
         /// MMDX上でのリーダを指定
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            TypeInfo type = null;
+            Type type;
             // MMDX側でのタイプライターを指定
             switch (targetPlatform)
             {
                 case TargetPlatform.Xbox360:
-                    //return "MikuMikuDance.XNA.Model.MMDXBoxModelPartReader, MikuMikuDanceXNA";
-                    type = typeof(MMDXBoxModelPartReader).GetTypeInfo();
-                    return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
-                //default:
-                //    throw new NotImplementedException();
+                    type = typeof(MMDXBoxModelPartReader);
+                    break;
                 case TargetPlatform.Windows:
                 default:
-                    //return "MikuMikuDance.XNA.Model.MMDGPUModelPartReader, MikuMikuDanceXNA";
-                    type = typeof(MMDGPUModelPartReader).GetTypeInfo();
-                    return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
+                    type = typeof(MMDGPUModelPartReader);
+                    break;
             }
+
+            return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }
 }

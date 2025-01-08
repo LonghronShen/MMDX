@@ -19,7 +19,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler
                 .ToDictionary(x => x.Parameters[0], x => x.MethodInfo);
         }
 
+#if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static void WriteAny<T>(this ContentWriter self, T value)
         {
             if (typeof(T).IsValueType)
@@ -39,7 +41,9 @@ namespace Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler
             }
         }
 
+#if !NET40
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
+#endif
         public static void WriteDictionary<TKey, TValue>(this ContentWriter self, Dictionary<TKey, TValue> value)
         {
             if (value == null)

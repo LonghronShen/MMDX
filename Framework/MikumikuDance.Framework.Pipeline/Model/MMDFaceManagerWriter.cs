@@ -1,14 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using MikuMikuDance.Core.Model;
-using System.Reflection;
+using System;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -43,6 +36,7 @@ namespace MikuMikuDance.XNA.Model
                 }
             }
         }
+
         /// <summary>
         /// 読み込み時の型を指定
         /// </summary>
@@ -50,24 +44,28 @@ namespace MikuMikuDance.XNA.Model
         /// <returns></returns>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.Core.Model.MMDFaceManager, MikuMikuDanceCore";
-            var type = typeof(MMDFaceManager).GetTypeInfo();
+            var type = typeof(MMDFaceManager);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
+
         /// <summary>
         /// 読み込み時のタイプライターを指定
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            TypeInfo type = null;
-            if (targetPlatform == TargetPlatform.Xbox360)
+            Type type;
+            switch (targetPlatform)
             {
-                //return "MikuMikuDance.XNA.Model.MMDXBoxFaceManagerReader, MikuMikuDanceXNA";
-                type = typeof(MMDXBoxFaceManagerReader).GetTypeInfo();
-                return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
+                case TargetPlatform.Xbox360:
+                    type = typeof(MMDXBoxFaceManagerReader);
+                    break;
+
+                case TargetPlatform.Windows:
+                default:
+                    type = typeof(MMDFaceManagerReader);
+                    break;
             }
-            //return "MikuMikuDance.XNA.Model.MMDFaceManagerReader, MikuMikuDanceXNA";
-            type = typeof(MMDFaceManagerReader).GetTypeInfo();
+
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }

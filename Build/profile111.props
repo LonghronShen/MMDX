@@ -7,7 +7,7 @@
 		<IsFullFramework>false</IsFullFramework>
 		<FeatureCoreDlr>true</FeatureCoreDlr>
 		<IncludeRubyStdLib>false</IncludeRubyStdLib>
-		<TargetFrameworks>$(TargetFrameworks);$(Profile336)</TargetFrameworks>
+		<!--<TargetFrameworks>$(TargetFrameworks);$(Profile111)</TargetFrameworks>-->
 	</PropertyGroup>
 
 	<PropertyGroup>

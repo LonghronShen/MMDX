@@ -1,14 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using MikuMikuDance.XNA.Model;
-using System.Reflection;
 
 namespace MikuMikuDance.XNA.Accessory
 {
@@ -32,22 +24,22 @@ namespace MikuMikuDance.XNA.Accessory
             output.WriteSharedResource(value.Material);
             output.WriteSharedResource(MMDModelContent.EdgeEffect);
         }
+
         /// <summary>
         /// MMDXè„Ç≈ÇÃå^
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.XNA.Accessory.MMDAccessoryPart, MikuMikuDanceXNA";
-            var type = typeof(MMDAccessoryPart).GetTypeInfo();
+            var type = typeof(MMDAccessoryPart);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
+
         /// <summary>
         /// MMDXè„Ç≈ÇÃTypeReader
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.XNA.Accessory.MMDAccessoryPartReader, MikuMikuDanceXNA";
-            var type = typeof(MMDAccessoryPartReader).GetTypeInfo();
+            var type = typeof(MMDAccessoryPartReader);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }

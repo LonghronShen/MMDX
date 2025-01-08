@@ -221,7 +221,7 @@ namespace MikuMikuDance.Core
             StageAnimationPlayer.Update(timeStep);
             if (OnBoneUpdate != null)
                 OnBoneUpdate(timeStep);
-            PhysicsThreadManager.Instanse.Update(timeStep);
+            PhysicsThreadManager.Instance.Update(timeStep);
             if (OnSkinUpdate != null)
                 OnSkinUpdate(timeStep);
         }
@@ -232,7 +232,7 @@ namespace MikuMikuDance.Core
         /// </summary>
         public virtual void Dispose()
         {
-            PhysicsThreadManager.Instanse.Dispose();
+            PhysicsThreadManager.Instance.Dispose();
             m_inst = null;
         }
 

@@ -1,13 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Content.Pipeline;
-using Microsoft.Xna.Framework.Content.Pipeline.Graphics;
-using Microsoft.Xna.Framework.Content.Pipeline.Processors;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
-using System.Reflection;
 
 namespace MikuMikuDance.XNA.Accessory
 {
@@ -25,22 +17,22 @@ namespace MikuMikuDance.XNA.Accessory
             output.WriteObject(value.Vertex);
             output.WriteObject(value.Parts);
         }
+
         /// <summary>
         /// MMDX上での型
         /// </summary>
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.XNA.Accessory.MMDAccessory, MikuMikuDanceXNA";
-            var type = typeof(MMDAccessory).GetTypeInfo();
+            var type = typeof(MMDAccessory);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
+
         /// <summary>
         /// MMDX上でのリーダ
         /// </summary>
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            //return "MikuMikuDance.XNA.Accessory.MMDAccessoryReader, MikuMikuDanceXNA";
-            var type = typeof(MMDAccessoryReader).GetTypeInfo();
+            var type = typeof(MMDAccessoryReader);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }

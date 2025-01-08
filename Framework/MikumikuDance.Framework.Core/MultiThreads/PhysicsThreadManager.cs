@@ -1,7 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 
@@ -10,57 +7,68 @@ namespace MikuMikuDance.Core.MultiThreads
     /// <summary>
     /// 物理エンジンスレッドマネージャ
     /// </summary>
-    public class PhysicsThreadManager : IDisposable
+    public class PhysicsThreadManager
+        : IDisposable
     {
+        //XBOX用ハードウェアスレッド番号
+        public const int XBoxCPUCores = 3;
+
         //フレーム落ち用タイムアウト時間
-        readonly TimeSpan PhysicsThreadTimeout = TimeSpan.FromMilliseconds(3);//3ms待って帰って来ないようなら物理はフレーム落ち
+        public readonly TimeSpan PhysicsThreadTimeout = TimeSpan.FromMilliseconds(3);//3ms待って帰って来ないようなら物理はフレーム落ち
+
         //タイムアウトした分のフレーム落ち
         float timeStepTO = 0;
         //フレーム落ち数
         int DFCount = 0;
-        //XBOX用ハードウェアスレッド番号
-        const int XboxCoreNum = 3;
+
         //スレッドオブジェクト
-        //Thread thread;
-        private Task thread;
         private CancellationToken cancellationToken;
         private CancellationTokenSource cancellationTokenSource;
+
         //マルチスレッドモード
-        bool bMultiThread = false;
+        bool bMultiThread = true;
         bool bNextThreadMode = false;
+
         //シグナル
         AutoResetEvent CalcStart;
         AutoResetEvent CalcFinished;
+
         //スレッド受け渡し変数
         float m_timeStep = 0;
         //バッファ番号
         int bufferNum = 0;
+
         //シングルトン用
-        static PhysicsThreadManager m_instanse = null;
+        static PhysicsThreadManager m_instance = null;
+
         /// <summary>
         /// マルチスレッドモードかどうか
         /// </summary>
         public bool IsMultiThread { get { return bMultiThread; } set { bNextThreadMode = value; } }
+
         /// <summary>
         /// バッファ番号
         /// </summary>
         public int BufferNum { get { return bufferNum; } }
+
         /// <summary>
         /// インスタンス
         /// </summary>
-        public static PhysicsThreadManager Instanse
+        public static PhysicsThreadManager Instance
         {
             get
             {
-                if (m_instanse == null)
-                    m_instanse = new PhysicsThreadManager();
-                return m_instanse;
+                if (m_instance == null)
+                    m_instance = new PhysicsThreadManager();
+                return m_instance;
             }
         }
+
         /// <summary>
         /// 物理エンジン同期処理用イベント
         /// </summary>
         public event Action Synchronize;
+
         /// <summary>
         /// 物理エンジンスレッドフレーム落ち処理用イベント
         /// </summary>
@@ -71,14 +79,24 @@ namespace MikuMikuDance.Core.MultiThreads
             CalcFinished = new AutoResetEvent(true);
             CalcStart = new AutoResetEvent(false);
 
-            //thread = new Thread(new ThreadStart(threadFunc));
-            //thread.Start();
-
             this.cancellationTokenSource = new CancellationTokenSource();
             this.cancellationToken = this.cancellationTokenSource.Token;
 
-            //threadFunc();
-            Task.Run(threadFunc);
+            this.RunPhysicsThread();
+        }
+
+        private void RunPhysicsThread()
+        {
+#if NET40
+            TaskEx.Run(PhysicsThread);
+#else
+            Task.Run(PhysicsThread);
+#endif
+        }
+
+        private void StopPhysicsThread()
+        {
+            this.cancellationTokenSource.Cancel();
         }
 
         internal void Update(float timeStep)
@@ -90,28 +108,27 @@ namespace MikuMikuDance.Core.MultiThreads
                 {
                     if (!bNextThreadMode)
                     {
-                        Sync(0);
+                        this.Sync(0);
                         bMultiThread = false;
-                        //thread.Abort();
-                        //thread = null;
-                        this.cancellationTokenSource.Cancel();
+                        this.StopPhysicsThread();
                     }
                     else
                     {
-                        Sync(timeStep);
+                        this.Sync(timeStep);
                         CalcStart.Set();
                     }
+
                     timeStepTO = 0;
                     DFCount = 0;
                 }
                 else
                 {
                     ++DFCount;
-                    if (DropFrame != null)
-                        DropFrame(DFCount);
+                    DropFrame?.Invoke(DFCount);
                     timeStepTO = timeStep;
                 }
             }
+
             if (!bMultiThread)
             {
                 if (bNextThreadMode)
@@ -119,11 +136,7 @@ namespace MikuMikuDance.Core.MultiThreads
                     bMultiThread = true;
                     Sync(timeStep);
 
-                    //thread = new Thread(new ThreadStart(threadFunc));
-                    //thread.Start();
-
-                    //threadFunc();
-                    Task.Run(threadFunc);
+                    this.RunPhysicsThread();
                 }
                 else
                 {
@@ -150,11 +163,12 @@ namespace MikuMikuDance.Core.MultiThreads
             }
         }
 
-        private void threadFunc()
+        private void PhysicsThread()
         {
 #if XBOX360
-            thread.SetProcessorAffinity(XboxCoreNum);
+            Thread.CurrentThread.SetProcessorAffinity(XboxCoreNum);
 #endif
+
             while (!this.cancellationToken.IsCancellationRequested)
             {
                 if (bMultiThread)
@@ -176,13 +190,8 @@ namespace MikuMikuDance.Core.MultiThreads
         /// </summary>
         public void Dispose()
         {
-            if (thread == null)
-                return;
-            //thread.Abort();
-            //thread = null;
-            this.cancellationTokenSource.Cancel();
+            this.StopPhysicsThread();
         }
-
         #endregion
     }
 }

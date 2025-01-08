@@ -75,8 +75,8 @@ namespace MikuMikuDance.Core.Model.Physics
             Joints = new ReadOnlyCollection<Generic6DofSpringConstraint>(dofjoints);
             bSetup = true;
             //イベントをフック
-            PhysicsThreadManager.Instanse.Synchronize += new Action(Update);
-            PhysicsThreadManager.Instanse.DropFrame += new Action<int>(DropFrame);
+            PhysicsThreadManager.Instance.Synchronize += new Action(Update);
+            PhysicsThreadManager.Instance.DropFrame += new Action<int>(DropFrame);
         }
         private RigidBody CreateRigidBody(MMDRigid rigid, MMDModel Model,out short group, out MMDMotionState motionStateStart)
         {
@@ -200,8 +200,8 @@ namespace MikuMikuDance.Core.Model.Physics
                 foreach (var rigid in Rigids)
                     MMDCore.Instance.Physics.removeRigidBody(rigid);
                 //処理が終わったのでイベントをアンフック
-                PhysicsThreadManager.Instanse.Synchronize -= new Action(Update);
-                PhysicsThreadManager.Instanse.DropFrame -= new Action<int>(DropFrame);
+                PhysicsThreadManager.Instance.Synchronize -= new Action(Update);
+                PhysicsThreadManager.Instance.DropFrame -= new Action<int>(DropFrame);
                 bDisposing = false;//念のため……
             }
             else

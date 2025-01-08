@@ -13,10 +13,12 @@ namespace MikuMikuDance.XNA.Model
     [ContentImporter(".pmd", DisplayName = "MikuMikuDance PMD : MikuMikuDance for XNA", DefaultProcessor = "MMDModelProcessor")]
     public class PMDImporter : ContentImporter<NodeContent>
     {
+#if NET461_OR_GREATER
         static PMDImporter()
         {
             Encoding.RegisterProvider(CodePagesEncodingProvider.Instance);
         }
+#endif
 
         /// <summary>
         /// ’i§ﬂﬁz§ﬂÑI¿Ì

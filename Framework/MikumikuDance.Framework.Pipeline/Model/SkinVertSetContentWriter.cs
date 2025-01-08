@@ -1,10 +1,6 @@
-﻿using Microsoft.Xna.Framework.Content;
-using Microsoft.Xna.Framework.Content.Pipeline;
+﻿using Microsoft.Xna.Framework.Content.Pipeline;
 using Microsoft.Xna.Framework.Content.Pipeline.Serialization.Compiler;
 using MikuMikuDance.Core.Model;
-using System;
-using System.Collections.Generic;
-using System.Reflection;
 
 namespace MikuMikuDance.XNA.Model
 {
@@ -24,13 +20,13 @@ namespace MikuMikuDance.XNA.Model
 
         public override string GetRuntimeType(TargetPlatform targetPlatform)
         {
-            var type = typeof(SkinVertSet).GetTypeInfo();
+            var type = typeof(SkinVertSet);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
 
         public override string GetRuntimeReader(TargetPlatform targetPlatform)
         {
-            var type = typeof(SkinVertSetReader).GetTypeInfo();
+            var type = typeof(SkinVertSetReader);
             return $"{type.Namespace}.{type.Name}, {type.Assembly.GetName().Name}";
         }
     }

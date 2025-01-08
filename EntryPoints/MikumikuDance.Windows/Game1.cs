@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MikuMikuDance.Core.Model;
@@ -12,7 +13,7 @@ namespace MikumikuDance.Windows
     /// MikuMikuDance for XNAシンプルサンプル
     /// </summary>
     public class Game1
-        : Microsoft.Xna.Framework.Game
+        : Game
     {
         //XNAのデバイス
         GraphicsDeviceManager graphics;
@@ -23,14 +24,24 @@ namespace MikumikuDance.Windows
         //前回のキーボードの入力を保持
         KeyboardState beforeState;
         GamePadButtons beforeButtons;
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public Game1()
+            : base()
         {
+            if (this.Content == null)
+            {
+                this.Content = new ContentManager(this.Services, "Content");
+            }
+            else
+            {
+                this.Content.RootDirectory = "Content";
+            }
+
             graphics = new GraphicsDeviceManager(this);
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
-            Content.RootDirectory = "Content";
         }
 
         /// <summary>
@@ -62,6 +73,7 @@ namespace MikumikuDance.Windows
             //モデルにモーションをセット
             model.AnimationPlayer.AddMotion("TrueMyHeart", motion, MMDMotionTrackOptions.UpdateWhenStopped);
         }
+
         /// <summary>
         /// UnloadContent はゲームごとに 1 回呼び出され、ここですべてのコンテンツを
         /// アンロードします。
@@ -105,7 +117,6 @@ namespace MikumikuDance.Windows
             //キーボードの状態を記録
             beforeState = Keyboard.GetState();
             beforeButtons = GamePad.GetState(PlayerIndex.One).Buttons;
-
         }
 
         /// <summary>
@@ -120,6 +131,7 @@ namespace MikumikuDance.Windows
             model.Draw();
             base.Draw(gameTime);
         }
+
         /// <summary>
         /// 破棄処理
         /// </summary>

@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 	<PropertyGroup>
-		<TargetFrameworks>net461</TargetFrameworks>
+		<TargetFrameworks>net461;net40</TargetFrameworks>
 		<OutputType>WinExe</OutputType>
 
 		<DefineConstants>WINDOWS</DefineConstants>
@@ -9,7 +9,18 @@
 	<PropertyGroup>
 		<NoWarn>NU5128</NoWarn>
 		<ApplicationIcon>Icon.ico</ApplicationIcon>
+
+		<AppConfig Condition=" '$(TargetFramework)' == 'net40' ">app.net40.config</AppConfig>
+		<AppConfig Condition=" '$(TargetFramework)' == 'net461' ">app.net461.config</AppConfig>
 	</PropertyGroup>
+
+	<!--<ItemGroup>
+		<None Remove="app.*.config" />
+	</ItemGroup>-->
+
+	<ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
+		<PackageReference Include="MonoGame.Framework.WindowsDX.9000" Version="3.8.9102"></PackageReference>
+	</ItemGroup>
 
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
 		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641"></PackageReference>
@@ -19,10 +30,10 @@
 	<ItemGroup>
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.BulletX\MikumikuDance.Framework.BulletX.csproj" />
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Core\MikumikuDance.Framework.Core.csproj" />
-		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Pipeline\MikumikuDance.Framework.Pipeline.csproj" />
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Primitives\MikumikuDance.Framework.Primitives.csproj" />
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Resources\MikumikuDance.Framework.Resources.csproj" />
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Xna\MikumikuDance.Framework.Xna.csproj" />
+		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Pipeline\MikumikuDance.Framework.Pipeline.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
@@ -33,6 +44,10 @@
 
 	<ItemGroup>
 		<MonoGameContentReference Include="Content\Content.mgcb" />
+
+		<Content Include="Content\bin\Windows\Content\**\*" Link="Content\%(RecursiveDir)%(Filename)%(Extension)" Condition=" '$(TargetFramework)' == 'net40' ">
+			<CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+		</Content>
 	</ItemGroup>
 
 	<Import Project="../../Build/profile111.props" Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81' " />
@@ -43,4 +58,15 @@
 	<Import Project="../../Build/net7.props" Condition=" '$(TargetFramework)' == 'net7' " />
 	<Import Project="../../Build/net8.props" Condition=" '$(TargetFramework)' == 'net8' " />
 	<Import Project="../../Build/net9.props" Condition=" '$(TargetFramework)' == 'net9' " />
+
+	<Target Name="GenerateHarvestDirectories" BeforeTargets="CollectContentReferences">
+		<MSBuild Projects="%(ProjectReference.Identity)" Targets="GetTargetPath" Properties="Configuration=$(Configuration);SelfContained=$(SelfContained)">
+			<Output TaskParameter="TargetOutputs" ItemName="PrimaryAssembly" />
+		</MSBuild>
+
+		<Message Text="Harvesting %(PrimaryAssembly.Filename): %(PrimaryAssembly.FullPath)" Importance="high" />
+		<PropertyGroup>
+			<MonoGameMGCBAdditionalArguments>$(MonoGameMGCBAdditionalArguments) /reference:"%(PrimaryAssembly.FullPath)"</MonoGameMGCBAdditionalArguments>
+		</PropertyGroup>
+	</Target>
 </Project>
