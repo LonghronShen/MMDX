@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFramework>net40</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>MikumikuDance.Framework.Renderer.Xna</AssemblyName>
+    <RootNamespace>MikumikuDance.Framework.Renderer.Xna</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MikumikuDance.Framework.Abstractions\MikumikuDance.Framework.Abstractions.csproj" />
+    <ProjectReference Include="..\MikumikuDance.Framework.Xna\MikumikuDance.Framework.Xna.csproj" />
+    <ProjectReference Include="..\MikumikuDance.Framework.Core\MikumikuDance.Framework.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup>
+    <Reference Include="Microsoft.Xna.Framework" />
+    <Reference Include="Microsoft.Xna.Framework.Game" />
+    <Reference Include="Microsoft.Xna.Framework.Graphics" />
+  </ItemGroup>
+  <!-- Unity 3.x for net40 DI -->
+  <ItemGroup>
+    <PackageReference Include="Unity" Version="3.5.1404" />
+  </ItemGroup>
+</Project>
