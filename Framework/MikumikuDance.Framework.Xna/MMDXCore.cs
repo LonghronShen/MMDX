@@ -5,12 +5,11 @@ using System.Text;
 using MikuMikuDance.Core;
 using MikuMikuDance.XNA.Model;
 using MikuMikuDance.Core.Model;
-using Microsoft.Xna.Framework.Content;
 using MikuMikuDance.Core.Motion;
 using MikuMikuDance.Core.Misc;
 using MikuMikuDance.Core.Accessory;
 using MikuMikuDance.XNA.Accessory;
-using Microsoft.Xna.Framework.Graphics;
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikuMikuDance.XNA
 {
@@ -34,7 +33,21 @@ namespace MikuMikuDance.XNA
         /// <summary>
         /// エッジ描画用エフェクト
         /// </summary>
-        public Effect EdgeEffect { get; set; }
+        public IMMDEffect EdgeEffect { get; set; }
+        /// <summary>
+        /// DI コンストラクタ
+        /// </summary>
+        protected MMDXCore(IMMDGraphicsDevice device, IMMDContentLoader loader)
+            : base(device, loader)
+        {
+#if WINDOWS
+            ModelPartFactory = new MMDGPUModelPartFactory();
+#elif XBOX
+            ModelPartFactory = new MMDXBoxModelPartFactory();
+#else
+            throw new NotImplementedException();
+#endif
+        }
         /// <summary>
         /// 規定のコンストラクタ
         /// </summary>
@@ -72,43 +85,68 @@ namespace MikuMikuDance.XNA
         }
 
         /// <summary>
-        /// モデルをアセットより読み込む
+        /// モデルをアセットより読み込む (IMMDContentLoader)
         /// </summary>
         /// <param name="assetName">アセット名</param>
-        /// <param name="content">コンテンツマネージャ</param>
+        /// <param name="loader">コンテンツローダー抽象</param>
         /// <returns>MMDモデル</returns>
-        public MMDModel LoadModel(string assetName, ContentManager content)
+        public MMDModel LoadModel(string assetName, IMMDContentLoader loader)
+        {
+            return loader.LoadModel<MMDXModel>(assetName);
+        }
+        /// <summary>
+        /// モデルをアセットより読み込む (ContentManager, レガシー)
+        /// </summary>
+        public MMDModel LoadModel(string assetName, Microsoft.Xna.Framework.Content.ContentManager content)
         {
             return content.Load<MMDXModel>(assetName);
         }
         /// <summary>
-        /// モーションをアセットより読み込む
+        /// モーションをアセットより読み込む (IMMDContentLoader)
         /// </summary>
         /// <param name="assetName">アセット名</param>
-        /// <param name="content">コンテンツマネージャ</param>
-        /// <returns>MMDモデル</returns>
-        public MMDMotion LoadMotion(string assetName, ContentManager content)
+        /// <param name="loader">コンテンツローダー抽象</param>
+        public MMDMotion LoadMotion(string assetName, IMMDContentLoader loader)
+        {
+            return loader.LoadModel<MMDMotion>(assetName);
+        }
+        /// <summary>
+        /// モーションをアセットより読み込む (ContentManager, レガシー)
+        /// </summary>
+        public MMDMotion LoadMotion(string assetName, Microsoft.Xna.Framework.Content.ContentManager content)
         {
             return content.Load<MMDMotion>(assetName);
         }
 
         /// <summary>
-        /// アクセサリをアセットより読み込む
+        /// アクセサリをアセットより読み込む (IMMDContentLoader)
         /// </summary>
         /// <param name="assetName">アセット名</param>
-        /// <param name="content">コンテンツマネージャ</param>
-        /// <returns>アクセサリ</returns>
-        public MMDAccessory LoadAccessory(string assetName, ContentManager content)
+        /// <param name="loader">コンテンツローダー抽象</param>
+        public MMDAccessory LoadAccessory(string assetName, IMMDContentLoader loader)
+        {
+            return loader.LoadModel<MMDAccessory>(assetName);
+        }
+        /// <summary>
+        /// アクセサリをアセットより読み込む (ContentManager, レガシー)
+        /// </summary>
+        public MMDAccessory LoadAccessory(string assetName, Microsoft.Xna.Framework.Content.ContentManager content)
         {
             return content.Load<MMDAccessory>(assetName);
         }
         /// <summary>
-        /// VAC情報をアセットより読み込む
+        /// VAC情報をアセットより読み込む (IMMDContentLoader)
         /// </summary>
         /// <param name="assetName">アセット名</param>
-        /// <param name="content">コンテンツマネージャ</param>
-        /// <returns>VAC</returns>
-        public MMD_VAC LoadVAC(string assetName, ContentManager content)
+        /// <param name="loader">コンテンツローダー抽象</param>
+        public MMD_VAC LoadVAC(string assetName, IMMDContentLoader loader)
+        {
+            return loader.LoadModel<MMD_VAC>(assetName);
+        }
+        /// <summary>
+        /// VAC情報をアセットより読み込む (ContentManager, レガシー)
+        /// </summary>
+        public MMD_VAC LoadVAC(string assetName, Microsoft.Xna.Framework.Content.ContentManager content)
         {
             MMD_VAC result= content.Load<MMD_VAC>(assetName);
             return result;

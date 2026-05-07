@@ -7,39 +7,40 @@ using Microsoft.Xna.Framework.Graphics;
 using MikuMikuDance.Core.Motion;
 using MikuMikuDance.Core.Model;
 using MikuMikuDance.Core.Model.Physics;
+using MikuMikuDance.XNA.Misc;
 
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// MMDModel¤Î¥ê©`¥À¥¯¥é¥¹
+    /// MMDModelï¿½Î¥ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½é¥¹
     /// </summary>
     public class MMDModelReader : ContentTypeReader<MMDXModel>
     {
         /// <summary>
-        /// ¥â¥Ç¥ë¤ÎÕi¤ßÞz¤ß
+        /// ï¿½ï¿½Ç¥ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
         /// </summary>
-        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
-        /// <param name="existingInstance">¼È´æ¥ª¥Ö¥¸¥§¥¯¥È</param>
+        /// <param name="input">ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½Ä¥ï¿½`ï¿½ï¿½</param>
+        /// <param name="existingInstance">ï¿½È´æ¥ªï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
         protected override MMDXModel Read(ContentReader input, MMDXModel existingInstance)
         {
-            // MMDModelPart¤ÎÕi¤ßÞz¤ß
+            // MMDModelPartï¿½ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
             var temp = input.ReadObject<List<MMDModelPart>>();
             List<IMMDModelPart> modelParts = new List<IMMDModelPart>();
             foreach (var it in temp)
                 modelParts.Add(it);
 
-            //MMDBoneManager¤ÎÕi¤ßÞz¤ß
+            //MMDBoneManagerï¿½ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
             MMDBoneManager boneManager = input.ReadObject<MMDBoneManager>();
             IMMDFaceManager faceManager = input.ReadObject<IMMDFaceManager>();
 
-            //¸¶Êô¥â©`¥·¥ç¥ó¤ÎÕi¤ßÞz¤ß
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½`ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
             Dictionary<string, MMDMotion> attachedMotion = input.ReadObject<Dictionary<string, MMDMotion>>();
 
-            //ÎïÀíÇéˆó¤ÎÕi¤ßÞz¤ß
+            //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
             MMDRigid[] rigids = input.ReadObject<MMDRigid[]>();
             MMDJoint[] joints = input.ReadObject<MMDJoint[]>();
 
-            input.ReadSharedResource<Effect>((effect) => MMDXCore.Instance.EdgeEffect = effect);
+            input.ReadSharedResource<Effect>((effect) => MMDXCore.Instance.EdgeEffect = new XNAEffectWrapper(effect));
             return new MMDXModel(modelParts, boneManager, faceManager, attachedMotion, rigids, joints);
         }
     }

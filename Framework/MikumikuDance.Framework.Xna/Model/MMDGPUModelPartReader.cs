@@ -6,22 +6,23 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using MikuMikuDance.Core.Model;
 using MikuMikuDance.Core.Misc;
+using MikuMikuDance.XNA.Misc;
 
 namespace MikuMikuDance.XNA.Model
 {
     /// <summary>
-    /// ModelPart¤ÎÕi¤ßÞz¤ßÓÃ¥¿¥¤¥×¥ê©`¥À
+    /// ModelPartï¿½ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½ï¿½Ã¥ï¿½ï¿½ï¿½ï¿½×¥ï¿½`ï¿½ï¿½
     /// </summary>
     public class MMDGPUModelPartReader : ContentTypeReader<MMDModelPart>
     {
         /// <summary>
-        /// ¥â¥Ç¥ë¥Ñ©`¥Ä¤ÎÕi¤ßÞz¤ß
+        /// ï¿½ï¿½Ç¥ï¿½Ñ©`ï¿½Ä¤ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
         /// </summary>
-        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
-        /// <param name="existingInstance">¼È´æ¥ª¥Ö¥¸¥§¥¯¥È</param>
+        /// <param name="input">ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½Ä¥ï¿½`ï¿½ï¿½</param>
+        /// <param name="existingInstance">ï¿½È´æ¥ªï¿½Ö¥ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½</param>
         protected override MMDModelPart Read(ContentReader input, MMDModelPart existingInstance)
         {
-            //¥â¥Ç¥ë¥Ñ©`¥Ä¤ÎÕi¤ßÞz¤ß
+            //ï¿½ï¿½Ç¥ï¿½Ñ©`ï¿½Ä¤ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
             int triangleCount = input.ReadInt32();
             MMDVertexNm[] Vertices = input.ReadObject<MMDVertexNm[]>();
             Dictionary<long, int[]> VertMap = input.ReadObject<Dictionary<long, int[]>>();
@@ -35,10 +36,10 @@ namespace MikuMikuDance.XNA.Model
             modelPart = MMDXCore.Instance.ModelPartFactory.Create(triangleCount, Vertices, OpaqueData) as MMDModelPart;
             if (modelPart == null)
             {
-                throw new ContentLoadException("MMDXCore.ModelPartFactory¤¬MMDModelPartÒÔÍâ¤ò·µ¤¹¥Õ¥¡¥¯¥È¥ê©`¤Ë¤Ê¤Ã¤Æ¤¤¤Þ¤¹¡£XNA¤Î¥³¥ó¥Æ¥ó¥Ä¥Ñ¥¤¥×¥é¥¤¥ó¤òÊ¹ÓÃ¤¹¤ëˆöºÏ¤ÏMMDModelPart¤ò·µ¤¹¥Õ¥¡¥¯¥È¥ê©`¤ò¥»¥Ã¥È¤¹¤ë±ØÒª¤¬¤¢¤ê¤Þ¤¹");
+                throw new ContentLoadException("MMDXCore.ModelPartFactoryï¿½ï¿½MMDModelPartï¿½ï¿½ï¿½ï¿½ò·µ¤ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½È¥ï¿½`ï¿½Ë¤Ê¤Ã¤Æ¤ï¿½ï¿½Þ¤ï¿½ï¿½ï¿½XNAï¿½Î¥ï¿½ï¿½ï¿½Æ¥ï¿½Ä¥Ñ¥ï¿½ï¿½×¥é¥¤ï¿½ï¿½ï¿½Ê¹ï¿½Ã¤ï¿½ï¿½ï¿½ï¿½ï¿½Ï¤ï¿½MMDModelPartï¿½ò·µ¤ï¿½ï¿½Õ¥ï¿½ï¿½ï¿½ï¿½È¥ï¿½`ï¿½ò¥»¥Ã¥È¤ï¿½ï¿½ï¿½ï¿½Òªï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Þ¤ï¿½");
             }
             // read in the BasicEffect as a shared resource
-            input.ReadSharedResource<Effect>(fx => modelPart.Effect = fx);
+            input.ReadSharedResource<Effect>(fx => modelPart.Effect = new XNAEffectWrapper(fx));
 
             return modelPart;
         }

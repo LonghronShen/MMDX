@@ -4,20 +4,21 @@ using System.Linq;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using MikuMikuDance.XNA.Misc;
 
 namespace MikuMikuDance.XNA.Accessory
 {
     /// <summary>
-    /// ¥¢¥¯¥»¥µ¥ê¥Ñ©`¥Ä¤Î¥³¥ó¥Æ¥ó¥È¥ê©`¥À
+    /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ©`ï¿½Ä¤Î¥ï¿½ï¿½ï¿½Æ¥ï¿½È¥ï¿½`ï¿½ï¿½
     /// </summary>
     public class MMDAccessoryPartReader : ContentTypeReader<MMDAccessoryPart>
     {
         /// <summary>
-        /// ¥¢¥¯¥»¥µ¥ê¥Ñ©`¥Ä¤ÎÕi¤ßÞz¤ß
+        /// ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ©`ï¿½Ä¤ï¿½ï¿½iï¿½ï¿½ï¿½zï¿½ï¿½
         /// </summary>
-        /// <param name="input">¥³¥ó¥Æ¥ó¥Ä¥ê©`¥À</param>
-        /// <param name="existingInstance">¼È´æ¥Ñ©`¥Ä</param>
-        /// <returns>¥¢¥¯¥»¥µ¥ê¥Ñ©`¥Ä</returns>
+        /// <param name="input">ï¿½ï¿½ï¿½ï¿½Æ¥ï¿½Ä¥ï¿½`ï¿½ï¿½</param>
+        /// <param name="existingInstance">ï¿½È´ï¿½Ñ©`ï¿½ï¿½</param>
+        /// <returns>ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ñ©`ï¿½ï¿½</returns>
         protected override MMDAccessoryPart Read(ContentReader input, MMDAccessoryPart existingInstance)
         {
             int vertexCount = input.ReadInt32();
@@ -28,7 +29,7 @@ namespace MikuMikuDance.XNA.Accessory
             bool edge = input.ReadBoolean();
             MMDAccessoryPart result = new MMDAccessoryPart(vertexCount, indices, baseVertex, triangleCount, screen, edge);
             input.ReadSharedResource<Effect>((effect) => result.Effect = effect);
-            input.ReadSharedResource<Effect>((effect) => MMDXCore.Instance.EdgeEffect = effect);
+            input.ReadSharedResource<Effect>((effect) => MMDXCore.Instance.EdgeEffect = new XNAEffectWrapper(effect));
             return result;
         }
     }

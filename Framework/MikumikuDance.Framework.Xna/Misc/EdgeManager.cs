@@ -5,6 +5,8 @@ using System.Text;
 using MikuMikuDance.Core.Misc;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework;
+using MikumikuDance.Framework.Abstractions;
+using MikuMikuDance.XNA.Misc;
 
 namespace MikuMikuDance.XNA.Misc
 {
@@ -85,19 +87,33 @@ namespace MikuMikuDance.XNA.Misc
         }
 
         /// <summary>
+        /// 内部の XNA Effect を取得 (可能であれば)
+        /// </summary>
+        private Effect GetXNAEdgeEffect()
+        {
+            var immdEffect = MMDXCore.Instance.EdgeEffect;
+            if (immdEffect == null)
+                return null;
+            if (immdEffect is XNAEffectWrapper wrapper)
+                return wrapper.InnerEffect;
+            return null;
+        }
+
+        /// <summary>
         /// 検出したエッジを描画する
         /// </summary>
         /// <remarks>2Dで描画されるので注意</remarks>
         public void DrawEdge(GraphicsDevice graphics)
         {
-            if (MMDXCore.Instance.EdgeEffect == null)
+            Effect edgeEffect = GetXNAEdgeEffect();
+            if (edgeEffect == null)
                 return;//ここに無いってことはモデル一個も読み込まれてないってことだから描く必要ないよね
             Viewport viewport=graphics.Viewport;
-            MMDXCore.Instance.EdgeEffect.Parameters["EdgeWidth"].SetValue(EdgeWidth);
-            MMDXCore.Instance.EdgeEffect.Parameters["ScreenResolution"].SetValue(new Vector2(viewport.Width, viewport.Height));
-            //MMDXCore.Instance.EdgeEffect.Parameters["Texture"].SetValue(edgeMap);
-            MMDXCore.Instance.EdgeEffect.CurrentTechnique = MMDXCore.Instance.EdgeEffect.Techniques["MMDEdgeEffect"];
-            spriteBatch.Begin(0, BlendState.NonPremultiplied, null, null, null, MMDXCore.Instance.EdgeEffect);
+            edgeEffect.Parameters["EdgeWidth"].SetValue(EdgeWidth);
+            edgeEffect.Parameters["ScreenResolution"].SetValue(new Vector2(viewport.Width, viewport.Height));
+            //edgeEffect.Parameters["Texture"].SetValue(edgeMap);
+            edgeEffect.CurrentTechnique = edgeEffect.Techniques["MMDEdgeEffect"];
+            spriteBatch.Begin(0, BlendState.NonPremultiplied, null, null, null, edgeEffect);
             //spriteBatch.Begin();
             spriteBatch.Draw(edgeMap, Vector2.Zero, Color.White);
             spriteBatch.End();

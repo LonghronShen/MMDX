@@ -28,6 +28,7 @@
 	<ItemGroup>
 		<ProjectReference Include="..\MikumikuDance.Framework.BulletX\MikumikuDance.Framework.BulletX.csproj" />
 		<ProjectReference Include="..\MikumikuDance.Framework.Primitives\MikumikuDance.Framework.Primitives.csproj" />
+		<ProjectReference Include="..\MikumikuDance.Framework.Abstractions\MikumikuDance.Framework.Abstractions.csproj" />
 	</ItemGroup>
 
 	<Import Project="../../Build/profile111.props" Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81' " />

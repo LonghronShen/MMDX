@@ -14,6 +14,7 @@ using BulletX.BulletCollision.BroadphaseCollision;
 using BulletX.BulletDynamics.ConstraintSolver;
 using BulletX.LinerMath;
 using MikuMikuDance.Core.Accessory;
+using MikumikuDance.Framework.Abstractions;
 #if XNA
 using Microsoft.Xna.Framework.Content;
 #endif
@@ -29,6 +30,14 @@ namespace MikuMikuDance.Core
         /// シングルトンオブジェクト
         /// </summary>
         protected static MMDCore m_inst;
+        /// <summary>
+        /// DI: グラフィックデバイス抽象
+        /// </summary>
+        protected IMMDGraphicsDevice m_graphicsDevice;
+        /// <summary>
+        /// DI: コンテンツローダー抽象
+        /// </summary>
+        protected IMMDContentLoader m_contentLoader;
         //物理エンジンの設定データ
         ICollisionConfiguration config = null;
         CollisionDispatcher dispatcher = null;
@@ -112,7 +121,19 @@ namespace MikuMikuDance.Core
         /// </summary>
         public Dictionary<string, object> OpaqueData { get { return opaqueData; } }
         /// <summary>
-        /// コンストラクタ
+        /// DI コンストラクタ
+        /// </summary>
+        /// <param name="device">グラフィックデバイス抽象</param>
+        /// <param name="contentLoader">コンテンツローダー抽象</param>
+        protected MMDCore(IMMDGraphicsDevice device, IMMDContentLoader contentLoader)
+            : this()
+        {
+            m_graphicsDevice = device;
+            m_contentLoader = contentLoader;
+        }
+
+        /// <summary>
+        /// コンストラクタ (レガシー)
         /// </summary>
         protected MMDCore()
         {
@@ -227,6 +248,26 @@ namespace MikuMikuDance.Core
         }
 
         #region IDisposable メンバー
+        #region 抽象へのアクセサ
+
+        /// <summary>
+        /// グラフィックデバイス抽象
+        /// </summary>
+        public IMMDGraphicsDevice GraphicsDevice
+        {
+            get { return m_graphicsDevice; }
+        }
+
+        /// <summary>
+        /// コンテンツローダー抽象
+        /// </summary>
+        public IMMDContentLoader ContentLoader
+        {
+            get { return m_contentLoader; }
+        }
+
+        #endregion
+
         /// <summary>
         /// 終了時に呼び出す。
         /// </summary>
