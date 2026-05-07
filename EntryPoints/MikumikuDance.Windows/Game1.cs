@@ -45,7 +45,7 @@ namespace MikumikuDance.Windows
             _contentLoader = cl;
 
             graphics = new GraphicsDeviceManager(this);
-            graphics.GraphicsProfile = GraphicsProfile.HiDef;
+            graphics.GraphicsProfile = GraphicsProfile.Reach;
 
             // ContentManager は DI で注入された IMMDContentLoader を使うので、
             // Game.Content プロパティは空のサービスコンテナで初期化

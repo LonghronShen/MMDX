@@ -54,5 +54,5 @@
 	<Import Project="../../Build/netstandard2.0.props" Condition=" '$(TargetFramework)' == 'netstandard2.0' " />
 	<Import Project="../../Build/net7.props" Condition=" '$(TargetFramework)' == 'net7' " />
 	<Import Project="../../Build/net8.props" Condition=" '$(TargetFramework)' == 'net8' " />
-	<Import Project="../../Build/net9.props" Condition=" '$(TargetFramework)' == 'net9' " />
+	<Import Project="../../Build/net9.props" Condition=" '$(TargetFramework)' == 'net9.0' " />
 </Project>

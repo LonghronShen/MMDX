@@ -10,7 +10,7 @@
 
 #-------------------------------- References --------------------------------#
 
-/reference:..\..\..\Framework\MikumikuDance.Framework.Pipeline\bin\Debug\net461\MikumikuDance.Framework.Pipeline.dll
+# /reference:..\..\..\Framework\MikumikuDance.Framework.Pipeline\bin\Debug\net461\MikumikuDance.Framework.Pipeline.dll
 
 #---------------------------------- Content ---------------------------------#
 
