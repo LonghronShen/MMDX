@@ -1,0 +1,16 @@
+<Project Sdk="Microsoft.NET.Sdk">
+  <PropertyGroup>
+    <TargetFrameworks>netstandard2.0</TargetFrameworks>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <AssemblyName>MikumikuDance.Framework.Renderer.MonoGame</AssemblyName>
+    <RootNamespace>MikumikuDance.Framework.Renderer.MonoGame</RootNamespace>
+  </PropertyGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\MikumikuDance.Framework.Abstractions\MikumikuDance.Framework.Abstractions.csproj" />
+    <ProjectReference Include="..\MikumikuDance.Framework.Core\MikumikuDance.Framework.Core.csproj" />
+  </ItemGroup>
+  <ItemGroup Condition="'$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105" />
+    <PackageReference Include="Unity" Version="5.11.11" />
+  </ItemGroup>
+</Project>
