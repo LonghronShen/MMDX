@@ -94,14 +94,15 @@
 		</PackageReference>
 	</ItemGroup>
 
-	<ItemGroup>
+	<ItemGroup Condition=" '$(MSBuildRuntimeType)' != 'Core' ">
 		<PackageReference Include="Microsoft.Bcl" Version="1.1.8"></PackageReference>
 		<PackageReference Include="Microsoft.Bcl.Build" Version="1.0.21" GeneratePathProperty="true"></PackageReference>
 		<PackageReference Include="Microsoft.Bcl.Async" Version="1.0.168"></PackageReference>
 	</ItemGroup>
 
-	<Import Project="$(PkgMicrosoft_Bcl_Build)\tools\Microsoft.Bcl.Build.targets" Condition="Exists('$(PkgMicrosoft_Bcl_Build)\tools\Microsoft.Bcl.Build.targets')" />
-	<Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition=" '$(BclBuildImported)' == '' AND '$(SkipValidatePackageReferences)' != 'true' ">
+	<!-- Bcl.Build targets only work with .NET Framework MSBuild (v4.0), skip for dotnet CLI -->
+	<Import Project="$(PkgMicrosoft_Bcl_Build)\tools\Microsoft.Bcl.Build.targets" Condition=" '$(MSBuildRuntimeType)' != 'Core' And Exists('$(PkgMicrosoft_Bcl_Build)\tools\Microsoft.Bcl.Build.targets')" />
+	<Target Name="EnsureBclBuildImported" BeforeTargets="BeforeBuild" Condition=" '$(BclBuildImported)' == '' AND '$(SkipValidatePackageReferences)' != 'true' AND '$(MSBuildRuntimeType)' != 'Core' ">
 		<Error Condition="!Exists('$(PkgMicrosoft_Bcl_Build)\tools\Microsoft.Bcl.Build.targets')" Text="This project references NuGet package(s) that are missing on this computer. Enable NuGet Package Restore to download them.  For more information, see http://go.microsoft.com/fwlink/?LinkID=317567." HelpKeyword="BCLBUILD2001" />
 		<Error Condition="Exists('$(PkgMicrosoft_Bcl_Build)\tools\Microsoft.Bcl.Build.targets')" Text="The build restored NuGet packages. Build the project again to include these packages in the build. For more information, see http://go.microsoft.com/fwlink/?LinkID=317568." HelpKeyword="BCLBUILD2002" />
 	</Target>
