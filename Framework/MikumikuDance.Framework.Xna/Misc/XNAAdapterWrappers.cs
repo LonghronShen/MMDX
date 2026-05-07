@@ -1,4 +1,5 @@
 using System;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using MikumikuDance.Framework.Abstractions;
 
@@ -189,7 +190,7 @@ namespace MikuMikuDance.XNA.Misc
             // Since we need DynamicVertexBuffer for writable vertex buffers, we create one
             // The caller must ensure the vertex type is set correctly externally.
             // We use a generic vertex declaration placeholder - actual type is set in the subclasses.
-            var vb = new DynamicVertexBuffer(InnerDevice, typeof(Microsoft.Xna.Framework.Graphics.VertexPositionNormal), size / 12, BufferUsage.None);
+            var vb = new DynamicVertexBuffer(InnerDevice, typeof(VertexPositionNormal), size / 12, BufferUsage.None);
             return new XNAVertexBufferWrapper(vb);
         }
 

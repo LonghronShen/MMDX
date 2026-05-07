@@ -10,13 +10,8 @@
     <ProjectReference Include="..\MikumikuDance.Framework.Xna\MikumikuDance.Framework.Xna.csproj" />
     <ProjectReference Include="..\MikumikuDance.Framework.Core\MikumikuDance.Framework.Core.csproj" />
   </ItemGroup>
+  <!-- MonoGame.WindowsDX.9000 provides the Microsoft.Xna.Framework assemblies for net40 -->
   <ItemGroup>
-    <Reference Include="Microsoft.Xna.Framework" />
-    <Reference Include="Microsoft.Xna.Framework.Game" />
-    <Reference Include="Microsoft.Xna.Framework.Graphics" />
-  </ItemGroup>
-  <!-- Unity 3.x for net40 DI -->
-  <ItemGroup>
-    <!-- Unity added at EntryPoint level -->
+    <PackageReference Include="MonoGame.Framework.WindowsDX.9000" Version="3.8.9102" />
   </ItemGroup>
 </Project>

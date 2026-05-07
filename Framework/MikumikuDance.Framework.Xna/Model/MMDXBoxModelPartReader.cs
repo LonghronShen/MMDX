@@ -1,4 +1,4 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
@@ -38,7 +38,7 @@ namespace MikuMikuDance.XNA.Model
                 throw new ContentLoadException("MMDXCore.ModelPartFactoryがMMDModelPart以外を返すファクトリーになっています。XNAのコンテンツパイプラインを使用する場合はMMDModelPartを返すファクトリーをセットする必要があります");
             }
             // read in the BasicEffect as a shared resource
-            input.ReadSharedResource<Effect>(fx => modelPart.Effect = fx);
+            input.ReadSharedResource<Effect>(fx => modelPart.Effect = new MikuMikuDance.XNA.Misc.XNAEffectWrapper(fx));
 
             return modelPart;
         }
