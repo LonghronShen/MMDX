@@ -1,10 +1,12 @@
-﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MikuMikuDance.Core.Model;
 using MikuMikuDance.Core.Motion;
 using MikuMikuDance.XNA;
+using MikuMikuDance.XNA.Misc;
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikumikuDance.Windows
 {
@@ -17,6 +19,12 @@ namespace MikumikuDance.Windows
     {
         //XNAのデバイス
         GraphicsDeviceManager graphics;
+        //DI: コンテンツローダー抽象
+        IMMDContentLoader _contentLoader;
+        //DI: MMDXCore（MMDXCore.Instance の代わり）
+        MMDXCore _mmdxCore;
+        //DI: グラフィックデバイス抽象
+        IMMDGraphicsDevice _graphicsDevice;
         //MMDモデル
         MMDModel model;
         //MMDモーション
@@ -26,22 +34,22 @@ namespace MikumikuDance.Windows
         GamePadButtons beforeButtons;
 
         /// <summary>
-        /// コンストラクタ
+        /// DI コンストラクタ
         /// </summary>
-        public Game1()
+        /// <param name="cl">コンテンツローダー抽象</param>
+        /// <param name="core">MMDXCore インスタンス</param>
+        public Game1(IMMDContentLoader cl, MMDXCore core)
             : base()
         {
-            if (this.Content == null)
-            {
-                this.Content = new ContentManager(this.Services, "Content");
-            }
-            else
-            {
-                this.Content.RootDirectory = "Content";
-            }
+            _mmdxCore = core;
+            _contentLoader = cl;
 
             graphics = new GraphicsDeviceManager(this);
             graphics.GraphicsProfile = GraphicsProfile.HiDef;
+
+            // ContentManager は DI で注入された IMMDContentLoader を使うので、
+            // Game.Content プロパティは空のサービスコンテナで初期化
+            base.Content = new ContentManager(this.Services, "Content");
         }
 
         /// <summary>
@@ -64,12 +72,16 @@ namespace MikumikuDance.Windows
         /// </summary>
         protected override void LoadContent()
         {
+            // GraphicsDevice が利用可能になったので、XNAGraphicsDeviceWrapper を作成して注入
+            _graphicsDevice = new XNAGraphicsDeviceWrapper(GraphicsDevice);
+            _mmdxCore.SetGraphicsDevice(_graphicsDevice);
+
             //モデルをパイプラインより読み込み
-            model = MMDXCore.Instance.LoadModel("Miku", Content);
+            model = _mmdxCore.LoadModel("Miku", _contentLoader);
             //サンプルモデルはカリングを行わない。(他のモデルはカリングを行う)
             model.Culling = false;
             //モーションをパイプラインより読み込み
-            motion = MMDXCore.Instance.LoadMotion("TrueMyHeart", Content);
+            motion = _mmdxCore.LoadMotion("TrueMyHeart", _contentLoader);
             //モデルにモーションをセット
             model.AnimationPlayer.AddMotion("TrueMyHeart", motion, MMDMotionTrackOptions.UpdateWhenStopped);
         }
@@ -111,7 +123,7 @@ namespace MikumikuDance.Windows
                 model.AnimationPlayer["TrueMyHeart"].Start();
             }
             //MMDのUpdateを呼び出す
-            MMDXCore.Instance.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
+            _mmdxCore.Update((float)gameTime.ElapsedGameTime.TotalSeconds);
 
             base.Update(gameTime);
             //キーボードの状態を記録
@@ -140,7 +152,7 @@ namespace MikumikuDance.Windows
         {
             //MMDの破棄処理を実行
             model.Dispose();
-            MMDXCore.Instance.Dispose();
+            _mmdxCore.Dispose();
             base.Dispose(disposing);
         }
     }

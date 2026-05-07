@@ -266,6 +266,17 @@ namespace MikuMikuDance.Core
             get { return m_contentLoader; }
         }
 
+        /// <summary>
+        /// DI: ゲーム起動後にグラフィックデバイスを注入（XNA GraphicsDevice は Game.Run 後でないと生成されない）
+        /// </summary>
+        /// <param name="device">グラフィックデバイス抽象</param>
+        public void SetGraphicsDevice(IMMDGraphicsDevice device)
+        {
+            if (device == null)
+                throw new ArgumentNullException(nameof(device));
+            m_graphicsDevice = device;
+        }
+
         #endregion
 
         /// <summary>

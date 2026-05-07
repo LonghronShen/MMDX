@@ -25,6 +25,7 @@
 	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
 		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641"></PackageReference>
 		<PackageReference Include="MonoGame.Content.Builder.Task" Version="3.8.0.1641"></PackageReference>
+		<PackageReference Include="Unity" Version="5.11.1"></PackageReference>
 	</ItemGroup>
 
 	<ItemGroup>
@@ -34,6 +35,8 @@
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Resources\MikumikuDance.Framework.Resources.csproj" />
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Xna\MikumikuDance.Framework.Xna.csproj" />
 		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Pipeline\MikumikuDance.Framework.Pipeline.csproj" />
+		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Abstractions\MikumikuDance.Framework.Abstractions.csproj" />
+		<ProjectReference Include="..\..\Framework\MikumikuDance.Framework.Renderer.Xna\MikumikuDance.Framework.Renderer.Xna.csproj" />
 	</ItemGroup>
 
 	<ItemGroup>
