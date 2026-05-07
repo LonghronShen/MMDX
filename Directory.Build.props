@@ -45,6 +45,8 @@
 
 	<ItemGroup Condition=" $(TargetFramework) != '' ">
 		<PackageReference Include="Microsoft.SourceLink.GitHub" Version="1.1.1" PrivateAssets="All" />
+	</ItemGroup>
+	<ItemGroup Condition=" $(TargetFramework) != '' And '$(GitVersionEnabled)' == 'true' ">
 		<PackageReference Include="GitVersion.MsBuild" Version="6.1.0" PrivateAssets="All" />
 	</ItemGroup>
 </Project>

@@ -17,6 +17,6 @@
   </ItemGroup>
   <!-- Unity 3.x for net40 DI -->
   <ItemGroup>
-    <PackageReference Include="Unity" Version="3.5.1404" />
+    <!-- Unity added at EntryPoint level -->
   </ItemGroup>
 </Project>

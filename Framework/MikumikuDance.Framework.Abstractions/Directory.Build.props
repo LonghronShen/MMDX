@@ -1,0 +1,13 @@
+<Project>
+	<!-- Override root Directory.Build.props for the zero-dependency abstractions project -->
+	<PropertyGroup>
+		<GenerateDocumentationFile>false</GenerateDocumentationFile>
+		<GenerateSerializationAssemblies>Off</GenerateSerializationAssemblies>
+		<EnableWindowsTargeting>false</EnableWindowsTargeting>
+		<RootNamespace>MikumikuDance.Framework.Abstractions</RootNamespace>
+	</PropertyGroup>
+
+	<ItemGroup Condition=" $(TargetFramework) != '' ">
+		<!-- Skip GitVersion.MsBuild and SourceLink for this project -->
+	</ItemGroup>
+</Project>
