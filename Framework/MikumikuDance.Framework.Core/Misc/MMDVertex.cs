@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Misc
 {
@@ -18,11 +13,11 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// 位置
         /// </summary>
-        public Vector3 Position;
+        public MMDVector3 Position;
         /// <summary>
         /// ボーンウェイト
         /// </summary>
-        public Vector2 BlendWeights;
+        public MMDVector2 BlendWeights;
         /// <summary>
         /// 影響ボーン1
         /// </summary>
@@ -34,7 +29,7 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// 法線
         /// </summary>
-        public Vector3 Normal;
+        public MMDVector3 Normal;
     }
     /// <summary>
     /// MMD頂点データ(法線、テクスチャ付き)
@@ -44,7 +39,7 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// テクスチャ座標
         /// </summary>
-        public Vector2 TextureCoordinate;
+        public MMDVector2 TextureCoordinate;
     }
     /// <summary>
     /// MMD頂点データ(法線、テクスチャ、頂点カラー付き)
@@ -54,7 +49,7 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// 頂点カラー
         /// </summary>
-        public Vector4 VertexColor;
+        public MMDVector4 VertexColor;
     }
     /// <summary>
     /// MMD頂点データ(法線、頂点カラー付き)
@@ -64,7 +59,7 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// 頂点カラー
         /// </summary>
-        public Vector4 VertexColor;
+        public MMDVector4 VertexColor;
     }
     
 }

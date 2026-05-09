@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Misc
 {
@@ -52,8 +47,8 @@ namespace MikuMikuDance.Core.Misc
             Restitution = new float[3];
             for (int i = 0; i < 3; i++)
             {
-                MaxRot[i] = MathHelper.Pi;
-                MinRot[i] = -MathHelper.Pi;
+                MaxRot[i] = MMDMathHelper.Pi;
+                MinRot[i] = -MMDMathHelper.Pi;
                 Mirror[i] = false;
                 Restitution[i] = 0.5f;
             }
@@ -115,7 +110,7 @@ namespace MikuMikuDance.Core.Misc
         /// 回転軸制限の適用
         /// </summary>
         /// <param name="rotationAxis"></param>
-        public void Adjust(ref Vector3 rotationAxis)
+        public void Adjust(ref MMDVector3 rotationAxis)
         {
             if (Limits[0])
             {
@@ -157,8 +152,8 @@ namespace MikuMikuDance.Core.Misc
             TotalRotationLimits = new Dictionary<string, RotationLimit>();
             RotationLimit limit;
             limit = new RotationLimit();
-            limit.MaxRot[0] = MathHelper.Pi;
-            limit.MinRot[0] = MathHelper.ToRadians(3f);//3度ぐらい制限を設けてやると上手くいく。
+            limit.MaxRot[0] = MMDMathHelper.Pi;
+            limit.MinRot[0] = MMDMathHelper.ToRadians(3f);//3度ぐらい制限を設けてやると上手くいく。
             limit.MinRot[1] = 0;
             limit.MaxRot[1] = 0;
             limit.MinRot[2] = 0;
@@ -167,8 +162,8 @@ namespace MikuMikuDance.Core.Misc
             limit.Restitution[0] = 0.99f;
             TotalRotationLimits.Add("左ひざ", limit);
             limit = new RotationLimit();
-            limit.MaxRot[0] = MathHelper.Pi;
-            limit.MinRot[0] = MathHelper.ToRadians(3f);//3度ぐらい制限を設けてやると上手くいく。
+            limit.MaxRot[0] = MMDMathHelper.Pi;
+            limit.MinRot[0] = MMDMathHelper.ToRadians(3f);//3度ぐらい制限を設けてやると上手くいく。
             limit.MinRot[1] = 0;
             limit.MaxRot[1] = 0;
             limit.MinRot[2] = 0;
@@ -270,7 +265,7 @@ namespace MikuMikuDance.Core.Misc
         /// </summary>
         /// <param name="boneName">ボーン名</param>
         /// <param name="rotationAxis">回転軸</param>
-        public void Adjust(string boneName, ref Vector3 rotationAxis)
+        public void Adjust(string boneName, ref MMDVector3 rotationAxis)
         {
             RotationAxisLimit limit;
             if (RotationAxisLimits.TryGetValue(boneName, out limit))

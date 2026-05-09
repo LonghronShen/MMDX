@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Accessory
 {
@@ -19,7 +14,7 @@ namespace MikuMikuDance.Core.Accessory
         /// <summary>
         /// 位置
         /// </summary>
-        public Matrix Transform;
+        public MikumikuDance.Framework.Abstractions.MMDMatrix Transform;
         /// <summary>
         /// 基準ボーン名
         /// </summary>

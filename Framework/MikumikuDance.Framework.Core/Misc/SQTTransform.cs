@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Misc
 {
@@ -20,23 +15,23 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// 拡大
         /// </summary>
-        public Vector3 Scales;
+        public MMDVector3 Scales;
 
         /// <summary>
         /// 回転
         /// </summary>
-        public Quaternion Rotation;
+        public MMDQuaternion Rotation;
 
         /// <summary>
         /// 平行移動
         /// </summary>
-        public Vector3 Translation;
+        public MMDVector3 Translation;
 
         #endregion
         /// <summary>
         /// 恒等SQTTransformを返します
         /// </summary>
-        public static SQTTransform Identity { get { return new SQTTransform(new Vector3(1, 1, 1), Quaternion.Identity, Vector3.Zero); } }
+        public static SQTTransform Identity { get { return new SQTTransform(new MMDVector3(1, 1, 1), MMDQuaternion.Identity, MMDVector3.Zero); } }
         #region 初期化
 
         /// <summary>
@@ -45,7 +40,7 @@ namespace MikuMikuDance.Core.Misc
         /// <param name="scales">スケールベクトル</param>
         /// <param name="rotation">回転クォータニオン</param>
         /// <param name="translation">移動ベクトル</param>
-        public SQTTransform(Vector3 scales, Quaternion rotation, Vector3 translation)
+        public SQTTransform(MMDVector3 scales, MMDQuaternion rotation, MMDVector3 translation)
         {
             Scales = scales;
             Rotation = rotation;
@@ -58,7 +53,7 @@ namespace MikuMikuDance.Core.Misc
         /// <param name="rotation">回転クォータニオン</param>
         /// <param name="translation">移動ベクトル</param>
         /// <param name="result">SQTTransform</param>
-        public static void Create(ref Vector3 scales, ref Quaternion rotation, ref Vector3 translation, out SQTTransform result)
+        public static void Create(ref MMDVector3 scales, ref MMDQuaternion rotation, ref MMDVector3 translation, out SQTTransform result)
         {
             result = new SQTTransform() { Scales = scales, Rotation = rotation, Translation = translation };
         }
@@ -70,45 +65,37 @@ namespace MikuMikuDance.Core.Misc
             result = new SQTTransform();
             // 平行移動の算出
             // 拡大→回転
-            Vector3 temp = new Vector3();
-#if SlimDX
-            Vector4 newTranslation;
-#else
-            Vector3 newTranslation;
-#endif
+            MMDVector3 temp = new MMDVector3();
+            MMDVector3 newTranslation;
             temp.X = value1.Translation.X * value2.Scales.X;
             temp.Y = value1.Translation.Y * value2.Scales.Y;
             temp.Z = value1.Translation.Z * value2.Scales.Z;
-            Vector3.Transform(ref temp, ref value2.Rotation, out newTranslation);
+            MMDVector3.Transform(ref temp, ref value2.Rotation, out newTranslation);
 
             newTranslation.X += value2.Translation.X;
             newTranslation.Y += value2.Translation.Y;
             newTranslation.Z += value2.Translation.Z;
 
             // 回転部分の結合(回転と拡大は独立だったはず……)
-            Quaternion.Multiply(ref value1.Rotation, ref value2.Rotation,
+            MMDQuaternion.Multiply(ref value1.Rotation, ref value2.Rotation,
                                         out result.Rotation);
             //拡大部分の結合
             result.Scales.X = value1.Scales.X * value2.Scales.X;
             result.Scales.Y = value1.Scales.Y * value2.Scales.Y;
             result.Scales.Z = value1.Scales.Z * value2.Scales.Z;
-#if SlimDX
-            result.Translation = new Vector3(newTranslation.X, newTranslation.Y, newTranslation.Z);
-#else
             result.Translation = newTranslation;
-#endif
         }
         /// <summary>
         /// 指定された行列から生成する
         /// </summary>
         /// <param name="matrix"></param>
         /// <returns></returns>
-        public static SQTTransform FromMatrix(Matrix matrix)
+        public static SQTTransform FromMatrix(MMDMatrix matrix)
         {
             // 行列の分解
-            Quaternion rotation;
-            Vector3 translation;
-            Vector3 scale;
+            MMDQuaternion rotation;
+            MMDVector3 translation;
+            MMDVector3 scale;
             matrix.Decompose(out scale, out rotation, out translation);
 
             
@@ -117,9 +104,9 @@ namespace MikuMikuDance.Core.Misc
 
         
         #endregion
-        internal Matrix CreateMatrix()
+        internal MMDMatrix CreateMatrix()
         {
-            Matrix result;
+            MMDMatrix result;
             CreateMatrix(out result);
             return result;
         }
@@ -127,17 +114,17 @@ namespace MikuMikuDance.Core.Misc
         /// マトリックスの生成
         /// </summary>
         /// <param name="result">マトリックス</param>
-        public void CreateMatrix(out Matrix result)
+        public void CreateMatrix(out MMDMatrix result)
         {
-            Matrix scales;
-            Matrix move;
-            Matrix rot;
-            Matrix temp;
+            MMDMatrix scales;
+            MMDMatrix move;
+            MMDMatrix rot;
+            MMDMatrix temp;
             MMDXMath.CreateScaleMatrix(ref Scales, out scales);
             MMDXMath.CreateTranslationMatrix(ref Translation, out move);
             MMDXMath.CreateMatrixFromQuaternion(ref Rotation, out rot);
-            Matrix.Multiply(ref scales, ref rot, out temp);
-            Matrix.Multiply(ref temp, ref move, out result);
+            MMDMatrix.Multiply(ref scales, ref rot, out temp);
+            MMDMatrix.Multiply(ref temp, ref move, out result);
 
         }
         
@@ -152,9 +139,9 @@ namespace MikuMikuDance.Core.Misc
         /// <remarks>Quaternionは球状線形補間を使用</remarks>
         internal static void Lerp(ref SQTTransform pose1, ref SQTTransform pose2, float amount, out SQTTransform result)
         {
-            Vector3.Lerp(ref pose1.Scales, ref pose2.Scales, amount, out result.Scales);
-            Vector3.Lerp(ref pose1.Translation, ref pose2.Translation, amount, out result.Translation);
-            Quaternion.Slerp(ref pose1.Rotation, ref pose2.Rotation, amount, out result.Rotation);
+            MMDVector3.Lerp(ref pose1.Scales, ref pose2.Scales, amount, out result.Scales);
+            MMDVector3.Lerp(ref pose1.Translation, ref pose2.Translation, amount, out result.Translation);
+            MMDQuaternion.Slerp(ref pose1.Rotation, ref pose2.Rotation, amount, out result.Rotation);
         }
 
         

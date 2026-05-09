@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 	<PropertyGroup>
-		<TargetFrameworks>net40;net461;netstandard2.0;net9.0;portable-net45+win8+wpa81</TargetFrameworks>
+		<TargetFrameworks>net40;netstandard2.0</TargetFrameworks>
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 
@@ -10,37 +10,15 @@
 
 	<PropertyGroup>
 		<NoWarn>NU5128</NoWarn>
-		<DefineConstants>WINDOWS;XNA;PORTABLE</DefineConstants>
+		<DefineConstants>WINDOWS;PORTABLE</DefineConstants>
 	</PropertyGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81' ">
-		<PackageReference Include="MonoGame.Framework.Portable.9000" Version="3.8.9102"></PackageReference>
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net40' ">
-		<PackageReference Include="MonoGame.Framework.WindowsDX.9000" Version="3.8.9102"></PackageReference>
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net461' ">
-		<PackageReference Include="MonoGame.Framework.WindowsDX" Version="3.8.0.1641"></PackageReference>
-	</ItemGroup>
-
-	<ItemGroup Condition=" '$(TargetFramework)' == 'net9.0' ">
-		<PackageReference Include="MonoGame.Framework.DesktopGL" Version="3.8.2.1105"></PackageReference>
-	</ItemGroup>
 
 	<ItemGroup>
 		<ProjectReference Include="..\MikumikuDance.Framework.BulletX\MikumikuDance.Framework.BulletX.csproj" />
 		<ProjectReference Include="..\MikumikuDance.Framework.Primitives\MikumikuDance.Framework.Primitives.csproj" />
-		<ProjectReference Include="..\MikumikuDance.Framework.Abstractions\MikumikuDance.Framework.Abstractions.csproj" Condition=" '$(TargetFramework)' != 'portable-net45+win8+wpa81' " />
+		<ProjectReference Include="..\MikumikuDance.Framework.Abstractions\MikumikuDance.Framework.Abstractions.csproj" />
 	</ItemGroup>
 
-	<Import Project="../../Build/profile111.props" Condition=" '$(TargetFramework)' == 'portable-net45+win8+wpa81' " />
-	<Import Project="../../Build/sl5.props" Condition=" '$(TargetFramework)' == 'sl5' " />
-	<Import Project="../../Build/net35.props" Condition=" '$(TargetFramework)' == 'net35' " />
 	<Import Project="../../Build/net40.props" Condition=" '$(TargetFramework)' == 'net40' " />
 	<Import Project="../../Build/netstandard2.0.props" Condition=" '$(TargetFramework)' == 'netstandard2.0' " />
-	<Import Project="../../Build/net7.props" Condition=" '$(TargetFramework)' == 'net7' " />
-	<Import Project="../../Build/net8.props" Condition=" '$(TargetFramework)' == 'net8' " />
-	<Import Project="../../Build/net9.props" Condition=" '$(TargetFramework)' == 'net9' " />
 </Project>

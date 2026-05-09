@@ -1,11 +1,14 @@
-﻿using System;
+using System;
 using System.Threading;
 using System.Threading.Tasks;
+using BulletX.BulletDynamics.Dynamics;
+using MikuMikuDance.Core.Misc;
 
 namespace MikuMikuDance.Core.MultiThreads
 {
     /// <summary>
     /// 物理エンジンスレッドマネージャ
+    /// DI対応、非シングルトン版
     /// </summary>
     public class PhysicsThreadManager
         : IDisposable
@@ -38,8 +41,12 @@ namespace MikuMikuDance.Core.MultiThreads
         //バッファ番号
         int bufferNum = 0;
 
-        //シングルトン用
-        static PhysicsThreadManager m_instance = null;
+        /// <summary>DI: 物理ワールド</summary>
+        private DiscreteDynamicsWorld m_physicsWorld;
+        /// <summary>DI: 物理使用フラグへのアクセス</summary>
+        private Func<bool> m_usePhysicsGetter;
+        /// <summary>DI: デバッグ描画用コールバック（任意）</summary>
+        private Action<float> m_debugDraw;
 
         /// <summary>
         /// マルチスレッドモードかどうか
@@ -52,19 +59,6 @@ namespace MikuMikuDance.Core.MultiThreads
         public int BufferNum { get { return bufferNum; } }
 
         /// <summary>
-        /// インスタンス
-        /// </summary>
-        public static PhysicsThreadManager Instance
-        {
-            get
-            {
-                if (m_instance == null)
-                    m_instance = new PhysicsThreadManager();
-                return m_instance;
-            }
-        }
-
-        /// <summary>
         /// 物理エンジン同期処理用イベント
         /// </summary>
         public event Action Synchronize;
@@ -74,8 +68,21 @@ namespace MikuMikuDance.Core.MultiThreads
         /// </summary>
         public event Action<int> DropFrame;
 
-        private PhysicsThreadManager()
+        /// <summary>
+        /// DI コンストラクタ
+        /// </summary>
+        /// <param name="physicsWorld">物理ワールド</param>
+        /// <param name="usePhysicsGetter">UsePhysicsフラグ取得用デリゲート</param>
+        /// <param name="debugDraw">デバッグ描画コールバック（任意）</param>
+        public PhysicsThreadManager(DiscreteDynamicsWorld physicsWorld, Func<bool> usePhysicsGetter, Action<float> debugDraw = null)
         {
+            if (physicsWorld == null) throw new ArgumentNullException(nameof(physicsWorld));
+            if (usePhysicsGetter == null) throw new ArgumentNullException(nameof(usePhysicsGetter));
+
+            m_physicsWorld = physicsWorld;
+            m_usePhysicsGetter = usePhysicsGetter;
+            m_debugDraw = debugDraw;
+
             CalcFinished = new AutoResetEvent(true);
             CalcStart = new AutoResetEvent(false);
 
@@ -83,6 +90,14 @@ namespace MikuMikuDance.Core.MultiThreads
             this.cancellationToken = this.cancellationTokenSource.Token;
 
             this.RunPhysicsThread();
+        }
+
+        /// <summary>
+        /// 簡易コンストラクタ（MMDCoreから呼ばれる）
+        /// </summary>
+        internal PhysicsThreadManager(DiscreteDynamicsWorld physicsWorld, MMDCore core)
+            : this(physicsWorld, () => core.UsePhysics, (ts) => { if (core.Physics.DebugDrawer != null) core.Physics.debugDrawWorld(); })
+        {
         }
 
         private void RunPhysicsThread()
@@ -142,8 +157,8 @@ namespace MikuMikuDance.Core.MultiThreads
                 {
                     if (timeStep > 0.0f)
                     {
-                        if (MMDCore.Instance.UsePhysics)
-                            MMDCore.Instance.Physics.stepSimulation(timeStep);
+                        if (m_usePhysicsGetter())
+                            m_physicsWorld.stepSimulation(timeStep);
                     }
                 }
             }
@@ -153,9 +168,9 @@ namespace MikuMikuDance.Core.MultiThreads
         {
             m_timeStep = timeStep;
             bufferNum = (++bufferNum) % 2;
-            if (timeStep > 0.0f && MMDCore.Instance.Physics.DebugDrawer != null)
+            if (timeStep > 0.0f && m_debugDraw != null)
             {
-                MMDCore.Instance.Physics.debugDrawWorld();
+                m_debugDraw(timeStep);
             }
             if (timeStep > 0.0f && Synchronize != null)
             {
@@ -175,8 +190,8 @@ namespace MikuMikuDance.Core.MultiThreads
                 {
                     if (m_timeStep > 0.0f)
                     {
-                        if (MMDCore.Instance.UsePhysics)
-                            MMDCore.Instance.Physics.stepSimulation(m_timeStep);
+                        if (m_usePhysicsGetter())
+                            m_physicsWorld.stepSimulation(m_timeStep);
                     }
                 }
                 CalcFinished.Set();

@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Model;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Accessory
 {
@@ -28,7 +23,7 @@ namespace MikuMikuDance.Core.Accessory
         /// アクセサリーの位置
         /// </summary>
         /// <remarks>モデルがアクセサリーを保持中は保持した状態を基準とした座標系</remarks>
-        public Matrix Transform = Matrix.Identity;
+        public MMDMatrix Transform = MMDMatrix.Identity;
         /// <summary>
         /// テクスチャとしてスクリーンを適応するフラグ
         /// </summary>
@@ -39,14 +34,14 @@ namespace MikuMikuDance.Core.Accessory
         /// アクセサリーの位置を取得
         /// </summary>
         /// <param name="position">位置を示したMatrix</param>
-        public void GetPosition(out Matrix position)
+        public void GetPosition(out MMDMatrix position)
         {
             if (Model != null && !string.IsNullOrEmpty(VAC.BoneName))
             {
-                Matrix temp, temp2;
-                Matrix.Multiply(ref Transform, ref VAC.Transform, out temp);
-                Matrix.Multiply(ref temp, ref Model.BoneManager[VAC.BoneName].GlobalTransform, out temp2);
-                Matrix.Multiply(ref temp2, ref Model.Transform, out position);
+                MMDMatrix temp, temp2;
+                MMDMatrix.Multiply(ref Transform, ref VAC.Transform, out temp);
+                MMDMatrix.Multiply(ref temp, ref Model.BoneManager[VAC.BoneName].GlobalTransform, out temp2);
+                MMDMatrix.Multiply(ref temp2, ref Model.Transform, out position);
             }
             else
                 position = Transform;
@@ -57,7 +52,7 @@ namespace MikuMikuDance.Core.Accessory
         /// </summary>
         public void Draw()
         {
-            Matrix Position;
+            MMDMatrix Position;
             GetPosition(out Position);
             Draw(ref Position);
         }
@@ -65,7 +60,7 @@ namespace MikuMikuDance.Core.Accessory
         /// アクセサリーを描画
         /// </summary>
         /// <param name="Position">描画する位置</param>
-        protected abstract void Draw(ref Matrix Position);
+        protected abstract void Draw(ref MMDMatrix Position);
         
     }
 }

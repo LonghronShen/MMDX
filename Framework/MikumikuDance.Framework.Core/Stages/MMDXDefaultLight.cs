@@ -2,14 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
-#if !XNA
-using System.Drawing;
-#endif
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikuMikuDance.Core.Stages
 {
@@ -23,8 +16,8 @@ namespace MikuMikuDance.Core.Stages
         /// </summary>
         public MMDXDefaultLight()
         {
-            LightColor = new Vector3(164.0f / 255.0f, 164.0f / 255.0f, 164.0f / 255.0f);
-            LightDirection = new Vector3(-0.5f, -1f, -0.5f);
+            LightColor = new MMDVector3(164.0f / 255.0f, 164.0f / 255.0f, 164.0f / 255.0f);
+            LightDirection = new MMDVector3(-0.5f, -1f, -0.5f);
         }
 
         #region IMMDXLight メンバー
@@ -33,7 +26,7 @@ namespace MikuMikuDance.Core.Stages
         /// </summary>
         /// <param name="color">ライト色</param>
         /// <param name="dir">ライト方向</param>
-        public void GetLightParam(out Vector3 color, out Vector3 dir)
+        public void GetLightParam(out MMDVector3 color, out MMDVector3 dir)
         {
             color = LightColor;
             dir = LightDirection;
@@ -42,12 +35,12 @@ namespace MikuMikuDance.Core.Stages
         /// <summary>
         /// ライト色の設定
         /// </summary>
-        public Vector3 LightColor { get; set; }
+        public MMDVector3 LightColor { get; set; }
 
         /// <summary>
         /// ライト方向の設定
         /// </summary>
-        public Vector3 LightDirection { get; set; }
+        public MMDVector3 LightDirection { get; set; }
 
         #endregion
     }

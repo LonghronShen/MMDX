@@ -1,17 +1,10 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Collections.ObjectModel;
 using MikuMikuDance.Core.Misc;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
-#if !XNA
-using System.Drawing;
-#endif
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikuMikuDance.Core.Model
 {
@@ -29,22 +22,28 @@ namespace MikuMikuDance.Core.Model
         /// <summary>
         /// スキニング行列
         /// </summary>
-        public virtual Matrix[] SkinTransforms { get; private set; }
+        public virtual MMDMatrix[] SkinTransforms { get; private set; }
+        /// <summary>
+        /// IKソルバー（DI対応、nullの場合はMMDCore.Current.IKSolverを使用）
+        /// </summary>
+        public IIKSolver IKSolver { get; set; }
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="bones">ボーン一覧</param>
         /// <param name="iks">IK一覧</param>
-        public MMDBoneManager(List<MMDBone> bones, List<MMDIK> iks)
+        /// <param name="ikSolver">IKソルバー（省略時はMMDCore.Current.IKSolver）</param>
+        public MMDBoneManager(List<MMDBone> bones, List<MMDIK> iks, IIKSolver ikSolver = null)
         {
             this.bones = new ReadOnlyCollection<MMDBone>(bones);
             this.IKs = new ReadOnlyCollection<MMDIK>(iks);
+            this.IKSolver = ikSolver;
             boneDic = new Dictionary<string, int>();
             for (int i = 0; i < bones.Count; i++)
             {
                 boneDic.Add(bones[i].Name, i);
             }
-            SkinTransforms = new Matrix[bones.Count];
+            SkinTransforms = new MMDMatrix[bones.Count];
         }
         /// <summary>
         /// ボーン取得
@@ -87,7 +86,7 @@ namespace MikuMikuDance.Core.Model
             for (int i = 1; i < bones.Count; ++i)
             {
                 int parentBone = bones[i].SkeletonHierarchy;
-                Matrix local;
+                MMDMatrix local;
                 bones[i].LocalTransform.CreateMatrix(out local);
                 if (parentBone >= bones.Count)
                 {
@@ -95,7 +94,7 @@ namespace MikuMikuDance.Core.Model
                 }
                 else
                 {
-                    Matrix.Multiply(ref local, ref bones[parentBone].GlobalTransform, out bones[i].GlobalTransform);
+                    MMDMatrix.Multiply(ref local, ref bones[parentBone].GlobalTransform, out bones[i].GlobalTransform);
                 }
             }
             MMDXProfiler.EndMark("BoneManager.CalcGlobalTransform");
@@ -108,7 +107,7 @@ namespace MikuMikuDance.Core.Model
         {
             MMDXProfiler.BeginMark("BoneManager.CalcSkinTransform", MMDXMath.CreateColor(40, 255, 0));
             for (int i = 0; i < bones.Count; ++i)
-                Matrix.Multiply(ref bones[i].InverseBindPose, ref bones[i].GlobalTransform, out SkinTransforms[i]);
+                MMDMatrix.Multiply(ref bones[i].InverseBindPose, ref bones[i].GlobalTransform, out SkinTransforms[i]);
             MMDXProfiler.EndMark("BoneManager.CalcSkinTransform");
         }
         /// <summary>
@@ -116,10 +115,13 @@ namespace MikuMikuDance.Core.Model
         /// </summary>
         public virtual void CalcIK()
         {
+            IIKSolver solver = IKSolver ?? (MMDCore.Current?.IKSolver);
+            if (solver == null) return;
+
             bool UpdateFlag = false;
             for (int i = 0; i < IKs.Count; ++i)
             {
-                if (MMDCore.Instance.IKSolver.Solve(IKs[i], this))
+                if (solver.Solve(IKs[i], this))
                     UpdateFlag = true;
             }
             if (UpdateFlag)

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -23,6 +23,15 @@ namespace MikuMikuDance.Core.Stages
         int lightPos;
 
         /// <summary>
+        /// カメラ（DI対応、null時はMMDCore.Current.Camera）
+        /// </summary>
+        public IMMDXCamera Camera { get; set; }
+        /// <summary>
+        /// ライト（DI対応、null時はMMDCore.Current.Light）
+        /// </summary>
+        public IMMDXLight Light { get; set; }
+
+        /// <summary>
         /// モーション再生用FPS
         /// </summary>
         public decimal FramePerSecond { get; set; }
@@ -30,8 +39,12 @@ namespace MikuMikuDance.Core.Stages
         /// コンストラクタ
         /// </summary>
         /// <param name="motionData">モーションデータ</param>
-        public MMDStageMotionTrack(MMDMotion motionData)
+        /// <param name="camera">カメラ（省略時はMMDCore.Current.Camera）</param>
+        /// <param name="light">ライト（省略時はMMDCore.Current.Light）</param>
+        public MMDStageMotionTrack(MMDMotion motionData, IMMDXCamera camera = null, IMMDXLight light = null)
         {
+            Camera = camera;
+            Light = light;
             cameraFrames = motionData.CameraFrames;
             lightFrames = motionData.LightFrames;
             //モーションのFPS=30
@@ -44,6 +57,15 @@ namespace MikuMikuDance.Core.Stages
                 MaxFrame = Math.Max(MaxFrame, frame.FrameNo);
         }
 
+        private IMMDXCamera ResolveCamera()
+        {
+            return Camera ?? (MMDCore.Current != null ? MMDCore.Current.Camera : null);
+        }
+
+        private IMMDXLight ResolveLight()
+        {
+            return Light ?? (MMDCore.Current != null ? MMDCore.Current.Light : null);
+        }
 
         /// <summary>
         /// モーションの再生
@@ -98,6 +120,8 @@ namespace MikuMikuDance.Core.Stages
         internal void Update(float elapsedSeconds)
         {
             TimeUpdate(elapsedSeconds);
+            IMMDXCamera camera = ResolveCamera();
+            IMMDXLight light = ResolveLight();
             //カメラの更新
             //カーソル位置の更新
             int CursorPos = cameraPos;
@@ -112,13 +136,13 @@ namespace MikuMikuDance.Core.Stages
                 for (; CursorPos < cameraFrames.Count && cameraFrames[CursorPos].FrameNo < NowFrame; ++CursorPos) ;
             }
             cameraPos = CursorPos;
-            if (!(CursorPos == 0 || CursorPos == cameraFrames.Count))
+            if (!(CursorPos == 0 || CursorPos == cameraFrames.Count) && camera != null)
             {
                 //時間経過取得
                 float Progress = ((float)NowFrame - (float)cameraFrames[CursorPos - 1].FrameNo) / ((float)cameraFrames[CursorPos].FrameNo - (float)cameraFrames[CursorPos - 1].FrameNo);
                 //差分を適用
                 MMDCameraKeyFrame camera1 = cameraFrames[CursorPos - 1], camera2 = cameraFrames[CursorPos];
-                MMDCameraKeyFrame.Lerp(camera1, camera2, Progress, MMDCore.Instance.Camera);
+                MMDCameraKeyFrame.Lerp(camera1, camera2, Progress, camera);
             }
             CursorPos = lightPos;
             if (!bReverse)
@@ -132,12 +156,12 @@ namespace MikuMikuDance.Core.Stages
                 for (; CursorPos < lightFrames.Count && lightFrames[CursorPos].FrameNo < NowFrame; ++CursorPos) ;
             }
             lightPos = CursorPos;
-            if (!(CursorPos == 0 || CursorPos == lightFrames.Count))
+            if (!(CursorPos == 0 || CursorPos == lightFrames.Count) && light != null)
             {
                 //時間経過取得
                 float Progress = ((float)NowFrame - (float)lightFrames[CursorPos - 1].FrameNo) / ((float)lightFrames[CursorPos].FrameNo - (float)lightFrames[CursorPos - 1].FrameNo);
                 MMDLightKeyFrame light1 = lightFrames[CursorPos - 1], light2 = lightFrames[CursorPos];
-                MMDLightKeyFrame.Lerp(light1, light2, Progress, MMDCore.Instance.Light);
+                MMDLightKeyFrame.Lerp(light1, light2, Progress, light);
             }
         }
 

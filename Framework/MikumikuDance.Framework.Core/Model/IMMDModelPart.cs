@@ -1,10 +1,6 @@
 ﻿using System;
 using MikuMikuDance.Core.Misc;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikuMikuDance.Core.Model
 {
@@ -18,12 +14,12 @@ namespace MikuMikuDance.Core.Model
         /// </summary>
         /// <param name="mode">モデル描画モード</param>
         /// <param name="world">ワールドマトリクス</param>
-        void SetParams(MMDDrawingMode mode, ref Matrix world);
+        void SetParams(MMDDrawingMode mode, ref MMDMatrix world);
         /// <summary>
         /// スキン行列の設定
         /// </summary>
         /// <param name="skinTransforms">スキン行列配列</param>
-        void SetSkinMatrix(Matrix[] skinTransforms);
+        void SetSkinMatrix(MMDMatrix[] skinTransforms);
 
         /// <summary>
         /// モデルパーツの描画

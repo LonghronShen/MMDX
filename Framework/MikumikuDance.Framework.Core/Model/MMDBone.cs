@@ -4,11 +4,6 @@ using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Misc;
 using System.Collections.ObjectModel;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Model
 {
@@ -30,7 +25,7 @@ namespace MikuMikuDance.Core.Model
         /// ボーンのバインドポーズ逆行列
         /// </summary>
         /// <remarks>変更しないこと……</remarks>
-        public Matrix InverseBindPose;
+        public MMDMatrix InverseBindPose;
         /// <summary>
         /// ボーンの親のボーンのインデックス情報
         /// </summary>
@@ -47,7 +42,7 @@ namespace MikuMikuDance.Core.Model
         /// ボーンのグローバル変換行列
         /// </summary>
         /// <remarks>毎フレームごとにLocalTransformから計算され、上書きされる</remarks>
-        public Matrix GlobalTransform;
+        public MMDMatrix GlobalTransform;
         /// <summary>
         /// 物理影響下のフラグ
         /// </summary>
@@ -59,14 +54,14 @@ namespace MikuMikuDance.Core.Model
         /// <param name="bindPose">バインドポーズ</param>
         /// <param name="inverseBindPose">逆バインドポーズ</param>
         /// <param name="skeletonHierarchy">親ボーン番号</param>
-        public MMDBone(string name, SQTTransform bindPose, Matrix inverseBindPose, int skeletonHierarchy)
+        public MMDBone(string name, SQTTransform bindPose, MMDMatrix inverseBindPose, int skeletonHierarchy)
         {
             Name = name;
             BindPose = bindPose;
             InverseBindPose = inverseBindPose;
             SkeletonHierarchy = skeletonHierarchy;
             LocalTransform = bindPose;
-            GlobalTransform = Matrix.Identity;
+            GlobalTransform = MMDMatrix.Identity;
             IsPhysics = false;
         }
     }

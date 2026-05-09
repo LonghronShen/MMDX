@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Misc
 {
@@ -23,11 +18,11 @@ namespace MikuMikuDance.Core.Misc
         /// <summary>
         /// ベジェ曲線に用いる点１
         /// </summary>
-        public Vector2 v1;
+        public MMDVector2 v1;
         /// <summary>
         /// ベジェ曲線に用いる点2
         /// </summary>
-        public Vector2 v2;
+        public MMDVector2 v2;
 
 
         /// <summary>
@@ -38,16 +33,16 @@ namespace MikuMikuDance.Core.Misc
         public float Evaluate(float Progress)
         {
             //ニュートン法による近似
-            float t = MathHelper.Clamp(Progress, 0, 1);
+            float t = MMDMathHelper.Clamp(Progress, 0, 1);
             float dt;
             do
             {
                 dt = -(fx(t) - Progress) / dfx(t);
                 if (float.IsNaN(dt))
                     break;
-                t += MathHelper.Clamp(dt, -1f, 1f);//大幅に移動して別の解に到達するのを防止する用
+                t += MMDMathHelper.Clamp(dt, -1f, 1f);//大幅に移動して別の解に到達するのを防止する用
             } while (Math.Abs(dt) > Epsilon);
-            return MathHelper.Clamp(fy(t), 0f, 1f);//念のため、0-1の間に収まるようにした
+            return MMDMathHelper.Clamp(fy(t), 0f, 1f);//念のため、0-1の間に収まるようにした
         }
         //fy(t)を計算する関数
         private float fy(float t)

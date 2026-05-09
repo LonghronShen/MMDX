@@ -5,11 +5,6 @@ using System.Text;
 using BulletX.LinerMath;
 using MikuMikuDance.Core.Misc;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Model.Physics
 {
@@ -26,10 +21,10 @@ namespace MikuMikuDance.Core.Model.Physics
         btTransform m_centerOfMassOffset;
         btTransform m_startWorldTrans;
         MMDRigid m_rigid;
-        Matrix m_rigidBias;
+        MMDMatrix m_rigidBias;
         MMDModel m_model;
         //フレーム落ち用にボーンの位置を記録しておく
-        Matrix beforeBone;
+        MMDMatrix beforeBone;
         bool enableBeforeBone;
         //関連ボーン名を取得しておく
         string RelatedBoneName;
@@ -47,7 +42,7 @@ namespace MikuMikuDance.Core.Model.Physics
             UserData = null;
             m_rigid = rigid;
             //初期の姿勢を計算
-            Matrix startTransform;
+            MMDMatrix startTransform;
             if (!string.IsNullOrEmpty(rigid.RelatedBoneName))
                 startTransform = Model.BoneManager[rigid.RelatedBoneName].GlobalTransform;
             else
@@ -55,10 +50,10 @@ namespace MikuMikuDance.Core.Model.Physics
                 if (Model.BoneManager.IndexOf("センター") >= 0)
                     startTransform = Model.BoneManager[Model.BoneManager.IndexOf("センター")].GlobalTransform;
                 else
-                    startTransform = Matrix.Identity;
+                    startTransform = MMDMatrix.Identity;
             }
             //ボーンと剛体とのズレを計算
-            Matrix RigidBias = CreateRigidBias(rigid);
+            MMDMatrix RigidBias = CreateRigidBias(rigid);
             //初期姿勢を計算
             startTransform = RigidBias * startTransform * Model.Transform;
             //初期の姿勢をMotionStateに設定
@@ -81,9 +76,9 @@ namespace MikuMikuDance.Core.Model.Physics
                 return;
             if (m_rigid.Type == 0 || reset)
             {
-                Matrix temp, temp2, temp3 = m_model.Transform;
+                MMDMatrix temp, temp2, temp3 = m_model.Transform;
                 temp = m_rigidBias * m_model.BoneManager[RelatedBoneName].GlobalTransform;
-                Matrix.Multiply(ref temp, ref temp3, out temp2);
+                MMDMatrix.Multiply(ref temp, ref temp3, out temp2);
                 if (!reset)
                     MMDXMath.TobtTransform(ref temp2,out m_graphicsWorldTrans);
                 else
@@ -93,13 +88,13 @@ namespace MikuMikuDance.Core.Model.Physics
             }
             else
             {
-                Matrix RigidPos;
+                MMDMatrix RigidPos;
                 MMDXMath.ToMatrix(ref m_graphicsWorldTrans, out RigidPos);
-                Matrix temp1, temp2, temp3;
-                Matrix.Invert(ref m_rigidBias, out temp1);
-                Matrix.Multiply(ref temp1, ref RigidPos, out temp2);
-                temp1 = Matrix.Invert(m_model.Transform);
-                Matrix.Multiply(ref temp2, ref temp1, out temp3);
+                MMDMatrix temp1, temp2, temp3;
+                MMDMatrix.Invert(ref m_rigidBias, out temp1);
+                MMDMatrix.Multiply(ref temp1, ref RigidPos, out temp2);
+                temp1 = MMDMatrix.Invert(m_model.Transform);
+                MMDMatrix.Multiply(ref temp2, ref temp1, out temp3);
                 m_model.BoneManager[RelatedBoneName].GlobalTransform = temp3;
                 //フレーム落ち対策……
                 beforeBone = temp3;
@@ -131,7 +126,7 @@ namespace MikuMikuDance.Core.Model.Physics
             m_graphicsWorldTrans = centerOfMassWorldTrans * m_centerOfMassOffset;
 
         }
-        Matrix CreateRigidBias(MMDRigid rigid)
+        MMDMatrix CreateRigidBias(MMDRigid rigid)
         {
             return MMDXMath.CreateMatrixFromYawPitchRoll(rigid.Rotation[1], rigid.Rotation[0], rigid.Rotation[2])
                 * MMDXMath.CreateTranslationMatrix(rigid.Position[0], rigid.Position[1], rigid.Position[2]);

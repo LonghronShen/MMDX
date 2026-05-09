@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,15 +8,7 @@ using MikuMikuDance.Core.Misc;
 using MikuMikuDance.Core.MultiThreads;
 using MikuMikuDance.Core.Model.Physics;
 using MikuMikuDance.Core.Accessory;
-
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
-#if !XNA
-using System.Drawing;
-#endif
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikuMikuDance.Core.Model
 {
@@ -32,6 +24,12 @@ namespace MikuMikuDance.Core.Model
         private AnimationPlayer animationPlayer;
         readonly PhysicsManager physicsManager;
         private IMMDFaceManager faceManager;
+
+        /// <summary>
+        /// 関連付けられたMMDCoreインスタンス（DI対応）。
+        /// nullの場合はMMDCore.Current（アンビエントコンテキスト）を使用する。
+        /// </summary>
+        public MMDCore Core { get; set; }
 
         /// <summary>
         /// ボーンマネージャ
@@ -58,7 +56,7 @@ namespace MikuMikuDance.Core.Model
         /// <summary>
         /// このモデルのワールド座標
         /// </summary>
-        public Matrix Transform = Matrix.Identity;
+        public MMDMatrix Transform = MMDMatrix.Identity;
         /// <summary>
         /// カリングを行うか
         /// </summary>
@@ -75,24 +73,31 @@ namespace MikuMikuDance.Core.Model
         /// <param name="joints">関節情報</param>
         public MMDModel(List<IMMDModelPart> modelParts, MMDBoneManager boneManager, IMMDFaceManager faceManager, Dictionary<string, MMDMotion> attachedMotion, MMDRigid[] rigids, MMDJoint[] joints)
         {
-            Transform = Matrix.Identity;
+            Transform = MMDMatrix.Identity;
             this.modelParts = modelParts;
             this.boneManager = boneManager;
             this.faceManager = faceManager;
             this.attachedMotion = attachedMotion;
             Culling = true;
             boneManager.CalcGlobalTransform();
-            this.physicsManager = new PhysicsManager(rigids, joints, this);
+            this.physicsManager = new PhysicsManager(rigids, joints, this, MMDCore.Current);
 
             foreach (var part in modelParts)
                 part.SetModel(this);
             Parts = new ReadOnlyCollection<IMMDModelPart>(modelParts);
-            animationPlayer = new AnimationPlayer(boneManager, faceManager);
+            animationPlayer = new AnimationPlayer(boneManager, faceManager, MMDCore.Current);
 
-            //イベントフック
-            MMDCore.Instance.OnBoneUpdate += new Action<float>(BoneUpdate);
-            MMDCore.Instance.OnSkinUpdate += new Action<float>(SkinUpdate);
+            //イベントフック（MMDCore参照があればそちらを使う）
+            MMDCore core = MMDCore.Current;
+            core.OnBoneUpdate += new Action<float>(BoneUpdate);
+            core.OnSkinUpdate += new Action<float>(SkinUpdate);
         }
+
+        private MMDCore ResolveCore()
+        {
+            return Core ?? MMDCore.Current;
+        }
+
         /// <summary>
         /// ボーンの更新処理
         /// </summary>
@@ -113,8 +118,9 @@ namespace MikuMikuDance.Core.Model
         /// <remarks>MMDXCoreから呼ばれるので呼ぶ必要はない</remarks>
         public void SkinUpdate(float elapsedSeconds)
         {
+            MMDCore core = ResolveCore();
             //物理更新(シングルスレッド用)
-            if (!PhysicsThreadManager.Instance.IsMultiThread)
+            if (!core.PhysicsThreadManager.IsMultiThread)
                 PhysicsManager.Update();
             //表情適用
             MMDXProfiler.BeginMark("ModelPart.SetFace", MMDXMath.CreateColor(60, 65, 0));
@@ -142,8 +148,9 @@ namespace MikuMikuDance.Core.Model
         /// </summary>
         public void Draw()
         {
+            MMDCore core = ResolveCore();
             MMDDrawingMode mode = MMDDrawingMode.Normal;
-            if (MMDCore.Instance.EdgeManager != null && MMDCore.Instance.EdgeManager.IsEdgeDetectionMode)
+            if (core.EdgeManager != null && core.EdgeManager.IsEdgeDetectionMode)
             {
                 mode = MMDDrawingMode.Edge;
             }
@@ -172,7 +179,7 @@ namespace MikuMikuDance.Core.Model
         /// <param name="accessory">アクセサリー</param>
         /// <param name="bonename">ボーン名</param>
         /// <param name="transform">トランスフォーム</param>
-        public void BindAccessory(MMDAccessoryBase accessory, string bonename, Matrix transform)
+        public void BindAccessory(MMDAccessoryBase accessory, string bonename, MMDMatrix transform)
         {
             BindAccessory(accessory, new MMD_VAC { BoneName = bonename, Transform = transform });
         }
@@ -196,9 +203,10 @@ namespace MikuMikuDance.Core.Model
         {
             if (!disposed)
             {
+                MMDCore core = ResolveCore();
                 //イベントをアンフック
-                MMDCore.Instance.OnBoneUpdate -= new Action<float>(BoneUpdate);
-                MMDCore.Instance.OnSkinUpdate -= new Action<float>(SkinUpdate);
+                core.OnBoneUpdate -= new Action<float>(BoneUpdate);
+                core.OnSkinUpdate -= new Action<float>(SkinUpdate);
                 foreach (var part in modelParts)
                 {
                     part.Dispose();

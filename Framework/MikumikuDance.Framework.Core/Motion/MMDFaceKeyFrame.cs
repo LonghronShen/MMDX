@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using MikuMikuDance.Core.Misc;
-#endif
 
 namespace MikuMikuDance.Core.Motion
 {
@@ -39,7 +34,7 @@ namespace MikuMikuDance.Core.Motion
         /// <returns>表情適用量</returns>
         public static float Lerp(MMDFaceKeyFrame frame1, MMDFaceKeyFrame frame2, float progress)
         {
-            return MathHelper.Lerp(frame1.Rate, frame2.Rate, progress);
+            return MMDMathHelper.Lerp(frame1.Rate, frame2.Rate, progress);
         }
     }
 }

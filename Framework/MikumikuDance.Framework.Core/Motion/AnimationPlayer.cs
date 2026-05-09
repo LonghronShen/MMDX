@@ -6,12 +6,6 @@ using MikuMikuDance.Core.Model;
 using MikuMikuDance.Core.Misc;
 using System.Collections;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#else
-using System.Drawing;
-#endif
-
 namespace MikuMikuDance.Core.Motion
 {
     /// <summary>
@@ -25,8 +19,10 @@ namespace MikuMikuDance.Core.Motion
         Dictionary<string, SQTTransform> BindPoses;
         Dictionary<string, SQTTransform> Poses;
         Dictionary<string, float> Faces;
-        internal AnimationPlayer(MMDBoneManager bones, IMMDFaceManager faces)
+        MMDCore m_core;//DI: MMDCore参照
+        internal AnimationPlayer(MMDBoneManager bones, IMMDFaceManager faces, MMDCore core = null)
         {
+            m_core = core;
             boneManager = bones;
             faceManager = faces;
             BindPoses = new Dictionary<string, SQTTransform>();
@@ -117,6 +113,7 @@ namespace MikuMikuDance.Core.Motion
         internal void Update(float elapsedSeconds)
         {
             MMDXProfiler.BeginMark("AnimationPlayerUpdate", MMDXMath.CreateColor(30, 255, 0));
+            MMDCore core = m_core ?? MMDCore.Current;
             //差分ポーズを元にした加算ブレンディング
             Poses.Clear();
             Faces.Clear();
@@ -143,13 +140,13 @@ namespace MikuMikuDance.Core.Motion
                         if (!faceManager.ContainsKey(subface.Key))
                             continue;
                     }
-                    Faces[subface.Key] = MathHelper.Lerp(rate1, rate2, track.Value.BlendingFactor);
+                    Faces[subface.Key] = MMDMathHelper.Lerp(rate1, rate2, track.Value.BlendingFactor);
                 }
             }
             //ボーンマネージャへの書き戻し
             foreach (var pose in Poses)
             {
-                if (!boneManager[pose.Key].IsPhysics || !MMDCore.Instance.UsePhysics)
+                if (!boneManager[pose.Key].IsPhysics || !core.UsePhysics)
                     boneManager[pose.Key].LocalTransform = pose.Value;
             }
             foreach (var face in Faces)

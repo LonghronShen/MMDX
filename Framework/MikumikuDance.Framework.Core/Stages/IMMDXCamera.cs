@@ -2,11 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Stages
 {
@@ -21,16 +16,16 @@ namespace MikuMikuDance.Core.Stages
         /// <param name="aspectRatio">アスペクト比</param>
         /// <param name="view">ビュー情報</param>
         /// <param name="proj">プロジェクション情報</param>
-        void GetCameraParam(float aspectRatio, out  Matrix view, out Matrix proj);
+        void GetCameraParam(float aspectRatio, out  MMDMatrix view, out MMDMatrix proj);
         /// <summary>
         /// カメラ位置
         /// </summary>
-        Vector3 Position { get; set; }
+        MMDVector3 Position { get; set; }
         /// <summary>
         /// 回転の設定
         /// </summary>
         /// <param name="rotate">回転</param>
-        void SetRotation(Quaternion rotate);
+        void SetRotation(MMDQuaternion rotate);
         /// <summary>
         /// 視野角の設定/取得
         /// </summary>
@@ -48,6 +43,6 @@ namespace MikuMikuDance.Core.Stages
         /// カメラベクトルの設定
         /// </summary>
         /// <param name="newVector">カメラベクトル</param>
-        void SetVector(Vector3 newVector);
+        void SetVector(MMDVector3 newVector);
     }
 }

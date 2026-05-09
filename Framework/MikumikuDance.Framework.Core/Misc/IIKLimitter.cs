@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Model;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Misc
 {
@@ -26,6 +21,6 @@ namespace MikuMikuDance.Core.Misc
         /// </summary>
         /// <param name="boneName">対象となるボーン名</param>
         /// <param name="rotationAxis">回転軸</param>
-        void Adjust(string boneName, ref Vector3 rotationAxis);
+        void Adjust(string boneName, ref MMDVector3 rotationAxis);
     }
 }

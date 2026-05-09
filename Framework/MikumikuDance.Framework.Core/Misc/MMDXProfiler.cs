@@ -4,12 +4,6 @@ using System.Linq;
 using System.Text;
 using System.Diagnostics;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#else
-using System.Drawing;
-#endif
-
 namespace MikuMikuDance.Core.Misc
 {
     /// <summary>
@@ -18,7 +12,7 @@ namespace MikuMikuDance.Core.Misc
     /// <param name="mmdxThreadIndex">MMDXスレッド番号</param>
     /// <param name="key">計測用キー</param>
     /// <param name="color">色</param>
-    public delegate void BeginMarkDelegate(int mmdxThreadIndex, string key, Color color);
+    public delegate void BeginMarkDelegate(int mmdxThreadIndex, string key, MMDColor color);
     /// <summary>
     /// MMD内で時間計測用のEndMarkが呼ばれるとき用のデリゲート
     /// </summary>
@@ -39,7 +33,7 @@ namespace MikuMikuDance.Core.Misc
         /// </summary>
         public static event EndMarkDelegate MMDEndMark;
 
-        internal static void BeginMark(string key, Color color)
+        internal static void BeginMark(string key, MMDColor color)
         {
             if (MMDBeginMark != null)
             {

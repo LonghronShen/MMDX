@@ -3,11 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Misc;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Stages
 {
@@ -19,19 +14,19 @@ namespace MikuMikuDance.Core.Stages
         /// <summary>
         /// カメラ位置
         /// </summary>
-        public Vector3 CameraPos;
+        public MMDVector3 CameraPos;
         /// <summary>
         /// カメラ方向と距離
         /// </summary>
-        public Vector3 CameraVector;
+        public MMDVector3 CameraVector;
         /// <summary>
         /// カメラの上方向ベクトル
         /// </summary>
-        public Vector3 CameraUpVector = Vector3.UnitY;
+        public MMDVector3 CameraUpVector = MMDVector3.UnitY;
         /// <summary>
         /// 回転
         /// </summary>
-        public Quaternion Rotation = Quaternion.Identity;
+        public MMDQuaternion Rotation = MMDQuaternion.Identity;
         /// <summary>
         /// Near面
         /// </summary>
@@ -47,16 +42,16 @@ namespace MikuMikuDance.Core.Stages
         /// <summary>
         /// カメラ位置
         /// </summary>
-        public Vector3 Position { get { return CameraPos; } set { CameraPos = value; } }
+        public MMDVector3 Position { get { return CameraPos; } set { CameraPos = value; } }
 
         /// <summary>
         /// コンストラクタ
         /// </summary>
         public MMDXDefaultCamera()
         {
-            CameraPos = new Vector3(0, 10, 35);
-            CameraVector = new Vector3(0, 0, -35);
-            FieldOfView = MathHelper.PiOver4;
+            CameraPos = new MMDVector3(0, 10, 35);
+            CameraVector = new MMDVector3(0, 0, -35);
+            FieldOfView = MMDMathHelper.PiOver4;
             Near = 1;
             Far = 300;
         }
@@ -67,20 +62,12 @@ namespace MikuMikuDance.Core.Stages
         /// <param name="aspectRatio">アスペクト比</param>
         /// <param name="view">ビュー情報</param>
         /// <param name="proj">プロジェクション情報</param>
-        public void GetCameraParam(float aspectRatio, out  Matrix view, out Matrix proj)
+        public void GetCameraParam(float aspectRatio, out  MMDMatrix view, out MMDMatrix proj)
         {
-            Vector3 CameraTarget, trueCameraVector, trueCameraUpVector;
-#if SlimDX
-            Vector4 temp1, temp2;
-            Vector3.Transform(ref CameraVector, ref Rotation, out temp1);
-            Vector3.Transform(ref CameraUpVector, ref Rotation, out temp2);
-            trueCameraVector = new Vector3(temp1.X, temp1.Y, temp1.Z);
-            trueCameraUpVector = new Vector3(temp2.X, temp2.Y, temp2.Z);
-#elif XNA
-            Vector3.Transform(ref CameraVector, ref Rotation, out trueCameraVector);
-            Vector3.Transform(ref CameraUpVector, ref Rotation, out trueCameraUpVector);
-#endif
-            Vector3.Add(ref CameraPos, ref trueCameraVector, out CameraTarget);
+            MMDVector3 CameraTarget, trueCameraVector, trueCameraUpVector;
+            MMDVector3.Transform(ref CameraVector, ref Rotation, out trueCameraVector);
+            MMDVector3.Transform(ref CameraUpVector, ref Rotation, out trueCameraUpVector);
+            MMDVector3.Add(ref CameraPos, ref trueCameraVector, out CameraTarget);
             MMDXMath.CreateLookAtMatrix(ref CameraPos, ref CameraTarget, ref trueCameraUpVector, out view);
             MMDXMath.CreatePerspectiveFieldOfViewMatrix(FieldOfView, aspectRatio, Near, Far, out proj);
         }
@@ -88,7 +75,7 @@ namespace MikuMikuDance.Core.Stages
         /// カメラベクトルの設定
         /// </summary>
         /// <param name="newVector">カメラベクトル</param>
-        public void SetVector(Vector3 newVector)
+        public void SetVector(MMDVector3 newVector)
         {
             CameraVector = newVector;
         }
@@ -96,7 +83,7 @@ namespace MikuMikuDance.Core.Stages
         /// <summary>
         /// 視野角の設定/取得
         /// </summary>
-        public void SetRotation(Quaternion rot)
+        public void SetRotation(MMDQuaternion rot)
         {
             Rotation = rot;
         }

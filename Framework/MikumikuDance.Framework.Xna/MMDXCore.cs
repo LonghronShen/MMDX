@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -14,13 +14,21 @@ using MikumikuDance.Framework.Abstractions;
 namespace MikuMikuDance.XNA
 {
     /// <summary>
-    /// MMDXのコアクラス
+    /// MMDXのコアクラス（DI対応、非シングルトン）
     /// </summary>
     public class MMDXCore : MMDCore
     {
-        //シングルトン
-        static MMDXCore m_inst2;
-        
+        /// <summary>
+        /// ContentReader互換のための静的インスタンス（レガシー）。
+        /// DI移行後はMMDCore.Currentを使用。
+        /// </summary>
+        [Obsolete("Use MMDCore.Current instead")]
+        public static new MMDXCore Instance
+        {
+            get { return Current as MMDXCore; }
+            set { Current = value; }
+        }
+
         /// <summary>
         /// モデルパーツファクトリー
         /// </summary>
@@ -34,12 +42,45 @@ namespace MikuMikuDance.XNA
         /// エッジ描画用エフェクト
         /// </summary>
         public IMMDEffect EdgeEffect { get; set; }
+
         /// <summary>
-        /// DI コンストラクタ
+        /// DI コンストラクタ（完全版）
         /// </summary>
-        protected MMDXCore(IMMDGraphicsDevice device, IMMDContentLoader loader)
+        /// <param name="device">グラフィックデバイス抽象</param>
+        /// <param name="loader">コンテンツローダー抽象</param>
+        /// <param name="modelPartFactory">モデルパーツファクトリー（省略時はプラットフォームデフォルト）</param>
+        public MMDXCore(
+            IMMDGraphicsDevice device, 
+            IMMDContentLoader loader,
+            IMMDModelPartFactory modelPartFactory = null)
             : base(device, loader)
         {
+            ModelPartFactory = modelPartFactory;
+            InitializeFactory();
+        }
+
+        /// <summary>
+        /// DI コンストラクタ（全引数指定版）
+        /// </summary>
+        public MMDXCore(
+            IMMDGraphicsDevice device,
+            IMMDContentLoader loader,
+            IIKSolver ikSolver,
+            IIKLimitter ikLimitter,
+            IMMDModelPartFactory modelPartFactory = null)
+            : base(device, loader, ikSolver, ikLimitter)
+        {
+            ModelPartFactory = modelPartFactory;
+            InitializeFactory();
+        }
+
+        /// <summary>
+        /// パーツファクトリの初期化
+        /// </summary>
+        private void InitializeFactory()
+        {
+            if (ModelPartFactory != null)
+                return;
 #if WINDOWS
             ModelPartFactory = new MMDGPUModelPartFactory();
 #elif XBOX
@@ -47,41 +88,6 @@ namespace MikuMikuDance.XNA
 #else
             throw new NotImplementedException();
 #endif
-        }
-        /// <summary>
-        /// 規定のコンストラクタ
-        /// </summary>
-        protected MMDXCore()
-            : base()
-        {
-#if WINDOWS
-            ModelPartFactory = new MMDGPUModelPartFactory();
-#elif XBOX
-            ModelPartFactory = new MMDXBoxModelPartFactory();
-#else
-            throw new NotImplementedException();
-#endif
-        }
-        /// <summary>
-        /// Singletonインスタンス
-        /// </summary>
-        public new static MMDXCore Instance
-        {
-            get
-            {
-                if (m_inst == null)
-                {
-                    m_inst2 = new MMDXCore();
-                    m_inst = m_inst2;
-                }
-                if (m_inst2 == null)
-                {
-                    m_inst2 = m_inst as MMDXCore;
-                    if (m_inst2 == null)
-                        throw new MMDXException("エラー：m_instの型が" + m_inst.GetType().Name + "。呼び出し順番エラー？");//来るはず無いんだけど……
-                }
-                return m_inst2;
-            }
         }
 
         /// <summary>

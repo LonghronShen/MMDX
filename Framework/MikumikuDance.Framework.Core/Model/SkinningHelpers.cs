@@ -4,11 +4,6 @@ using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Misc;
 using System.Collections.ObjectModel;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Model
 {
@@ -18,7 +13,6 @@ namespace MikuMikuDance.Core.Model
     /// </summary>
     public static class SkinningHelpers
     {
-#if SlimDX
         /// <summary>
         /// 頂点変換
         /// </summary>
@@ -26,33 +20,23 @@ namespace MikuMikuDance.Core.Model
         /// <param name="vertin">MMD頂点データ</param>
         /// <param name="outPosition">頂点データ</param>
         /// <param name="outNormal">法線データ</param>
-        public static void SkinVertex(Matrix[] bones, MMDVertexNm vertin, out Vector4 outPosition, out Vector3 outNormal)
-#else
-        /// <summary>
-        /// 頂点変換
-        /// </summary>
-        /// <param name="bones">頂点</param>
-        /// <param name="vertin">MMD頂点データ</param>
-        /// <param name="outPosition">頂点データ</param>
-        /// <param name="outNormal">法線データ</param>
-        public static void SkinVertex(Matrix[] bones, MMDVertexNm vertin, out Vector3 outPosition, out Vector3 outNormal)
-#endif
+        public static void SkinVertex(MMDMatrix[] bones, MMDVertexNm vertin, out MMDVector3 outPosition, out MMDVector3 outNormal)
         {
             //影響ボーン取得
             int b0 = vertin.BlendIndexX;
             int b1 = vertin.BlendIndexY;
             
             //ボーンマトリックスをブレンド
-            Matrix skinnedTransformSum;
+            MMDMatrix skinnedTransformSum;
             Blend4x3Matrix(ref bones[b0], ref bones[b1], ref vertin.BlendWeights, out skinnedTransformSum);
             //ブレンドしたボーンによる変換を頂点に適応
-            Vector3.Transform(ref vertin.Position, ref skinnedTransformSum, out outPosition);
-            Vector3.TransformNormal(ref vertin.Normal, ref skinnedTransformSum, out outNormal);
+            MMDVector3.Transform(ref vertin.Position, ref skinnedTransformSum, out outPosition);
+            MMDVector3.TransformNormal(ref vertin.Normal, ref skinnedTransformSum, out outNormal);
         }
 
-        static void Blend4x3Matrix(ref Matrix m1, ref Matrix m2, ref Vector2 weights, out Matrix blended)
+        static void Blend4x3Matrix(ref MMDMatrix m1, ref MMDMatrix m2, ref MMDVector2 weights, out MMDMatrix blended)
         {
-            blended = new Matrix();
+            blended = new MMDMatrix();
             float w1 = weights.X;
             float w2 = weights.Y;
 

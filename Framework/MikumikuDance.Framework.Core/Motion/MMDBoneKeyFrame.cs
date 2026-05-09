@@ -5,11 +5,6 @@ using System.Text;
 using DWORD = System.UInt32;
 using MikuMikuDance.Core.Misc;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Motion
 {
@@ -32,15 +27,15 @@ namespace MikuMikuDance.Core.Motion
         /// <summary>
         /// スケールベクトル
         /// </summary>
-        public Vector3 Scales;
+        public MMDVector3 Scales;
         /// <summary>
         /// 位置ベクトル
         /// </summary>
-        public Vector3 Location;
+        public MMDVector3 Location;
         /// <summary>
         /// クォータニオン
         /// </summary>
-        public Quaternion Quatanion;
+        public MMDQuaternion Quatanion;
 
         /// <summary>
         /// 補完用曲線
@@ -63,15 +58,15 @@ namespace MikuMikuDance.Core.Motion
             ProgZ = frame2.Curve[2].Evaluate(Progress);
             ProgR = frame2.Curve[3].Evaluate(Progress);
             float x, y, z;
-            Quaternion q;
-            Vector3 scales;
-            x = MathHelper.Lerp(frame1.Location.X, frame2.Location.X, ProgX);
-            y = MathHelper.Lerp(frame1.Location.Y, frame2.Location.Y, ProgY);
-            z = MathHelper.Lerp(frame1.Location.Z, frame2.Location.Z, ProgZ);
-            Quaternion.Slerp(ref frame1.Quatanion,ref frame2.Quatanion, ProgR,out q );
+            MMDQuaternion q;
+            MMDVector3 scales;
+            x = MMDMathHelper.Lerp(frame1.Location.X, frame2.Location.X, ProgX);
+            y = MMDMathHelper.Lerp(frame1.Location.Y, frame2.Location.Y, ProgY);
+            z = MMDMathHelper.Lerp(frame1.Location.Z, frame2.Location.Z, ProgZ);
+            MMDQuaternion.Slerp(ref frame1.Quatanion,ref frame2.Quatanion, ProgR,out q );
             //MMDはスケールのアニメーションを含まないので、スケールのベジェ曲線計算は行わない
-            Vector3.Lerp(ref frame1.Scales, ref frame2.Scales, Progress, out scales);
-            Vector3 t=new Vector3(x, y, z);
+            MMDVector3.Lerp(ref frame1.Scales, ref frame2.Scales, Progress, out scales);
+            MMDVector3 t=new MMDVector3(x, y, z);
             SQTTransform.Create(ref scales, ref q, ref t, out result);
         }
         /// <summary>

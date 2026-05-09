@@ -2,11 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Stages
 {
@@ -20,17 +15,17 @@ namespace MikuMikuDance.Core.Stages
         /// </summary>
         /// <param name="color">ライト色</param>
         /// <param name="dir">ライト方向</param>
-        void GetLightParam(out Vector3 color, out Vector3 dir);
+        void GetLightParam(out MMDVector3 color, out MMDVector3 dir);
 
         /// <summary>
         /// ライト色の設定
         /// </summary>
-        Vector3 LightColor{ get; set; }
+        MMDVector3 LightColor{ get; set; }
 
         /// <summary>
         /// ライト方向の設定
         /// </summary>
-        Vector3 LightDirection { get; set; }
+        MMDVector3 LightDirection { get; set; }
 
     }
 }

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,11 +11,6 @@ using BulletX.BulletCollision.CollisionDispatch;
 using MikuMikuDance.Core.Misc;
 using MikuMikuDance.Core.MultiThreads;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Model.Physics
 {
@@ -28,6 +23,7 @@ namespace MikuMikuDance.Core.Model.Physics
         private int nReset = 0;
         private bool bDisposing = false;//自爆スイッチ
         private bool bSetup = false;//セットアップスイッチ
+        private MMDCore m_core;//DI: MMDCore参照
         /// <summary>
         /// 剛体
         /// </summary>
@@ -38,14 +34,22 @@ namespace MikuMikuDance.Core.Model.Physics
         /// 間接
         /// </summary>
         public ReadOnlyCollection<Generic6DofSpringConstraint> Joints { get; private set; }
+
+        private MMDCore ResolveCore()
+        {
+            return m_core ?? MMDCore.Current;
+        }
+
         /// <summary>
         /// コンストラクタ
         /// </summary>
         /// <param name="rigids">剛体情報</param>
         /// <param name="joints">関節情報</param>
         /// <param name="model">モデル情報</param>
-        public PhysicsManager(MMDRigid[] rigids, MMDJoint[] joints, MMDModel model)
+        /// <param name="core">MMDCoreインスタンス（省略時はMMDCore.Currentを使用）</param>
+        public PhysicsManager(MMDRigid[] rigids, MMDJoint[] joints, MMDModel model, MMDCore core = null)
         {
+            m_core = core;
             List<RigidBody> rbodies = new List<RigidBody>();
             List<Generic6DofSpringConstraint> dofjoints = new List<Generic6DofSpringConstraint>();
             motionState = new List<MMDMotionState>();
@@ -74,9 +78,10 @@ namespace MikuMikuDance.Core.Model.Physics
             this.masks = masks.ToArray();
             Joints = new ReadOnlyCollection<Generic6DofSpringConstraint>(dofjoints);
             bSetup = true;
+            MMDCore resolvedCore = ResolveCore();
             //イベントをフック
-            PhysicsThreadManager.Instance.Synchronize += new Action(Update);
-            PhysicsThreadManager.Instance.DropFrame += new Action<int>(DropFrame);
+            resolvedCore.PhysicsThreadManager.Synchronize += new Action(Update);
+            resolvedCore.PhysicsThreadManager.DropFrame += new Action<int>(DropFrame);
         }
         private RigidBody CreateRigidBody(MMDRigid rigid, MMDModel Model,out short group, out MMDMotionState motionStateStart)
         {
@@ -134,9 +139,9 @@ namespace MikuMikuDance.Core.Model.Physics
         }
         private Generic6DofSpringConstraint CreateJoint(RigidBody body0, RigidBody body1, MMDJoint joint, MMDModel model)
         {
-            Matrix frameInA, frameInB;
+            MMDMatrix frameInA, frameInB;
             btTransform btFrameInA, btFrameInB;
-            Matrix jointPos =MMDXMath.CreateMatrixFromYawPitchRoll(joint.Rotation[1], joint.Rotation[0], joint.Rotation[2])
+            MMDMatrix jointPos =MMDXMath.CreateMatrixFromYawPitchRoll(joint.Rotation[1], joint.Rotation[0], joint.Rotation[2])
                 * MMDXMath.CreateTranslationMatrix(joint.Position[0], joint.Position[1], joint.Position[2]);
             if (body0.MotionState != null)
             {
@@ -145,7 +150,7 @@ namespace MikuMikuDance.Core.Model.Physics
             }
             else
                 throw new NotImplementedException("来るハズないのだが");
-            frameInA = jointPos * model.Transform * Matrix.Invert(frameInA);
+            frameInA = jointPos * model.Transform * MMDMatrix.Invert(frameInA);
             if (body1.MotionState != null)
             {
                 MMDMotionState motionState = (MMDMotionState)body1.MotionState;
@@ -153,8 +158,8 @@ namespace MikuMikuDance.Core.Model.Physics
             }
             else
                 throw new NotImplementedException("来るハズないのだが");
-            frameInB = jointPos * model.Transform * Matrix.Invert(frameInB);
-            //frameInB = jointPos * Matrix.Invert(MMDMath.ConvertToMatrix(body1.GetWorldTransformSmart()));
+            frameInB = jointPos * model.Transform * MMDMatrix.Invert(frameInB);
+            //frameInB = jointPos * MMDMatrix.Invert(MMDMath.ConvertToMatrix(body1.GetWorldTransformSmart()));
             MMDXMath.TobtTransform(ref frameInA, out btFrameInA);
             MMDXMath.TobtTransform(ref frameInB, out btFrameInB);
 
@@ -190,31 +195,32 @@ namespace MikuMikuDance.Core.Model.Physics
 
         internal void Update()
         {
+            MMDCore core = ResolveCore();
             if (bDisposing)
             {
                 //自爆処理
                 //ジョイントを外す
                 foreach (var joint in Joints)
-                    MMDCore.Instance.Physics.removeConstraint(joint);
+                    core.Physics.removeConstraint(joint);
                 //剛体を外す
                 foreach (var rigid in Rigids)
-                    MMDCore.Instance.Physics.removeRigidBody(rigid);
+                    core.Physics.removeRigidBody(rigid);
                 //処理が終わったのでイベントをアンフック
-                PhysicsThreadManager.Instance.Synchronize -= new Action(Update);
-                PhysicsThreadManager.Instance.DropFrame -= new Action<int>(DropFrame);
+                core.PhysicsThreadManager.Synchronize -= new Action(Update);
+                core.PhysicsThreadManager.DropFrame -= new Action<int>(DropFrame);
                 bDisposing = false;//念のため……
             }
             else
             {
-                if (MMDCore.Instance.UsePhysics)
+                if (core.UsePhysics)
                 {
                     if (bSetup)
                     {
                         //ボディを有効化し、グループとマスクを適応
                         for (int i = 0; i < Rigids.Count; ++i)
-                            MMDCore.Instance.Physics.addRigidBody(Rigids[i], groups[i], masks[i]);
+                            core.Physics.addRigidBody(Rigids[i], groups[i], masks[i]);
                         foreach (var joint in Joints)
-                            MMDCore.Instance.Physics.addConstraint(joint);
+                            core.Physics.addConstraint(joint);
                         bSetup = false;
                     }
                     for (int i = 0; i < motionState.Count; i++)
@@ -240,7 +246,8 @@ namespace MikuMikuDance.Core.Model.Physics
         //フレーム落ち時のごまかし処理
         internal void DropFrame(int DFCount)
         {
-            if (MMDCore.Instance.UsePhysics)
+            MMDCore core = ResolveCore();
+            if (core.UsePhysics)
             {
                 for (int i = 0; i < motionState.Count; i++)
                 {

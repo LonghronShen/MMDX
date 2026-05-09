@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,9 +15,6 @@ using BulletX.BulletDynamics.ConstraintSolver;
 using BulletX.LinerMath;
 using MikuMikuDance.Core.Accessory;
 using MikumikuDance.Framework.Abstractions;
-#if XNA
-using Microsoft.Xna.Framework.Content;
-#endif
 
 namespace MikuMikuDance.Core
 {
@@ -27,9 +24,11 @@ namespace MikuMikuDance.Core
     public class MMDCore : IDisposable
     {
         /// <summary>
-        /// シングルトンオブジェクト
+        /// 明示的に設定可能なアンビエントコンテキスト（DI 移行用）。
+        /// 従来の static Instance を置き換え、自動生成は行わない。
+        /// 呼び出し元が明示的に設定する必要がある。
         /// </summary>
-        protected static MMDCore m_inst;
+        public static MMDCore Current { get; set; }
         /// <summary>
         /// DI: グラフィックデバイス抽象
         /// </summary>
@@ -44,24 +43,16 @@ namespace MikuMikuDance.Core
         IBroadphaseInterface pairCache = null;
         IConstraintSolver solver = null;
 
+        /// <summary>
+        /// 物理スレッドマネージャ（DI対応、非シングルトン）
+        /// </summary>
+        protected PhysicsThreadManager m_physicsThreadManager;
+
         internal event Action<float> OnBoneUpdate;
         internal event Action<float> OnSkinUpdate;
 
         //不透明データ
         Dictionary<string, object> opaqueData = new Dictionary<string, object>();
-
-        /// <summary>
-        /// Singletonインスタンス
-        /// </summary>
-        public static MMDCore Instance
-        {
-            get
-            {
-                if (m_inst == null)
-                    throw new MMDXException("MMDCore.Instanceは各継承先(MMDXCore, SlimMMDXCore等)のInstanceより先に使用することは出来ません。各継承先のInstanceを先に使用してください");
-                return m_inst;
-            }
-        }
         
         /// <summary>
         /// MMDXで使用するライト
@@ -120,31 +111,51 @@ namespace MikuMikuDance.Core
         /// 不透明データ
         /// </summary>
         public Dictionary<string, object> OpaqueData { get { return opaqueData; } }
+
         /// <summary>
-        /// DI コンストラクタ
+        /// DI コンストラクタ（完全版：物理依存を外部注入可能）
         /// </summary>
         /// <param name="device">グラフィックデバイス抽象</param>
         /// <param name="contentLoader">コンテンツローダー抽象</param>
-        protected MMDCore(IMMDGraphicsDevice device, IMMDContentLoader contentLoader)
-            : this()
+        /// <param name="ikSolver">IKソルバー（省略時はCCDSolver）</param>
+        /// <param name="ikLimitter">IKリミッター（省略時はDefaltIKLimitter）</param>
+        /// <param name="physicsWorld">物理ワールド（省略時はデフォルト生成）</param>
+        /// <param name="usePhysics">物理演算を使用するか（省略時はtrue）</param>
+        public MMDCore(
+            IMMDGraphicsDevice device, 
+            IMMDContentLoader contentLoader,
+            IIKSolver ikSolver = null,
+            IIKLimitter ikLimitter = null,
+            DiscreteDynamicsWorld physicsWorld = null,
+            bool? usePhysics = null)
         {
+            if (device == null) throw new ArgumentNullException(nameof(device));
+            if (contentLoader == null) throw new ArgumentNullException(nameof(contentLoader));
             m_graphicsDevice = device;
             m_contentLoader = contentLoader;
+
+            InitCore(ikSolver, ikLimitter, physicsWorld, usePhysics);
+
+            // アンビエントコンテキストとして自動設定
+            Current = this;
         }
 
         /// <summary>
-        /// コンストラクタ (レガシー)
+        /// 内部初期化（コンストラクタチェーン用）
         /// </summary>
-        protected MMDCore()
+        private void InitCore(
+            IIKSolver ikSolver = null,
+            IIKLimitter ikLimitter = null,
+            DiscreteDynamicsWorld physicsWorld = null,
+            bool? usePhysics = null)
         {
-            //外部からつくらせない
             //カメラとライト
             Camera = new MMDXDefaultCamera();
             Light = new MMDXDefaultLight();
             StageAnimationPlayer = new StagePlayer();
             //IKソルバとリミッター
-            IKSolver = new CCDSolver();
-            IKLimitter = new DefaltIKLimitter();
+            IKSolver = ikSolver ?? new CCDSolver();
+            IKLimitter = ikLimitter ?? new DefaltIKLimitter();
             //デフォルトファクトリー
 #if !(XBOX || PORTABLE)
             ModelFactoryFromFile = null;// new MMDModelPartFromFileFactory(ModelPartFactory);
@@ -152,22 +163,37 @@ namespace MikuMikuDance.Core
             AccessoryFactoryFromFile = null;
             VACFactoryFromFile = new MMDVACFactory();
 #endif
-            //物理作成
-            //物理エンジンの作成
-            config = new DefaultCollisionConfiguration();
-            dispatcher = new CollisionDispatcher(config);
-            pairCache = new AxisSweep3(new btVector3(-10000, -10000, -10000), new btVector3(10000, 10000, 10000), 5 * 5 * 5 + 1024, null, false);
-            solver = new SequentialImpulseConstraintSolver();
-            Physics = new DiscreteDynamicsWorld(dispatcher, pairCache, solver, config);
-            Physics.Gravity = new btVector3(0, -9.81f * 5.0f, 0);
+            //物理作成（注入可能）
+            if (physicsWorld != null)
+            {
+                Physics = physicsWorld;
+            }
+            else
+            {
+                config = new DefaultCollisionConfiguration();
+                dispatcher = new CollisionDispatcher(config);
+                pairCache = new AxisSweep3(new btVector3(-10000, -10000, -10000), new btVector3(10000, 10000, 10000), 5 * 5 * 5 + 1024, null, false);
+                solver = new SequentialImpulseConstraintSolver();
+                Physics = new DiscreteDynamicsWorld(dispatcher, pairCache, solver, config);
+                Physics.Gravity = new btVector3(0, -9.81f * 5.0f, 0);
+            }
 #if !XBOX
-            UsePhysics = true;
+            UsePhysics = usePhysics ?? true;
 #else
-            UsePhysics = false;//XBoxのパフォーマンス問題(物理はやっぱり重たいので入れないほうが早い)
+            UsePhysics = usePhysics ?? false;
 #endif
 
+            // 非シングルトンPhysicsThreadManager
+            m_physicsThreadManager = new PhysicsThreadManager(Physics, this);
         }
         
+        /// <summary>
+        /// 物理スレッドマネージャへのアクセス
+        /// </summary>
+        public PhysicsThreadManager PhysicsThreadManager
+        {
+            get { return m_physicsThreadManager; }
+        }
 
 #if !XBOX
         /// <summary>
@@ -242,7 +268,7 @@ namespace MikuMikuDance.Core
             StageAnimationPlayer.Update(timeStep);
             if (OnBoneUpdate != null)
                 OnBoneUpdate(timeStep);
-            PhysicsThreadManager.Instance.Update(timeStep);
+            m_physicsThreadManager.Update(timeStep);
             if (OnSkinUpdate != null)
                 OnSkinUpdate(timeStep);
         }
@@ -284,8 +310,11 @@ namespace MikuMikuDance.Core
         /// </summary>
         public virtual void Dispose()
         {
-            PhysicsThreadManager.Instance.Dispose();
-            m_inst = null;
+            if (m_physicsThreadManager != null)
+            {
+                m_physicsThreadManager.Dispose();
+                m_physicsThreadManager = null;
+            }
         }
 
         #endregion

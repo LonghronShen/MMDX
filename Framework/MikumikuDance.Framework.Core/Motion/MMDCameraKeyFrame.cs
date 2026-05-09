@@ -5,11 +5,6 @@ using System.Text;
 using MikuMikuDance.Core.Misc;
 using MikuMikuDance.Core.Stages;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Motion
 {
@@ -32,11 +27,11 @@ namespace MikuMikuDance.Core.Motion
         /// <summary>
         /// 位置
         /// </summary>
-        public Vector3 Location;
+        public MMDVector3 Location;
         /// <summary>
         /// 回転
         /// </summary>
-        public Quaternion Quatanion;
+        public MMDQuaternion Quatanion;
         /// <summary>
         /// 補完用曲線
         /// </summary>
@@ -65,27 +60,24 @@ namespace MikuMikuDance.Core.Motion
             ProgD = camera2.Curve[4].Evaluate(Progress);
             ProgV = camera2.Curve[5].Evaluate(Progress);
             float x, y, z;
-            x = MathHelper.Lerp(camera1.Location.X, camera2.Location.X, ProgX);
-            y = MathHelper.Lerp(camera1.Location.Y, camera2.Location.Y, ProgY);
-            z = MathHelper.Lerp(camera1.Location.Z, camera2.Location.Z, ProgZ);
+            x = MMDMathHelper.Lerp(camera1.Location.X, camera2.Location.X, ProgX);
+            y = MMDMathHelper.Lerp(camera1.Location.Y, camera2.Location.Y, ProgY);
+            z = MMDMathHelper.Lerp(camera1.Location.Z, camera2.Location.Z, ProgZ);
             //新しいカメラ位置の計算
-            float Length = MathHelper.Lerp(camera1.Length, camera2.Length, ProgD);
-            Quaternion Rotate = Quaternion.Slerp(camera1.Quatanion, camera2.Quatanion, ProgR);
+            float Length = MMDMathHelper.Lerp(camera1.Length, camera2.Length, ProgD);
+            MMDQuaternion Rotate = MMDQuaternion.Slerp(camera1.Quatanion, camera2.Quatanion, ProgR);
 
-            camera.SetVector(new Vector3(0, 0, Length));
+            camera.SetVector(new MMDVector3(0, 0, Length));
 
-            Vector3 temp = new Vector3(0, 0, -Length);
-#if XNA
-            Vector3 temp2;
-            Vector3.Transform(ref temp, ref Rotate, out temp2);
-#elif SlimDX
-            Vector4 temp2;
-            Vector3.Transform(ref temp, ref Rotate, out temp2);
-#endif
-            camera.Position = new Vector3(temp2.X + x, temp2.Y + y, temp2.Z + z);
+            MMDVector3 temp = new MMDVector3(0, 0, -Length);
+            MMDVector3 temp2;
+            MMDVector3.Transform(ref temp, ref Rotate, out temp2);
+            MMDVector4 temp2;
+            MMDVector3.Transform(ref temp, ref Rotate, out temp2);
+            camera.Position = new MMDVector3(temp2.X + x, temp2.Y + y, temp2.Z + z);
 
             camera.SetRotation(Rotate);
-            camera.FieldOfView = MathHelper.Lerp(camera1.ViewAngle, camera2.ViewAngle, ProgV);
+            camera.FieldOfView = MMDMathHelper.Lerp(camera1.ViewAngle, camera2.ViewAngle, ProgV);
         }
     }
 }

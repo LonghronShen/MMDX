@@ -4,11 +4,6 @@ using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Stages;
 
-#if XNA
-using Microsoft.Xna.Framework;
-#elif SlimDX
-using SlimDX;
-#endif
 
 namespace MikuMikuDance.Core.Motion
 {
@@ -27,11 +22,11 @@ namespace MikuMikuDance.Core.Motion
         /// <summary>
         /// ライトの色
         /// </summary>
-        public Vector3 Color;
+        public MMDVector3 Color;
         /// <summary>
         /// ライトの位置
         /// </summary>
-        public Vector3 Location;
+        public MMDVector3 Location;
         /// <summary>
         /// ライトの補間
         /// </summary>
@@ -41,8 +36,8 @@ namespace MikuMikuDance.Core.Motion
         /// <param name="light">適用するライト</param>
         public static void Lerp(MMDLightKeyFrame light1, MMDLightKeyFrame light2, float Progress, IMMDXLight light)
         {
-            light.LightColor = Vector3.Lerp(light1.Color, light2.Color, Progress);
-            light.LightDirection = Vector3.Lerp(light1.Location, light2.Location, Progress);
+            light.LightColor = MMDVector3.Lerp(light1.Color, light2.Color, Progress);
+            light.LightDirection = MMDVector3.Lerp(light1.Location, light2.Location, Progress);
         }
     }
 }

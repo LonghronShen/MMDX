@@ -4,9 +4,7 @@ using System.Linq;
 using System.Text;
 using MikuMikuDance.Core.Misc;
 using System.Diagnostics;
-#if XNA
-using Microsoft.Xna.Framework;
-#endif
+using MikumikuDance.Framework.Abstractions;
 namespace MikuMikuDance.Core.Motion
 {
     /// <summary>
@@ -53,7 +51,7 @@ namespace MikuMikuDance.Core.Motion
         /// <remarks>このトラックのモーションをどの程度モデルに適応するか。0～1の範囲の値。</remarks>
         public float BlendingFactor { 
             get { return m_blendingFactor; }
-            set { m_blendingFactor = MathHelper.Clamp(value, 0, 1); }
+            set { m_blendingFactor = MMDMathHelper.Clamp(value, 0, 1); }
         }
         /// <summary>
         /// モーション再生用FPS

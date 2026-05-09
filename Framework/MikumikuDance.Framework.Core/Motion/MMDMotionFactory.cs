@@ -1,21 +1,14 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-#if !(XBOX || PORTABLE)
 using MikuMikuDance.Motion;
-#endif
 using System.IO;
 using MikuMikuDance.Core.Misc;
-#if XNA
-using Microsoft.Xna.Framework;
-#else
-using SlimDX;
-#endif
+using MikumikuDance.Framework.Abstractions;
 
 namespace MikuMikuDance.Core.Motion
 {
-#if !(XBOX || PORTABLE)
     class MMDMotionFactory : IMMDMotionFactory
     {
 
@@ -40,14 +33,14 @@ namespace MikuMikuDance.Core.Motion
                 for (int j = 0; j < BoneFrames[i].Curve.Length; j++)
                 {
                     BezierCurve curve = new BezierCurve();
-                    curve.v1 = new Vector2((float)input.Motions[i].Interpolation[0][0][j] / 128f, (float)input.Motions[i].Interpolation[0][1][j] / 128f);
-                    curve.v2 = new Vector2((float)input.Motions[i].Interpolation[0][2][j] / 128f, (float)input.Motions[i].Interpolation[0][3][j] / 128f);
+                    curve.v1 = new MMDVector2((float)input.Motions[i].Interpolation[0][0][j] / 128f, (float)input.Motions[i].Interpolation[0][1][j] / 128f);
+                    curve.v2 = new MMDVector2((float)input.Motions[i].Interpolation[0][2][j] / 128f, (float)input.Motions[i].Interpolation[0][3][j] / 128f);
                     BoneFrames[i].Curve[j] = curve;
                 }
-                BoneFrames[i].Scales = new Vector3(1, 1, 1);
-                BoneFrames[i].Location = new Vector3(input.Motions[i].Location[0], input.Motions[i].Location[1], input.Motions[i].Location[2]);
-                BoneFrames[i].Quatanion = new Quaternion(input.Motions[i].Quatanion[0], input.Motions[i].Quatanion[1], input.Motions[i].Quatanion[2], input.Motions[i].Quatanion[3]);
-                BoneFrames[i].Quatanion.Normalize();
+                BoneFrames[i].Scales = new MMDVector3(1, 1, 1);
+                BoneFrames[i].Location = new MMDVector3(input.Motions[i].Location[0], input.Motions[i].Location[1], input.Motions[i].Location[2]);
+                BoneFrames[i].Quatanion = new MMDQuaternion(input.Motions[i].Quatanion[0], input.Motions[i].Quatanion[1], input.Motions[i].Quatanion[2], input.Motions[i].Quatanion[3]);
+                BoneFrames[i].Quatanion = BoneFrames[i].Quatanion.Normalize();
             }
             result.BoneFrames = MotionHelper.SplitBoneMotion(BoneFrames);
             //表情モーションの変換
@@ -70,13 +63,13 @@ namespace MikuMikuDance.Core.Motion
                 CameraFrames[i].Length = input.CameraMotions[i].Length;
                 CameraFrames[i].Location = MMDXMath.ToVector3(input.CameraMotions[i].Location);
                 CameraFrames[i].Quatanion = MMDXMath.CreateQuaternionFromYawPitchRoll(input.CameraMotions[i].Rotate[1], input.CameraMotions[i].Rotate[0], input.CameraMotions[i].Rotate[2]);
-                CameraFrames[i].ViewAngle = MathHelper.ToRadians(input.CameraMotions[i].ViewingAngle);
+                CameraFrames[i].ViewAngle = MMDMathHelper.ToRadians(input.CameraMotions[i].ViewingAngle);
                 CameraFrames[i].Curve = new BezierCurve[6];
                 for (int j = 0; j < CameraFrames[i].Curve.Length; j++)
                 {
                     BezierCurve curve = new BezierCurve();
-                    curve.v1 = new Vector2((float)input.CameraMotions[i].Interpolation[j][0] / 128f, (float)input.CameraMotions[i].Interpolation[j][2] / 128f);
-                    curve.v2 = new Vector2((float)input.CameraMotions[i].Interpolation[j][1] / 128f, (float)input.CameraMotions[i].Interpolation[j][3] / 128f);
+                    curve.v1 = new MMDVector2((float)input.CameraMotions[i].Interpolation[j][0] / 128f, (float)input.CameraMotions[i].Interpolation[j][2] / 128f);
+                    curve.v2 = new MMDVector2((float)input.CameraMotions[i].Interpolation[j][1] / 128f, (float)input.CameraMotions[i].Interpolation[j][3] / 128f);
                     CameraFrames[i].Curve[j] = curve;
                 }
             }
@@ -98,5 +91,4 @@ namespace MikuMikuDance.Core.Motion
 
     #endregion
     }
-#endif
 }
