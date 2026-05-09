@@ -1,0 +1,205 @@
+#==================================================================
+#  Content.HiDef.mgcb — MMDX Content Pipeline (HiDef / MGFB Profile)
+#
+#  Target: MonoGame DesktopGL MGFB (shader model 4.0, no preshader)
+#  Runtime: net8.0+ (MonoGame DesktopGL cross-platform)
+#  Pipeline DLL: MikuMikuDance.Content.Pipeline (net8.0 for dotnet mgcb)
+#
+#  This mgcb builds content for the MonoGame HiDef (MGFB) profile:
+#  - vs_4_0_level_9_1 / ps_4_0_level_9_1 shaders (no fxc preshader)
+#  - Texture compression: DxtCompressed (full support)
+#  - Vertex format: full channels (up to 16 texcoords, float formats)
+#  - Output: MonoGame .xnb (cross-platform format)
+#
+#  Usage:
+#    dotnet mgcb build Content.HiDef.mgcb
+#==================================================================
+
+#----------------------------- Global Properties ----------------------------#
+
+/outputDir:bin/HiDef
+/intermediateDir:obj/HiDef
+/platform:Windows
+/config:
+/profile:HiDef
+/compress:False
+
+#-------------------------------- References --------------------------------#
+
+# Pipeline DLL (built for dotnet mgcb — net8.0 target)
+/reference:Pipeline/bin/Debug/net8.0/MikuMikuDance.Content.Pipeline.dll
+
+#---------------------------------- Content ---------------------------------#
+
+# ── MMD Model (.pmd) ──
+# Processed by custom MMD Model processor → MikuMikuDanceModelContent
+
+#begin Content/Miku.pmd
+/importer:MikuMikuDance.Pipeline.Importers.MikuMikuDancePmdImporter
+/processor:MikuMikuDance.Pipeline.Processors.MikuMikuDanceModelProcessor
+/processorParam:TargetProfile=HiDef
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=False
+/processorParam:GenerateMipmaps=True
+/processorParam:PremultiplyTextureAlpha=True
+/processorParam:ResizeTexturesToPowerOfTwo=True
+/processorParam:TextureFormat=DxtCompressed
+/build:Miku
+
+# ── MMD Motion (.vmd) ──
+# Processed by PassThrough → MikuMikuDanceMotionContent
+
+#begin Content/TrueMyHeart.vmd
+/importer:MikuMikuDance.Pipeline.Importers.MikuMikuDanceVmdImporter
+/processor:MikuMikuDance.Pipeline.Importers.PassThroughProcessor
+/build:TrueMyHeart
+
+# ── Textures (HiDef: DxtCompressed, full size) ──
+
+#begin Content/eye2.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=True
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:eye2
+
+# Toon textures (10 total, 1-based indexing)
+#begin Content/toon01.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon01
+
+#begin Content/toon02.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon02
+
+#begin Content/toon03.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon03
+
+#begin Content/toon04.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon04
+
+#begin Content/toon05.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon05
+
+#begin Content/toon06.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon06
+
+#begin Content/toon07.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon07
+
+#begin Content/toon08.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon08
+
+#begin Content/toon09.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon09
+
+#begin Content/toon10.bmp
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=DxtCompressed
+/build:toon10
+
+# ── Shaders (HiDef: Defines=HIDEF, vs_4_0_level_9_1/ps_4_0_level_9_1, no preshader) ──
+
+#begin Content/Shaders/Skinning.fx
+/importer:EffectImporter
+/processor:MikuMikuDance.Pipeline.Processors.MikuMikuDanceEffectProcessor
+/processorParam:DebugMode=Auto
+/processorParam:Defines=HIDEF
+/build:Shaders/Skinning
+
+#begin Content/Shaders/MMDPassThrough.fx
+/importer:EffectImporter
+/processor:EffectProcessor
+/processorParam:DebugMode=Auto
+/build:Shaders/MMDPassThrough

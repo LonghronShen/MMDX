@@ -1,0 +1,117 @@
+<Project>
+  <!--
+    ====================================================================
+    Directory.Build.targets - MMDX Content Pipeline Dual Profile Build
+    
+    This targets file invokes MGCB with the correct .mgcb file
+    based on the target framework:
+    
+      net40  -> Content.Reach.mgcb  (XNA 4.0 Reach profile, fxc preshader)
+      net8.0 -> Content.HiDef.mgcb  (MonoGame MGFB/HiDef profile, no preshader)
+    
+    Output from MGCB (bin/Reach/ or bin/HiDef/) is copied to the App's
+    $(OutputPath)Content/ so ContentManager.Load() can find it at runtime.
+    
+    Prerequisites:
+      dotnet tool install -global dotnet-mgcb (or local: dotnet tool install dotnet-mgcb)
+    ====================================================================
+  -->
+
+  <!-- Profile selection based on TargetFramework -->
+  <!-- Only active for App projects (OutputType == Exe) that reference -->
+  <!-- the MMDX Content Pipeline. -->
+  <PropertyGroup Condition="'$(OutputType)' == 'Exe'">
+    <MMDXContentMGCB Condition="'$(TargetFramework)' == 'net40'">Content.Reach.mgcb</MMDXContentMGCB>
+    <MMDXContentMGCB Condition="'$(TargetFramework)' == 'net8.0'">Content.HiDef.mgcb</MMDXContentMGCB>
+    <MMDXContentProfileName Condition="'$(TargetFramework)' == 'net40'">Reach</MMDXContentProfileName>
+    <MMDXContentProfileName Condition="'$(TargetFramework)' == 'net8.0'">HiDef</MMDXContentProfileName>
+    <MMDXContentOutDir Condition="'$(TargetFramework)' == 'net40'">bin/Reach</MMDXContentOutDir>
+    <MMDXContentOutDir Condition="'$(TargetFramework)' == 'net8.0'">bin/HiDef</MMDXContentOutDir>
+    <MMDXProjectRoot>$(MSBuildThisFileDirectory)</MMDXProjectRoot>
+  </PropertyGroup>
+
+  <!-- BuildMMDXContent: invoke MGCB with selected .mgcb -->
+  <!-- Runs after ResolveProjectReferences (pipeline DLL must be built) -->
+  <!-- but before the main compilation so that XNBs exist for Copy. -->
+  <Target Name="BuildMMDXContent"
+          Condition="'$(MMDXContentMGCB)' != '' And '$(DesignTimeBuild)' != 'true'"
+          AfterTargets="ResolveProjectReferences"
+          BeforeTargets="BeforeCompile"
+          Inputs="$(MMDXProjectRoot)$(MMDXContentMGCB);
+                  $(MMDXProjectRoot)Content\**\*.*"
+          Outputs="$(MMDXProjectRoot)$(MMDXContentOutDir)\**\*.xnb">
+
+    <Message Importance="High"
+             Text="[MMDX Content] Building for $(TargetFramework) - $(MMDXContentProfileName) profile" />
+    <Message Importance="High"
+             Text="[MMDX Content] MGCB file: $(MMDXContentMGCB)" />
+    <Message Importance="High"
+             Text="[MMDX Content] Output dir: $(MMDXContentOutDir)" />
+
+    <!-- Invoke MGCB tool. -->
+    <PropertyGroup>
+      <MGCB_Tool>dotnet mgcb</MGCB_Tool>
+      <MGCB_ARGS>build "$(MMDXProjectRoot)$(MMDXContentMGCB)" --quiet</MGCB_ARGS>
+    </PropertyGroup>
+
+    <!-- Attempt 1: Global/local dotnet tool -->
+    <Exec Command="$(MGCB_Tool) $(MGCB_ARGS)"
+          WorkingDirectory="$(MMDXProjectRoot)"
+          ContinueOnError="True"
+          StandardOutputImportance="Low"
+          StandardErrorImportance="High">
+      <Output TaskParameter="ExitCode" PropertyName="_MGCBExitCode" />
+    </Exec>
+
+    <!-- Fallback to direct invocation of MGCB pipeline DLL -->
+    <PropertyGroup Condition="'$(_MGCBExitCode)' != '0'">
+      <_MGCBFallback>dotnet "$(NuGetPackageRoot)mgcb\$(MGCBVersion)\tools\mgcb.dll"</_MGCBFallback>
+    </PropertyGroup>
+
+    <Exec Command="$(_MGCBFallback) $(MGCB_ARGS)"
+          WorkingDirectory="$(MMDXProjectRoot)"
+          Condition="'$(_MGCBExitCode)' != '0'"
+          ContinueOnError="True"
+          StandardOutputImportance="Low"
+          StandardErrorImportance="High">
+      <Output TaskParameter="ExitCode" PropertyName="_MGCBExitCode2" />
+    </Exec>
+
+    <Warning Condition="'$(_MGCBExitCode)' != '0' And '$(_MGCBExitCode2)' != '0'"
+             Text="[MMDX Content] MGCB not found. Install with: dotnet tool install -g dotnet-mgcb" />
+
+    <!-- Copy XNB output to App's Content directory -->
+    <ItemGroup>
+      <_MMDXContentFiles Include="$(MMDXProjectRoot)$(MMDXContentOutDir)\**\*.xnb" />
+    </ItemGroup>
+
+    <Copy SourceFiles="@(_MMDXContentFiles)"
+          DestinationFiles="@(_MMDXContentFiles->'$(OutDir)Content\%(RecursiveDir)%(Filename)%(Extension)')"
+          Condition="'@(_MMDXContentFiles)' != ''"
+          SkipUnchangedFiles="true">
+      <Output TaskParameter="CopiedFiles" ItemName="_MMDXContentCopied" />
+    </Copy>
+
+    <Message Importance="High"
+             Text="[MMDX Content] Copied %(_MMDXContentCopied.Count) XNB files to $(OutDir)Content/"
+             Condition="'@(_MMDXContentCopied)' != ''" />
+  </Target>
+
+  <!-- EnsureContentDir: create empty Content/ in output dir -->
+  <!-- so ContentManager.Load() does not throw even if no XNBs exist. -->
+  <Target Name="EnsureContentDir"
+          AfterTargets="Build"
+          Condition="'$(OutputType)' == 'Exe'">
+    <MakeDir Directories="$(OutDir)Content" Condition="!Exists('$(OutDir)Content')" />
+  </Target>
+
+  <!-- CleanMMDXContent: remove MGCB output and copied XNBs -->
+  <Target Name="CleanMMDXContent"
+          AfterTargets="Clean"
+          Condition="'$(MMDXContentOutDir)' != ''">
+    <RemoveDir Directories="$(MMDXProjectRoot)$(MMDXContentOutDir)"
+               Condition="Exists('$(MMDXProjectRoot)$(MMDXContentOutDir)')" />
+    <RemoveDir Directories="$(OutDir)Content"
+               Condition="Exists('$(OutDir)Content')" />
+  </Target>
+</Project>
