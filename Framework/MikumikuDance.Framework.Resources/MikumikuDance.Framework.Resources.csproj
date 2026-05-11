@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 	<PropertyGroup>
-		<TargetFrameworks>netstandard1.1;net40</TargetFrameworks>
+		<TargetFrameworks>net40</TargetFrameworks>
 
 		<PackageId>MikumikuDance.Framework.Resources</PackageId>
 		<GeneratePackageOnBuild>true</GeneratePackageOnBuild>
