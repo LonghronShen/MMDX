@@ -88,7 +88,7 @@ namespace MikuMikuDance.Core.MultiThreads
         private void RunPhysicsThread()
         {
 #if NET40
-            TaskEx.Run(PhysicsThread);
+            Task.Factory.StartNew(PhysicsThread);
 #else
             Task.Run(PhysicsThread);
 #endif
