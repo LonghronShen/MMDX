@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------
+//-----------------------------------------------------------
 // MMDEdgeEffect.fx
 //
 // MMDX
@@ -64,6 +64,6 @@ Technique MMDEdgeEffect
 {
 	Pass
 	{
-		PixelShader = compile ps_4_0_level_9_1 PSDrawEdge();
+		PixelShader = compile ps_4_0 PSDrawEdge();
 	}
 }

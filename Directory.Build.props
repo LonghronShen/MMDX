@@ -13,6 +13,7 @@
 	<PropertyGroup>
 		<RootNamespace>MikumikuDance.Framework</RootNamespace>
 
+		<CheckEolWorkloads>false</CheckEolWorkloads>
 		<GenerateAssemblyInfo>false</GenerateAssemblyInfo>
 		<GenerateDocumentationFile>true</GenerateDocumentationFile>
 		<GenerateSerializationAssemblies>Auto</GenerateSerializationAssemblies>

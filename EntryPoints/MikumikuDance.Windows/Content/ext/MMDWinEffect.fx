@@ -1,4 +1,4 @@
-﻿//-----------------------------------------------------------
+//-----------------------------------------------------------
 // MMDWinEffect.fx
 //
 // MMDX
@@ -377,32 +377,32 @@ Technique MMDEffect
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSBasicNm();
-		PixelShader	 = compile ps_4_0_level_9_1 PSBasic();
+		VertexShader = compile vs_4_0 VSBasicNm();
+		PixelShader	 = compile ps_4_0 PSBasic();
 	}
 }
 Technique MMDEffect1
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSBasicNmVc();
-		PixelShader	 = compile ps_4_0_level_9_1 PSBasic();
+		VertexShader = compile vs_4_0 VSBasicNmVc();
+		PixelShader	 = compile ps_4_0 PSBasic();
 	}
 }
 Technique MMDEffect2
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSBasicNmTx();
-		PixelShader	 = compile ps_4_0_level_9_1 PSBasicTx();
+		VertexShader = compile vs_4_0 VSBasicNmTx();
+		PixelShader	 = compile ps_4_0 PSBasicTx();
 	}
 }
 Technique MMDEffect3
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSBasicNmTxVc();
-		PixelShader	 = compile ps_4_0_level_9_1 PSBasicTx();
+		VertexShader = compile vs_4_0 VSBasicNmTxVc();
+		PixelShader	 = compile ps_4_0 PSBasicTx();
 	}
 }
 
@@ -410,31 +410,31 @@ Technique MMDNormalDepth
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSEdgeNm();
-		PixelShader  = compile ps_4_0_level_9_1 PSEdge();
+		VertexShader = compile vs_4_0 VSEdgeNm();
+		PixelShader  = compile ps_4_0 PSEdge();
 	}
 }
 Technique MMDNormalDepth1
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSEdgeNm();
-		PixelShader  = compile ps_4_0_level_9_1 PSEdge();
+		VertexShader = compile vs_4_0 VSEdgeNm();
+		PixelShader  = compile ps_4_0 PSEdge();
 	}
 }
 Technique MMDNormalDepth2
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSEdgeNm();
-		PixelShader  = compile ps_4_0_level_9_1 PSEdge();
+		VertexShader = compile vs_4_0 VSEdgeNm();
+		PixelShader  = compile ps_4_0 PSEdge();
 	}
 }
 Technique MMDNormalDepth3
 {
 	Pass
 	{
-		VertexShader = compile vs_4_0_level_9_1 VSEdgeNm();
-		PixelShader  = compile ps_4_0_level_9_1 PSEdge();
+		VertexShader = compile vs_4_0 VSEdgeNm();
+		PixelShader  = compile ps_4_0 PSEdge();
 	}
 }
