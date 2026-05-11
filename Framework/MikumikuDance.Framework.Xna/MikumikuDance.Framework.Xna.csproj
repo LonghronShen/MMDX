@@ -1,6 +1,6 @@
 ﻿<Project Sdk="MSBuild.Sdk.Extras">
 	<PropertyGroup>
-		<TargetFrameworks>net40;net461;portable-net45+win8+wpa81</TargetFrameworks>
+		<TargetFrameworks>net40;net461</TargetFrameworks>
 
 		<AllowUnsafeBlocks>true</AllowUnsafeBlocks>
 

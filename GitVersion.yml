@@ -1,0 +1,14 @@
+mode: Mainline
+branches:
+  monogame:
+    mode: Mainline
+    increment: Minor
+    tag: ''
+    prevent-increment-of-merged-branch-version: false
+ignore:
+  sha: []
+  commits-before-branch: null
+merge-message-formats: {}
+commit-message-format: '{0}'
+tag-prefix: '[vV]?'
+next-version: 1.0.0
